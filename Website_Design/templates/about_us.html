@@ -2,7 +2,7 @@
 
 <html>
 	<head>
-		<title>Amino Acid Sequence List</title>
+		<title>About Us</title>
 	</head>
 	<body>
 		<link rel="stylesheet" type="text/css" href="static/index.css")}}"/>
@@ -22,11 +22,40 @@
 					<li><a href="{{ url_for('about_us')}}">About us </a></li>
 					<li><input type="text" placeholder="Search.."></li>
 				</ul>
-
-
 			</nav>
 		</header>
 
-	</body>
+		<p>
+			<ul>
+				<li>The team:</li>
+				<li>Nayam</li>
+				<li>Dionisis</li>
+				<li>Michaela</li>
+				<li>Dan</li>
+			</ul>
+		</p>
+		<p>
+			We are a group of aspiring Bioinformaticians, To contact us please fill out the form below
 
+		</p>
+		<p>
+			<form>
+			  First name:<br>
+			  <input type="text" name="firstname">
+			  <br>
+			  Last name:<br>
+			  <input type="text" name="lastname"> <br>
+				Email:<br>
+			  <input type="text" name="email">
+				<br>
+				Message: <br>
+				<textarea name="message" rows="10" cols="30">
+				</textarea>  <br>
+				<input type="submit">
+			</form>
+
+		</p>
+
+	</body>
+<footer>2018 Bioinformatics Research Project</footer>
 </html>
