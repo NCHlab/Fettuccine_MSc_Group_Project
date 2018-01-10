@@ -26,27 +26,27 @@ def AA_seq_list():
 
 @app.route("/relationship_AA")
 def relationship_AA():
-    return "rel"
+	return render_template("relationship_AA.html")
 
 @app.route("/peptide_seq_ident")
 def peptide_seq_ident():
-    return "pep seq"
+    return render_template("peptide_seq_ident.html")
 
 @app.route("/upload_peptide")
 def upload_peptide():
-    return "upload"
+    return render_template("upload_peptide.html")
 
 @app.route("/expression_atlas")
 def atlas():
-	return "this is the atlas"
+	return render_template("expression_atlas.html")
 
 @app.route("/documentation")
 def documentation():
-	return "doc"
+	return render_template("documentation.html")
 
 @app.route("/about_us")
 def about_us():
-	return "hi"
+	return render_template("about_us.html")
 
 ###############################################
 
