@@ -28,11 +28,15 @@
 		</header>
 	</body>
 	<p>
-		<form action="">
-	 		<input type="file" name="fileuploaded" accept=".xml">
-	 		<input type="submit">
-		</form>
+			<form id="upload-form" action="{{ url_for("upload_peptide")}}" method="POST" enctype="multipart/form-data">
+	 		<input type="file" name="file" accept=".xml">
+	 		<input type="submit" value="Upload">
 	</p>
+
+
+
+
+
 	<p>
 		<form action="">
 			<input type="checkbox" name="filetype" value="Mzid/MzIdent">Mzid/MzIdent<br>

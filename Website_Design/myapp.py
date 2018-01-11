@@ -3,9 +3,14 @@ from flask import request
 from flask import url_for
 from datetime import datetime
 from pytz import timezone
+import os
 
 
 app = Flask(__name__)
+APP_ROOT = os.path.dirname(os.path.abspath(__file__))
+
+
+
 @app.route("/")
 def indexpage():
 	now = datetime.now(timezone('Europe/London'))
@@ -32,9 +37,25 @@ def relationship_AA():
 def peptide_seq_ident():
     return render_template("peptide_seq_ident.html")
 
-@app.route("/upload_peptide")
+@app.route("/upload_peptide", methods=["GET","POST"])
 def upload_peptide():
-    return render_template("upload_peptide.html")
+	if request.method == "POST":
+		target = os.path.join(APP_ROOT, "uploaded/")
+
+		if not os.path.isdir(target):
+			os.mkdir(target)
+
+		for file in request.files.getlist("file"):
+			filename = file.filename
+			destination = "/".join([target, filename])
+			file.save(destination)
+		return uploaded() #render_template("uploaded.html")
+	else:
+		return render_template("upload_peptide.html")
+
+@app.route("/uploaded")
+def uploaded():
+	return render_template("uploaded.html")
 
 @app.route("/expression_atlas")
 def atlas():
