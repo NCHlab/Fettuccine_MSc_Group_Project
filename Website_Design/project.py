@@ -14,12 +14,12 @@ APP_ROOT = os.path.dirname(os.path.abspath(__file__))
 # Connect to the database
 try:
 	connection = pymysql.connect(host="localhost",
-                                 port=3306,
-                                 user="root",
-	                             password="root",
-	                             db="",#genome_data
-	                             charset="utf8mb4",
-	                             cursorclass=pymysql.cursors.DictCursor)
+								port=3306,
+								user="root",
+								password="root",
+								db="",#genome_data
+								charset="utf8mb4",
+								cursorclass=pymysql.cursors.DictCursor)
 except:
 	print "Failed to connect to db!!"
 	print "Please ensure you have started your MySQL server and the db name is correct"
