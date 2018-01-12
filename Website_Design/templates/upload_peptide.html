@@ -26,21 +26,21 @@
 
 			</nav>
 		</header>
+
+		<p>
+				Please Upload a mzid or mztab formatted file
+				<form id="upload-form" action="{{ url_for("upload_peptide")}}" method="POST" enctype="multipart/form-data">
+		 		<input type="file" name="file" accept=".xml">
+		 		<input type="submit" value="Upload">
+
+
+				<!–– THIS IS A COMMENT input type="text" id="player" value="" style="width:100px; height:40px;"––>
+		</p>
+		<p>
+			<form>
+				<input type="checkbox" name="filetype" value="Mzid/MzIdent">Mzid/MzIdent<br>
+				<input type="checkbox" name="filetype" value="MzTab">MzTab
+			</form>
+		</p>
 	</body>
-	<p>
-			<form id="upload-form" action="{{ url_for("upload_peptide")}}" method="POST" enctype="multipart/form-data">
-	 		<input type="file" name="file" accept=".xml">
-	 		<input type="submit" value="Upload">
-	</p>
-
-
-
-
-
-	<p>
-		<form action="">
-			<input type="checkbox" name="filetype" value="Mzid/MzIdent">Mzid/MzIdent<br>
-			<input type="checkbox" name="filetype" value="MzTab">MzTab
-		</form>
-	</p>
 </html>
