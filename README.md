@@ -3,6 +3,9 @@
 - pytz
 - pymysql
 
+- You also need to download MAMP (which does the MYSQL hosting for you) otherwise there will be no database
+- https://www.mamp.info/en/
+
 # Complete
 - Added the gantt chart and software architecture templates for filling them with the team.
 - Basic UI complete
