@@ -4,28 +4,49 @@ from flask import url_for
 from datetime import datetime
 from pytz import timezone
 import os
-import pymysql
-import pymysql.cursors
-
+import MySQLdb
+import pandas as pd
+import numpy as py
 
 app = Flask(__name__)
 APP_ROOT = os.path.dirname(os.path.abspath(__file__))
 
 # Connect to the database
 try:
-	connection = pymysql.connect(host="localhost",
+	connection = MySQLdb.connect(host="localhost",
 						port=3306,
 						user="root",
-						password="root",
-						db="genome_data",#genome_data
-						charset="utf8mb4",
-						cursorclass=pymysql.cursors.DictCursor)
+						passwd="root",
+						db="genome_data")#genome_data
 except:
 	print "Failed to connect to db!!"
 	print "Please ensure you have started your MySQL server and the db name is correct"
 	print "and that the port is set to 3306 in your server"
 	pass
 
+"""
+cur = connection.cursor()
+cur.execute("SELECT * FROM RetroTs")
+tables = cur.fetchall()
+d=[]
+for row in tables:
+	d.append({'Name':row[1], 'Class': row[0]})
+df=pd.DataFrame(d)
+DATA=df.to_html() #changes to URL format
+
+############################### different table with more columns:
+cur.execute("SELECT * FROM ROUGH")
+tables2 = cur.fetchall()
+d2=[]
+for row in tables2:
+	d2.append({'Family':row[1], 'name': row[2], 'details': row[3], 'sequence': row[4]})
+df2=pd.DataFrame(d2)
+DATA2=df2.to_html()
+df2_fam= df2[df2.Family == 'HERV']
+df3_fam= df2[df2.Family == 'LINE1']
+HF=df2_fam.to_html()
+LF=df3_fam.to_html()
+"""#"
 
 
 
@@ -38,6 +59,16 @@ def indexpage():
 @app.route("/family_table")
 def family_table():
     return render_template("family_table.html")
+
+@app.route('/family_table_LINE1')
+def family_table_LINE1():
+    Sum="variable passed on"
+    return render_template('family_table_LINE1.html',data2=LF)
+
+@app.route('/family_table_HERV')
+def family_table_HERV():
+    Sum="variable passed on"
+    return render_template('family_table_HERV.html',data2=HF)
 
 @app.route("/distribution")
 def distribution():
@@ -104,8 +135,8 @@ def uploaded():
 	        result = cursor.fetchone()
 	        print(result)
 	finally:
-	    connection.close()
-	return render_template("uploaded.html")
+	    #connection.close()
+		return render_template("uploaded.html")
 
 @app.route("/expression_atlas")
 def atlas():
