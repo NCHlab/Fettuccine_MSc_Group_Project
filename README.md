@@ -1,7 +1,9 @@
 # Fettuccine_MSc_Group_Project
 - Ensure you have the following modules install on your pc (by any means necessary e.g using pip install)
 - pytz
-- pymysql
+- MySQLdb
+- pandas
+- numpy
 
 - You also need to download MAMP (which does the MYSQL hosting for you) otherwise there will be no database
 - https://www.mamp.info/en/
