@@ -27,17 +27,7 @@ except:
 
 cur = connection.cursor()
 
-cur.execute("SELECT * FROM RT_data")
-table_family = cur.fetchall()
-d2=[]
-for row in table_family:
-	d2.append({'Family':row[1], 'name': row[2], 'details': row[3], 'sequence': row[4]})
-df2=pd.DataFrame(d2)
-DATA2=df2.to_html()
-df2_fam= df2[df2.Family == 'HERV']
-df3_fam= df2[df2.Family == 'LINE1']
-HF=df2_fam.to_html()
-LF=df3_fam.to_html()
+
 
 
 #s
@@ -50,7 +40,21 @@ def indexpage():
 
 @app.route("/family_table")
 def family_table():
-    return render_template("family_table.html", data2=DATA2)
+	cur.execute("SELECT * FROM RT_data")
+	table_family = cur.fetchall()
+	d2=[]
+	for row in table_family:
+		d2.append({'Family':row[1], 'name': row[2], 'details': row[3], 'sequence': row[4]})
+	df2=pd.DataFrame(d2)
+	DATA2=df2.to_html()
+	df2_fam= df2[df2.Family == 'HERV']
+	df3_fam= df2[df2.Family == 'LINE1']
+	HF=df2_fam.to_html()
+	LF=df3_fam.to_html()
+	global HF
+	global LF
+	global DATA2
+	return render_template("family_table.html", data2=DATA2)
 
 @app.route('/family_table_LINE1')
 def family_table_LINE1():
