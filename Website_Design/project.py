@@ -50,7 +50,7 @@ def indexpage():
 
 @app.route("/family_table")
 def family_table():
-    return render_template("family_table.html")
+    return render_template("family_table.html", data2=DATA2)
 
 @app.route('/family_table_LINE1')
 def family_table_LINE1():
