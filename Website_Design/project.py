@@ -24,21 +24,13 @@ except:
 	print "and that the port is set to 3306 in your server"
 	pass
 
-"""
-cur = connection.cursor()
-cur.execute("SELECT * FROM RetroTs")
-tables = cur.fetchall()
-d=[]
-for row in tables:
-	d.append({'Name':row[1], 'Class': row[0]})
-df=pd.DataFrame(d)
-DATA=df.to_html() #changes to URL format
 
-############################### different table with more columns:
-cur.execute("SELECT * FROM ROUGH")
-tables2 = cur.fetchall()
+cur = connection.cursor()
+
+cur.execute("SELECT * FROM RT_data")
+table_family = cur.fetchall()
 d2=[]
-for row in tables2:
+for row in table_family:
 	d2.append({'Family':row[1], 'name': row[2], 'details': row[3], 'sequence': row[4]})
 df2=pd.DataFrame(d2)
 DATA2=df2.to_html()
@@ -46,7 +38,7 @@ df2_fam= df2[df2.Family == 'HERV']
 df3_fam= df2[df2.Family == 'LINE1']
 HF=df2_fam.to_html()
 LF=df3_fam.to_html()
-"""#"
+
 
 #s
 

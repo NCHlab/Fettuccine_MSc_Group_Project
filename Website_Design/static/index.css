@@ -42,3 +42,79 @@ footer {
 #search22 {
     width: 22cm;  height: 2cm;
 }
+
+/* #####################################
+Formatting the search bar for fam tables: */
+
+/* search container */
+.search {
+ overflow: hidden;
+ background-color: #008080;
+ font-family: Arial;
+}
+
+/* The dropdown container */
+.dropdown_familytable {
+ float: left;
+ overflow: hidden;
+}
+
+/* Dropdown button */
+.dropdown_familytable .dropbtn_ft {
+ font-size: 16px;
+ border: none;
+ outline: none;
+ color: white;
+ padding: 14px 16px;
+ background-color: inherit;
+}
+
+/* Add a background color to searchbar links on hover */
+.search a:hover, .dropdown_familytable:hover .dropbtn_ft {
+ background-color: #333;
+}
+
+/* Dropdown content (hidden by default) */
+.dropdown-content_ft {
+ display: none;
+ position: absolute;
+ background-color: #f9f9f9;
+ min-width: 160px;
+ box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+ z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content_ft a {
+ float: none;
+ color: black;
+ padding: 12px 16px;
+ text-decoration: none;
+ display: block;
+ text-align: left;
+}
+
+/* Add a grey background color to dropdown links on hover */
+.dropdown-content_ft a:hover {
+ background-color: #ddd;
+}
+
+/* Show the dropdown menu on hover */
+.dropdown_familytable:hover .dropdown-content_ft {
+ display: block;
+}
+
+/* #####################################
+Formatting the database table: */
+.table {
+  color: #black;
+  background-color: #white;
+  font-family: Arial;
+  padding: 12px 16px;
+  font-size: 1em;
+}
+
+tr:nth-child(odd)		{ background-color:#eee; }
+tr:nth-child(even)	{ background-color:#fff; }
+
+tr:hover { background-color: #008080;}
