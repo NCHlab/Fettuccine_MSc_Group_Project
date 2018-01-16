@@ -1,6 +1,4 @@
-from flask import Flask, send_from_directory, render_template
-from flask import request
-from flask import url_for
+from flask import Flask, send_from_directory, render_template, request, url_for
 from datetime import datetime
 from pytz import timezone
 import os
@@ -27,10 +25,6 @@ except:
 
 cur = connection.cursor()
 
-
-
-
-#s
 
 @app.route("/")
 def indexpage():
@@ -96,12 +90,15 @@ def relationship_AA():
 
 @app.route("/peptide_seq_ident", methods=["GET","POST"])
 def peptide_seq_ident():
+	# If data has been submitted to the page i.e uploaded, then the POST method engages
 	if request.method == "POST":
 		target = os.path.join(APP_ROOT, "sequence_ident/")
 
+		# Checks to see if the folder exists
 		if not os.path.isdir(target):
 			os.mkdir(target)
 
+		# Saves the file to the target folder explicitly mentioned earlier
 		for file in request.files.getlist("file2"):
 			filename = file.filename
 			destination = "/".join([target, filename])
