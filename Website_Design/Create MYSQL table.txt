@@ -1,0 +1,3 @@
+CREATE TABLE fake_data (genoName VARCHAR(20), genoStart VARCHAR(20),
+    -> genoEnd VARCHAR(20), genoLeft VARCHAR(20), strand VARCHAR(20), repName VARCHAR(20),
+    repClass VARCHAR(20), repFamily VARCHAR(20), repStart VARCHAR(20), repEnd VARCHAR(20), repLeft VARCHAR(20));
