@@ -15,29 +15,29 @@ except:
 	print "and that the port is set to 3306 in your server"
 	pass
 
-book = pd.read_csv("data2.csv")
+df = pd.read_csv("data2.csv")
 
 
 # Get the cursor, which is used to traverse the database, line by line
 #cursor = database.cursor()
 cur = connection.cursor()
 # Create the INSERT INTO sql query
-query = """INSERT INTO fake_data (genoName, genoStart,
+query = """INSERT INTO prelim_data (genoName, genoStart,
         genoEnd, genoLeft, strand, repName,
         repClass, repFamily, repStart, repEnd, repLeft) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"""
 
-for i in range(0, len(book.index)):
-        genoName = book.iloc[i,0]
-        genoStart = book.iloc[i,1]
-        genoEnd	= book.iloc[i,2]
-        genoLeft = book.iloc[i,3]
-        strand	= book.iloc[i,4]
-        repName	= book.iloc[i,5]
-        repClass = book.iloc[i,6]
-        repFamily = book.iloc[i,7]
-        repStart = book.iloc[i,8]
-        repEnd = book.iloc[i,9]
-        repLeft	= book.iloc[i,-1]
+for i in range(0, len(df.index)):
+        genoName = df.iloc[i,0]
+        genoStart = df.iloc[i,1]
+        genoEnd	= df.iloc[i,2]
+        genoLeft = df.iloc[i,3]
+        strand	= df.iloc[i,4]
+        repName	= df.iloc[i,5]
+        repClass = df.iloc[i,6]
+        repFamily = df.iloc[i,7]
+        repStart = df.iloc[i,8]
+        repEnd = df.iloc[i,9]
+        repLeft	= df.iloc[i,-1]
 
 		# Assign values from each row
         values = (genoName, genoStart, genoEnd, genoLeft, strand, repName, repClass, repFamily, repStart, repEnd, repLeft)

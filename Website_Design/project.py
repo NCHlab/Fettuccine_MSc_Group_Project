@@ -40,6 +40,10 @@ def indexpage():
 
 @app.route("/family_table")
 def family_table():
+	global HF
+	global LF
+	global DATA2
+	global DATA3
 	cur.execute("SELECT * FROM RT_data")
 	table_family = cur.fetchall()
 	d2=[]
@@ -51,10 +55,17 @@ def family_table():
 	df3_fam= df2[df2.Family == 'LINE1']
 	HF=df2_fam.to_html()
 	LF=df3_fam.to_html()
-	global HF
-	global LF
-	global DATA2
-	return render_template("family_table.html", data2=DATA2)
+
+	cur.execute("SELECT * FROM prelim_data")
+	table_family2 = cur.fetchall()
+	d4=[]
+	for row in table_family2:
+		d4.append({'genoName':row[1], 'genoStart': row[2], 'genoEnd': row[3], 'genoLeft': row[4],
+		 'strand': row[5], 'repName': row[6], 'repClass': row[7], 'repFamily': row[8],
+		  'repStart': row[9], 'repEnd': row[10], 'repLeft': row[11]})
+	df4=pd.DataFrame(d4)
+	DATA3=df4.to_html()
+	return render_template("family_table.html", data3=DATA3, data2=DATA2)
 
 @app.route('/family_table_LINE1')
 def family_table_LINE1():
@@ -65,6 +76,11 @@ def family_table_LINE1():
 def family_table_HERV():
     Sum="variable passed on"
     return render_template('family_table_HERV.html',data2=HF)
+
+@app.route('/family_table_O')
+def family_table_O():
+    Sum="variable passed on"
+    return render_template('family_table_O.html',data3=DATA3)
 
 @app.route("/distribution")
 def distribution():

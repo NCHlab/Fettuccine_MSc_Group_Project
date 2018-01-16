@@ -36,13 +36,16 @@
 	   <a href="{{ url_for('family_table')}}">All</a>
 	   <a href="{{ url_for('family_table_LINE1')}}">Line-1</a>
 	   <a href="{{ url_for('family_table_HERV')}}">HERV</a>
+		 <a href="{{ url_for('family_table_O')}}">O</a>
 	 </div>
 
 	<div class="table">
 	{{data2|safe}} <!--safe=shows as html object rather than code-->
 
-	<div>
-
+	</div>
+	<div class="table">
+		{{data3|safe}}
+	</div>
 	</body>
 
 </html>
