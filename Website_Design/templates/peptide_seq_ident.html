@@ -26,7 +26,20 @@
 
 			</nav>
 		</header>
+		<p>
+				Please Upload a fasta file or enter the peptide sequence below
+				<form id="upload-form" action="{{ url_for("peptide_seq_ident")}}" method="POST" enctype="multipart/form-data">
+		 		<input type="file" name="file2" accept=".fasta">
+		 		<input type="submit" value="Upload">
 
+		</p>
+		<p>
+			<form action="/action_page.php">
+			  <textarea Name="content" rows=10 cols=100></textarea>
+				<br>
+			  <input type="submit" value="Seach" id="search22">
+			</form>
+		</p>
 	</body>
 
 </html>

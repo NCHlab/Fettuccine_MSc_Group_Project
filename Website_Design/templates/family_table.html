@@ -5,7 +5,7 @@
 		<title>RT Family Table</title>
 	</head>
 	<body>
-		<link rel="stylesheet" type="text/css" href="static/index.css")}}"/>
+		<link rel="stylesheet" type="text/css" href="static/index.css"/>
 
 		<header>
 			<nav>
@@ -23,10 +23,29 @@
 					<li><input type="text" placeholder="Search.."></li>
 				</ul>
 
-
 			</nav>
+
 		</header>
 
+	<div class="search">
+	<div class="dropdown_familytable">
+	 <button class="dropbtn_ft">Search by Family
+	   <i class="fa fa-caret-down_ft"></i>
+	 </button>
+	 <div class="dropdown-content_ft">
+	   <a href="{{ url_for('family_table')}}">All</a>
+	   <a href="{{ url_for('family_table_LINE1')}}">Line-1</a>
+	   <a href="{{ url_for('family_table_HERV')}}">HERV</a>
+		 <a href="{{ url_for('family_table_O')}}">O</a>
+	 </div>
+
+	<div class="table">
+	{{data2|safe}} <!--safe=shows as html object rather than code-->
+
+	</div>
+	<div class="table">
+		{{data3|safe}}
+	</div>
 	</body>
 
 </html>
