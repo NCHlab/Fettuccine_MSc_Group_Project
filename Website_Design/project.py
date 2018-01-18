@@ -5,6 +5,9 @@ import os
 import MySQLdb
 import pandas as pd
 import numpy as py
+#import fasta
+from Bio import SeqIO
+#from pyfastaq import sequences
 
 app = Flask(__name__)
 APP_ROOT = os.path.dirname(os.path.abspath(__file__))
@@ -104,7 +107,18 @@ def peptide_seq_ident():
 			destination = "/".join([target, filename])
 			file.save(destination)
 
-		return render_template("peptide_seq_ident.html")
+		def fastafile(fastafile):
+			# Goes through fasta file
+			for record in SeqIO.parse(fastafile, "fasta"):
+				global recordID
+				global result_seq
+				# saves the sequence into recordid
+				recordID = record.seq
+				cur.execute("SELECT Family, Sequence FROM prelim2 WHERE Sequence = %s", recordID)
+				# Stores the data from the MySQL query into result_seq
+				result_seq =  cur.fetchall()
+		fastafile(filename)
+		return render_template("peptide_seq_ident.html", result_family=result_seq[0][0], result_seq=result_seq[0][1])
 	else:
 		return render_template("peptide_seq_ident.html")
 
