@@ -34,15 +34,16 @@
 
 		</p>
 		<p>
-			<form action="/action_page.php">
-			  <textarea Name="content" rows=10 cols=100></textarea>
+			<form action="{{ url_for("peptide_seq_ident")}}" method="POST">
+			  <textarea Name="fasta_content" rows=10 cols=100></textarea>
 				<br>
-			  <input type="submit" value="Seach" id="search22">
+			  <input type="submit" value="Search" id="fasta_search">
 			</form>
 		</p>
 
 		{{ result_family }}
-		{{ result_seq }}
+		{{ result_seq1 }}
+		{{ empty }}
 	</body>
 
 </html>
