@@ -7,6 +7,8 @@ import pandas as pd
 import numpy as py
 #import fasta
 from Bio import SeqIO
+import re
+import xml.etree.ElementTree as ET
 #from pyfastaq import sequences
 
 app = Flask(__name__)
@@ -93,37 +95,69 @@ def relationship_AA():
 
 @app.route("/peptide_seq_ident", methods=["GET","POST"])
 def peptide_seq_ident():
+	global empty_error
+	global rows_count
+	global result_seq
+	global no_match
+	result_seq=""
+	rows_count = ""
+	error_empty2 = "This is an empty file! Please upload a populated FASTA file"
+	no_match= "No Match was found"
+
+	#fastaseq = request.form["fasta_content"]
 	# If data has been submitted to the page i.e uploaded, then the POST method engages
 	if request.method == "POST":
-		target = os.path.join(APP_ROOT, "sequence_ident/")
+		if request.form["fasta_content"] != "":
+			fastaseq = request.form["fasta_content"]
+			rows_count = cur.execute("SELECT Family, Sequence FROM prelim2 WHERE Sequence = %s", fastaseq)
+			cur.execute("SELECT Family, Sequence FROM prelim2 WHERE Sequence = %s", fastaseq)
+			result_seq =  cur.fetchall()
+			if not cur.rowcount:
+			  return render_template("peptide_seq_ident.html", result_family=no_match)
+			else:
+			  return render_template("peptide_seq_ident.html", result_family=result_seq[0][0], result_seq1=result_seq[0][1])
 
-		# Checks to see if the folder exists
-		if not os.path.isdir(target):
-			os.mkdir(target)
+		elif 'file2' in request.files:
+			target = os.path.join(APP_ROOT, "sequence_ident/")
 
-		# Saves the file to the target folder explicitly mentioned earlier
-		for file in request.files.getlist("file2"):
-			filename = file.filename
-			destination = "/".join([target, filename])
-			file.save(destination)
+			if not os.path.isdir(target):
+				os.mkdir(target)
 
-		def fastafile(fastafile):
-			# Goes through fasta file
-			for record in SeqIO.parse(fastafile, "fasta"):
-				global recordID
-				global result_seq
-				# saves the sequence into recordid
-				recordID = record.seq
-				cur.execute("SELECT Family, Sequence FROM prelim2 WHERE Sequence = %s", recordID)
-				# Stores the data from the MySQL query into result_seq
-				result_seq =  cur.fetchall()
-		fastafile(filename)
-		return render_template("peptide_seq_ident.html", result_family=result_seq[0][0], result_seq=result_seq[0][1])
+			  # Saves the file to the target folder explicitly mentioned earlier
+			for file in request.files.getlist("file2"):
+				filename = file.filename
+				destination = "/".join([target, filename])
+				file.save(destination)
+			  # Goes through fasta file
+			global recordID
+
+
+			seqfile = SeqIO.parse(filename, "fasta")
+			if os.stat(filename).st_size == 0:
+				return render_template("peptide_seq_ident.html", empty = error_empty2)
+			else:
+				for record in SeqIO.parse(filename, "fasta"):
+					recordID = record.seq
+					rows_count = cur.execute("SELECT Family, Sequence FROM prelim2 WHERE Sequence = %s", recordID)
+					cur.execute("SELECT Family, Sequence FROM prelim2 WHERE Sequence = %s", recordID)
+					result_seq =  cur.fetchall()
+					if not cur.rowcount:
+					  return render_template("peptide_seq_ident.html", result_family=no_match)
+					else:
+					  return render_template("peptide_seq_ident.html", result_family=result_seq[0][0], result_seq1=result_seq[0][1])
+		elif request.form["fasta_content"] == "":
+			return render_template("peptide_seq_ident.html", empty = error_empty2)
+		  #return render_template("peptide_seq_ident.html", result_family=result_seq, result_seq1=result_seq, emptyfile=error_empty)
+	  #return render_template("peptide_seq_ident.html", result_family=result_seq[0][0], result_seq1=result_seq[0][1], emptyfile=error_empty)
 	else:
-		return render_template("peptide_seq_ident.html")
+	  	return render_template("peptide_seq_ident.html")
+
 
 @app.route("/upload_peptide", methods=["GET","POST"])
 def upload_peptide():
+	global filename2
+	global pepseq
+
 	if request.method == "POST":
 		target = os.path.join(APP_ROOT, "uploaded/")
 
@@ -131,35 +165,27 @@ def upload_peptide():
 			os.mkdir(target)
 
 		for file in request.files.getlist("file"):
-			filename = file.filename
-			destination = "/".join([target, filename])
+			filename2 = file.filename
+			destination = "/".join([target, filename2])
 			file.save(destination)
-		return uploaded() #render_template("uploaded.html")
+		pepseq=[]
+		tree = ET.parse("Galaxy18.xml")
+		root = tree.getroot()
+		#root = ET.fromstring(Galaxy18_as_string)
+		for Peptide in root.findall("Peptide"):
+			pepseq.append(Peptide.find("PeptideSequence").text)
+		#for i in range(0,4):
+		#	pepseq.append(i)
+
+		return render_template("uploaded.html", matches1 = pepseq)
+		#return uploaded() #render_template("uploaded.html")
 	else:
 		return render_template("upload_peptide.html")
 
 @app.route("/uploaded")
 def uploaded():
-	try:
-	    with connection.cursor() as cursor:
-	        # Create a new record
-			#cursor.execute("USE ")
-	        sql = "INSERT INTO `users` (`email`, `password`) VALUES (%s, %s)"
-	        cursor.execute(sql, ('webmaster@python.org', 'very-secret'))
 
-	    # connection is not autocommit by default. So you must commit to save
-    	# your changes.
-	    connection.commit()
-
-	    with connection.cursor() as cursor:
-	        # Read a single record
-	        sql = "INSERT INTO `users` (`email`, `password`) VALUES (%s, %s)"
-	        cursor.execute(sql, ('webmaster@python.org', 'very-secret'))
-	        result = cursor.fetchone()
-	        print(result)
-	finally:
-	    #connection.close()
-		return render_template("uploaded.html")
+	return render_template("uploaded.html", matches1 = pepseq)
 
 @app.route("/expression_atlas")
 def atlas():
