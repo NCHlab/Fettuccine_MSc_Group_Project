@@ -99,14 +99,17 @@ def peptide_seq_ident():
 	global rows_count
 	global result_seq
 	global no_match
+	global recordID
 	result_seq=""
 	rows_count = ""
 	error_empty2 = "This is an empty file! Please upload a populated FASTA file"
 	no_match= "No Match was found"
 
-	#fastaseq = request.form["fasta_content"]
+
 	# If data has been submitted to the page i.e uploaded, then the POST method engages
 	if request.method == "POST":
+		# If the Textbox has been filled with peptide sequences, DB is searched for matching sequence and FAMILY + sequence returned
+		# Otherwise if no match found, displays no match
 		if request.form["fasta_content"] != "":
 			fastaseq = request.form["fasta_content"]
 			rows_count = cur.execute("SELECT Family, Sequence FROM prelim2 WHERE Sequence = %s", fastaseq)
@@ -116,10 +119,11 @@ def peptide_seq_ident():
 			  return render_template("peptide_seq_ident.html", result_family=no_match)
 			else:
 			  return render_template("peptide_seq_ident.html", result_family=result_seq[0][0], result_seq1=result_seq[0][1])
-
+		# If a file has been uploaded (file2 - name of upload form), this if statement occurs
 		elif 'file2' in request.files:
+			# Creates a path to the specified folder
 			target = os.path.join(APP_ROOT, "sequence_ident/")
-
+			# Creates directory if it doesnt already exist
 			if not os.path.isdir(target):
 				os.mkdir(target)
 
@@ -128,14 +132,16 @@ def peptide_seq_ident():
 				filename = file.filename
 				destination = "/".join([target, filename])
 				file.save(destination)
-			  # Goes through fasta file
-			global recordID
 
 
+			# Goes through fasta file and checks whether if its empty
 			seqfile = SeqIO.parse(filename, "fasta")
 			if os.stat(filename).st_size == 0:
 				return render_template("peptide_seq_ident.html", empty = error_empty2)
 			else:
+				# if file contains information, retrieve data from the DB,
+				# if request from DB does not have data returned (rowcount=0), show no match,
+				# otherwise display Family + sequence
 				for record in SeqIO.parse(filename, "fasta"):
 					recordID = record.seq
 					rows_count = cur.execute("SELECT Family, Sequence FROM prelim2 WHERE Sequence = %s", recordID)
@@ -145,10 +151,10 @@ def peptide_seq_ident():
 					  return render_template("peptide_seq_ident.html", result_family=no_match)
 					else:
 					  return render_template("peptide_seq_ident.html", result_family=result_seq[0][0], result_seq1=result_seq[0][1])
+		# If the peptide sequence search form is empty, return empty error
 		elif request.form["fasta_content"] == "":
 			return render_template("peptide_seq_ident.html", empty = error_empty2)
-		  #return render_template("peptide_seq_ident.html", result_family=result_seq, result_seq1=result_seq, emptyfile=error_empty)
-	  #return render_template("peptide_seq_ident.html", result_family=result_seq[0][0], result_seq1=result_seq[0][1], emptyfile=error_empty)
+
 	else:
 	  	return render_template("peptide_seq_ident.html")
 
