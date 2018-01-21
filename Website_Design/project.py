@@ -100,6 +100,8 @@ def peptide_seq_ident():
 	global result_seq
 	global no_match
 	global recordID
+	global result_seq_multi
+	result_seq_multi=[]
 	result_seq=""
 	rows_count = ""
 	error_empty2 = "This is an empty file! Please upload a populated FASTA file"
@@ -143,20 +145,24 @@ def peptide_seq_ident():
 				# if request from DB does not have data returned (rowcount=0), show no match,
 				# otherwise display Family + sequence
 				for record in SeqIO.parse(filename, "fasta"):
+					# do the code here for loop for multiple fasta
 					recordID = record.seq
 					rows_count = cur.execute("SELECT Family, Sequence FROM prelim2 WHERE Sequence = %s", recordID)
 					cur.execute("SELECT Family, Sequence FROM prelim2 WHERE Sequence = %s", recordID)
 					result_seq =  cur.fetchall()
-					if not cur.rowcount:
-					  return render_template("peptide_seq_ident.html", result_family=no_match)
-					else:
-					  return render_template("peptide_seq_ident.html", result_family=result_seq[0][0], result_seq1=result_seq[0][1])
+					result_seq_multi.append(result_seq)
+				if not cur.rowcount:
+				  return render_template("peptide_seq_ident.html", result_family=no_match)
+				else:
+				  #return render_template("peptide_seq_ident.html", result_family=result_seq[0][0], result_seq1=result_seq[0][1])
+				  return render_template("peptide_seq_ident.html", result_family=result_seq_multi)
 		# If the peptide sequence search form is empty, return empty error
 		elif request.form["fasta_content"] == "":
 			return render_template("peptide_seq_ident.html", empty = error_empty2)
 
 	else:
 	  	return render_template("peptide_seq_ident.html")
+
 
 
 @app.route("/upload_peptide", methods=["GET","POST"])
