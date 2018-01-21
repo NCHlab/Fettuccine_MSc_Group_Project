@@ -144,24 +144,37 @@ def peptide_seq_ident():
 				# if file contains information, retrieve data from the DB,
 				# if request from DB does not have data returned (rowcount=0), show no match,
 				# otherwise display Family + sequence
-				for record in SeqIO.parse(filename, "fasta"):
-					# do the code here for loop for multiple fasta
-					recordID = record.seq
-					rows_count = cur.execute("SELECT Family, Sequence FROM prelim2 WHERE Sequence = %s", recordID)
-					cur.execute("SELECT Family, Sequence FROM prelim2 WHERE Sequence = %s", recordID)
-					result_seq =  cur.fetchall()
-					result_seq_multi.append(result_seq)
-				if not cur.rowcount:
-				  return render_template("peptide_seq_ident.html", result_family=no_match)
+				record_list = list(SeqIO.parse(filename, "fasta"))
+				if len(record_list) == 1:
+					#If only 1 fasta sequence in file
+					for record in SeqIO.parse(filename, "fasta"):
+						recordID = record.seq
+						rows_count = cur.execute("SELECT Family, Sequence FROM prelim2 WHERE Sequence = %s", recordID)
+						cur.execute("SELECT Family, Sequence FROM prelim2 WHERE Sequence = %s", recordID)
+						result_seq =  cur.fetchall()
+					if not cur.rowcount:
+					  return render_template("peptide_seq_ident.html", result_family=no_match)
+					else:
+						return render_template("peptide_seq_ident.html", result_family=result_seq[0][0], result_seq1=result_seq[0][1])
 				else:
-				  #return render_template("peptide_seq_ident.html", result_family=result_seq[0][0], result_seq1=result_seq[0][1])
-				  return render_template("peptide_seq_ident.html", result_family=result_seq_multi)
-		# If the peptide sequence search form is empty, return empty error
+					for record in SeqIO.parse(filename, "fasta"):
+						# do the code here for loop for multiple fasta
+						recordID = record.seq
+						rows_count = cur.execute("SELECT Family, Sequence FROM prelim2 WHERE Sequence = %s", recordID)
+						cur.execute("SELECT Family, Sequence FROM prelim2 WHERE Sequence = %s", recordID)
+						result_seq =  cur.fetchall()
+						result_seq_multi.append(result_seq)
+					if not cur.rowcount:
+					  return render_template("peptide_seq_ident.html", result_family=no_match)
+					else:
+					  #return render_template("peptide_seq_ident.html", result_family=result_seq[0][0], result_seq1=result_seq[0][1])
+					  return render_template("peptide_seq_ident.html", result_family=result_seq_multi)
+			# If the peptide sequence search form is empty, return empty error
 		elif request.form["fasta_content"] == "":
 			return render_template("peptide_seq_ident.html", empty = error_empty2)
 
 	else:
-	  	return render_template("peptide_seq_ident.html")
+		return render_template("peptide_seq_ident.html")
 
 
 
