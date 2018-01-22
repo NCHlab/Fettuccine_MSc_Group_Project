@@ -1,4 +1,4 @@
-from flask import Flask, send_from_directory, render_template, request, url_for
+from flask import Flask, send_from_directory, render_template, request, url_for, flash
 from datetime import datetime
 from pytz import timezone
 import os
@@ -13,6 +13,7 @@ import xml.etree.ElementTree as ET
 
 app = Flask(__name__)
 APP_ROOT = os.path.dirname(os.path.abspath(__file__))
+#app.secret_key = 'SUPER_SECRET_KEY_BIO_PROJECT'
 
 # Connect to the database
 try:
@@ -182,6 +183,23 @@ def peptide_seq_ident():
 def upload_peptide():
 	global filename2
 	global pepseq
+	global list_of_matches
+	global list_of_pep_seqs
+	global empty_error
+	global rows_count
+	global result_seq
+	global no_match
+	global recordID
+	global result_seq_multi
+	result_seq_multi=[]
+	result_seq=""
+	rows_count = ""
+	error_empty2 = "This is an empty file! Please upload a populated FASTA file"
+	no_match= "No Match was found"
+
+
+	list_of_matches = []
+	list_of_pep_seqs = []
 
 	if request.method == "POST":
 		target = os.path.join(APP_ROOT, "uploaded/")
@@ -193,19 +211,48 @@ def upload_peptide():
 			filename2 = file.filename
 			destination = "/".join([target, filename2])
 			file.save(destination)
-		pepseq=[]
-		tree = ET.parse("Galaxy18.xml")
-		root = tree.getroot()
-		#root = ET.fromstring(Galaxy18_as_string)
-		for Peptide in root.findall("Peptide"):
-			pepseq.append(Peptide.find("PeptideSequence").text)
-		#for i in range(0,4):
-		#	pepseq.append(i)
 
-		return render_template("uploaded.html", matches1 = pepseq)
+		file_mz_seq = open(filename2, "r")
+		whole_file = file_mz_seq.read()
+
+		regex = r">[a-zA-z]+"
+		matches = re.finditer(regex, whole_file)
+		for matchNum, match in enumerate(matches):
+		    matchNum = matchNum + 1
+		    list_of_matches.append(match.group())
+
+		list_of_pep_seqs = [character.replace('>', '') for character in list_of_matches]
+
+
+		if len(list_of_pep_seqs) == 1:
+			#If only 1 fasta sequence in file
+			for seqs in list_of_pep_seqs:
+				rows_count = cur.execute("SELECT Family, Sequence FROM prelim2 WHERE Sequence = %s", seqs)
+				cur.execute("SELECT Family, Sequence FROM prelim2 WHERE Sequence = %s", seqs)
+				result_seq =  cur.fetchall()
+			if not cur.rowcount:
+			  return render_template("peptide_seq_ident.html", result_family=no_match)
+			else:
+				return render_template("peptide_seq_ident.html", result_family=result_seq[0][0], result_seq1=result_seq[0][1])
+		else:
+			for seqs in list_of_pep_seqs:
+				# do the code here for loop for multiple fasta
+
+				rows_count = cur.execute("SELECT Family, Sequence FROM prelim2 WHERE Sequence = %s", seqs)
+				cur.execute("SELECT Family, Sequence FROM prelim2 WHERE Sequence = %s", seqs)
+				result_seq =  cur.fetchall()
+				result_seq_multi.append(result_seq)
+			#if not cur.rowcount:
+			#  return render_template("peptide_seq_ident.html", result_family=no_match)
+			#else:
+			  #return render_template("peptide_seq_ident.html", result_family=result_seq[0][0], result_seq1=result_seq[0][1])
+			return render_template("peptide_seq_ident.html", result_family=result_seq_multi)
+
+		#return render_template("uploaded.html", matches1 = list_of_pep_seqs)
 		#return uploaded() #render_template("uploaded.html")
 	else:
 		return render_template("upload_peptide.html")
+
 
 @app.route("/uploaded")
 def uploaded():
