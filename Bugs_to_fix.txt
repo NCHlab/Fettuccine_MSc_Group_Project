@@ -1,2 +1,0 @@
-##BUGS##
-- Fix fasta sequence search box input (to ignore whitespace, tabs and new lines)
