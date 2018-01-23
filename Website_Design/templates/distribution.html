@@ -2,10 +2,25 @@
 
 <html>
 	<head>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js">
+		</script>
+		<script>
+		$(document).ready(function(){
+		  $(".Chromosome1").click(function(){
+		    $(".Chr1").toggle();
+		  });
+		  $(".Chromosome2").click(function(){
+		    $(".Chr2").toggle();
+		  });
+		  $(".Chromosome3").click(function(){
+		    $(".Chr3").toggle();
+		  });
+		});
+		</script>
 		<title>RT Distribution</title>
 	</head>
 	<body>
-		<link rel="stylesheet" type="text/css" href="static/index.css")}}"/>
+		<link rel="stylesheet" type="text/css" href="static/index.css"/>
 
 		<header>
 			<nav>
@@ -27,7 +42,42 @@
 			</nav>
 		</header>
 
+		<P><div class="Genome"></P>
+		  <div class="Chromosome1">Chr1
+		    <button class="Chr1_drop">
+		      <i class"fa fa-caret-down"><i/>
+		    </button>
+		    <div class="Chr1_drop_info">
+		      <a href="">RTs:<br>HERV=50,991 <br> LINE1=69,538</a>
+		    </div>
+		  </div>
+		  <div class="Chr1"> Chromosome 1
+		    <img src="static/2.png">
+		  </div>
 
+		  <div class="Chromosome2">Chr2
+		    <button class="Chr2_drop">
+		      <i class"fa fa-caret-down"><i/>
+		    </button>
+		    <div class="Chr2_drop_info">
+		      <a href="">RTs:<br>HERV=55,837 <br> LINE1=80,721</a>
+		    </div>
+		  </div>
+		  <div class="Chr2"> Chromosome 2
+		    <img src="static/3.png">
+		  </div>
+
+		  <div class="Chromosome3">Chr3
+		    <button class="Chr3_drop">
+		      <i class"fa fa-caret-down"><i/>
+		    </button>
+		    <div class="Chr3_drop_info">
+		      <a href="">RTs:<br>HERV=? <br> LINE1=?</a>
+		    </div>
+		  </div>
+		  <div class="Chr3"> Chromosome 3
+		  <!--  <img src="static/chr3.png"> -->
+		  </div>
 	</body>
 
 </html>

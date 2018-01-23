@@ -118,3 +118,216 @@ tr:nth-child(odd)		{ background-color:#eee; }
 tr:nth-child(even)	{ background-color:#fff; }
 
 tr:hover { background-color: #008080;}
+
+/* #####################################
+visualisation of distribution: */
+
+.Genome {
+  width: 800px;
+  height: 50px;
+  position: relative;
+  background: deepskyblue;
+}
+
+.Chromosome1 {
+    width: 50px;
+    height: 50px;
+    background: gray;
+    position: relative;
+    left:0px;
+    top:0px;
+}
+
+/* Dropdown button */
+.Chromosome1 .Chr1_drop {
+ font-size: 16px;
+ border: none;
+ outline: none;
+ color: white;
+ padding: 14px 16px;
+ background-color: inherit;
+}
+/* Dropdown content (hidden by default) */
+.Chr1_drop_info {
+ display: none;
+ position: absolute;
+ background-color: #f9f9f9;
+ min-width: 160px;
+ box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+ z-index: 1;
+}
+
+/* Links inside the dropdown */
+.Chr1_drop_info a {
+ float: none;
+ color: black;
+ padding: 12px 16px;
+ text-decoration: none;
+ display: block;
+ text-align: center;
+}
+
+/* Add a grey background color to dropdown links on hover */
+.Chr1_drop_info a:hover {
+ background-color: #ddd;
+}
+
+/* Show the dropdown menu on hover */
+.Chromosome1:hover .Chr1_drop_info {
+ display: block;
+}
+
+/* container for the images and embeded url*/
+.Chr1 {
+  display: none;
+  width: 800px;
+  height: 50px;
+  background: deepskyblue;
+  position: relative;
+  left:0px;
+  top:50px;
+}
+
+/*iframe formating*/
+.iframe-container {
+  position: relative;
+  margin: 5px auto;
+  height: 0;
+  overflow: hidden;
+}
+.iframe-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: 5px auto;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  border: 1px solid #7a8b8b;
+  /* style following properties (necessary for proper handling
+  of overflow and scrolling) inline in div container
+  around iframe because not stable in CSS */
+  -webkit-overflow-scrolling: touch
+  overflow: auto; */
+}
+.iframe-container-for-wxh-600x330 {
+  padding: 10px 10px 55% 10px;   /* padding-bottom = h/w as % */
+}
+
+.Chromosome2 {
+    width: 50px;
+    height: 50px;
+    background: gray;
+    position: relative;
+    left:100px;
+    top:-50px;
+}
+
+/* Dropdown button */
+.Chromosome2 .Chr2_drop {
+ font-size: 16px;
+ border: none;
+ outline: none;
+ color: white;
+ padding: 14px 16px;
+ background-color: inherit;
+}
+/* Dropdown content (hidden by default) */
+.Chr2_drop_info {
+ display: none;
+ position: absolute;
+ background-color: #f9f9f9;
+ min-width: 160px;
+ box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+ z-index: 1;
+}
+
+/* Links inside the dropdown */
+.Chr2_drop_info a {
+ float: none;
+ color: black;
+ padding: 12px 16px;
+ text-decoration: none;
+ display: block;
+ text-align: center;
+}
+
+/* Add a grey background color to dropdown links on hover */
+.Chr2_drop_info a:hover {
+ background-color: #ddd;
+}
+
+/* Show the dropdown menu on hover */
+.Chromosome2:hover .Chr2_drop_info {
+ display: block;
+}
+
+/* container for the images and embeded url*/
+.Chr2 {
+  display: none;
+  width: 800px;
+  height: 50px;
+  background: deepskyblue;
+  position: relative;
+  left:0px;
+  top:50px;
+}
+
+.Chromosome3 {
+    width: 50px;
+    height: 50px;
+    background: gray;
+    position: relative;
+    left:200px;
+    top:-100px;
+}
+
+/* Dropdown button */
+.Chromosome3 .Chr3_drop {
+ font-size: 16px;
+ border: none;
+ outline: none;
+ color: white;
+ padding: 14px 16px;
+ background-color: inherit;
+}
+/* Dropdown content (hidden by default) */
+.Chr3_drop_info {
+ display: none;
+ position: absolute;
+ background-color: #f9f9f9;
+ min-width: 160px;
+ box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+ z-index: 1;
+}
+
+/* Links inside the dropdown */
+.Chr3_drop_info a {
+ float: none;
+ color: black;
+ padding: 12px 16px;
+ text-decoration: none;
+ display: block;
+ text-align: center;
+}
+
+/* Add a grey background color to dropdown links on hover */
+.Chr3_drop_info a:hover {
+ background-color: #ddd;
+}
+
+/* Show the dropdown menu on hover */
+.Chromosome3:hover .Chr3_drop_info {
+ display: block;
+}
+
+/* container for the images and embeded url*/
+.Chr3 {
+  display: none;
+  width: 800px;
+  height: 50px;
+  background: deepskyblue;
+  position: relative;
+  left:0px;
+  top:50px;
+}
