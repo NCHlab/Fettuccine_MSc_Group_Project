@@ -5,15 +5,20 @@ import os
 import MySQLdb
 import pandas as pd
 import numpy as py
-#import fasta
 from Bio import SeqIO
 import re
-import xml.etree.ElementTree as ET
+#import xml.etree.ElementTree as ET
 #from pyfastaq import sequences
+#import fasta
 
 app = Flask(__name__)
 APP_ROOT = os.path.dirname(os.path.abspath(__file__))
 #app.secret_key = 'SUPER_SECRET_KEY_BIO_PROJECT'
+
+ALLOWED_EXTENSIONS = set(["xml", "mzid", "mzTab", "mztab" ,"fasta"])
+ALLOWED_EX_XML = set(["xml", "mzid"])
+ALLOWED_EX_MZTAB = set(["mzTab", "mztab"])
+ALLOWED_EX_FASTA = set(["fasta"])
 
 # Connect to the database
 try:
@@ -136,7 +141,10 @@ def peptide_seq_ident():
 				destination = "/".join([target, filename])
 				file.save(destination)
 
+			if os.getcwd() != APP_ROOT+"\sequence_ident":
+				os.chdir("sequence_ident")
 
+			#fpath = os.path.join(direct, filename)
 			# Goes through fasta file and checks whether if its empty
 			seqfile = SeqIO.parse(filename, "fasta")
 			if os.stat(filename).st_size == 0:
@@ -196,8 +204,6 @@ def upload_peptide():
 	rows_count = ""
 	error_empty2 = "This is an empty file! Please upload a populated FASTA file"
 	no_match= "No Match was found"
-
-
 	list_of_matches = []
 	list_of_pep_seqs = []
 
@@ -212,17 +218,39 @@ def upload_peptide():
 			destination = "/".join([target, filename2])
 			file.save(destination)
 
-		file_mz_seq = open(filename2, "r")
-		whole_file = file_mz_seq.read()
+		if os.getcwd() != APP_ROOT+"\uploaded":
+			os.chdir("uploaded")
 
-		regex = r">[a-zA-z]+"
-		matches = re.finditer(regex, whole_file)
-		for matchNum, match in enumerate(matches):
-		    matchNum = matchNum + 1
-		    list_of_matches.append(match.group())
+		if filename2.rsplit('.', 1)[1].lower() in ALLOWED_EX_XML:
 
-		list_of_pep_seqs = [character.replace('>', '') for character in list_of_matches]
+			file_mz_seq = open(filename2, "r")
+			whole_file = file_mz_seq.read()
 
+			regex = r">[a-zA-z]+"
+			matches = re.finditer(regex, whole_file)
+			for matchNum, match in enumerate(matches):
+			    matchNum = matchNum + 1
+			    list_of_matches.append(match.group())
+
+			list_of_pep_seqs = [character.replace('>', '') for character in list_of_matches]
+
+		#elif filename2.rsplit('.', 1)[1].lower() in ALLOWED_EX_MZTAB:
+		else:
+			file_mztab_seq = open(filename2, "r")
+			whole_file = file_mztab_seq.read()
+
+			regex = r"[A-Z]+\S\B[A-Z]"
+			matches = re.finditer(regex, whole_file)
+			for matchNum, match in enumerate(matches):
+			    matchNum = matchNum + 1
+			    list_of_matches.append(match.group())
+			list_of_words = ["UNIMOD", "PSM", "COM", "TRAQ", "MTD", "PRIDE"]
+			mztab_seq_mixed = [word for word in list_of_matches if word not in list_of_words]
+			list_of_pep_seqs = [sequence for sequence in mztab_seq_mixed if len(sequence) > 5]
+			#return render_template("peptide_seq_ident.html", result_family=list_of_pep_seqs)
+		#else:
+		#	result_seq_multi = "Incorrect file uploaded"
+			#return render_template("peptide_seq_ident.html", result_family=result_seq_multi)
 
 		if len(list_of_pep_seqs) == 1:
 			#If only 1 fasta sequence in file
@@ -231,9 +259,10 @@ def upload_peptide():
 				cur.execute("SELECT Family, Sequence FROM prelim2 WHERE Sequence = %s", seqs)
 				result_seq =  cur.fetchall()
 			if not cur.rowcount:
-			  return render_template("peptide_seq_ident.html", result_family=no_match)
+			  return render_template("upload_peptide.html", result_family=no_match)
 			else:
-				return render_template("peptide_seq_ident.html", result_family=result_seq[0][0], result_seq1=result_seq[0][1])
+
+				return render_template("upload_peptide.html", result_family=result_seq[0][0], result_seq1=result_seq[0][1])
 		else:
 			for seqs in list_of_pep_seqs:
 				# do the code here for loop for multiple fasta
@@ -246,7 +275,8 @@ def upload_peptide():
 			#  return render_template("peptide_seq_ident.html", result_family=no_match)
 			#else:
 			  #return render_template("peptide_seq_ident.html", result_family=result_seq[0][0], result_seq1=result_seq[0][1])
-			return render_template("peptide_seq_ident.html", result_family=result_seq_multi)
+
+			return render_template("upload_peptide.html", result_family=result_seq_multi)
 
 		#return render_template("uploaded.html", matches1 = list_of_pep_seqs)
 		#return uploaded() #render_template("uploaded.html")
