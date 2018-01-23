@@ -56,22 +56,24 @@ Formatting the search bar for fam tables: */
 /* The dropdown container */
 .dropdown_familytable {
  float: left;
+ background-color: #4CAF50;
  overflow: hidden;
 }
 
 /* Dropdown button */
 .dropdown_familytable .dropbtn_ft {
+ background-color: #4CAF50;
  font-size: 16px;
- border: none;
+ border: black;
  outline: none;
  color: white;
  padding: 14px 16px;
- background-color: inherit;
+ 
 }
 
 /* Add a background color to searchbar links on hover */
 .search a:hover, .dropdown_familytable:hover .dropbtn_ft {
- background-color: #333;
+ background-color: #4CAF50;
 }
 
 /* Dropdown content (hidden by default) */
@@ -96,15 +98,14 @@ Formatting the search bar for fam tables: */
 
 /* Add a grey background color to dropdown links on hover */
 .dropdown-content_ft a:hover {
- background-color: #ddd;
+ background-color: #4CAF50;
 }
 
 /* Show the dropdown menu on hover */
-.dropdown_familytable:hover .dropdown-content_ft {
+.dropdown_familytable: .dropdown-content_ft {
  display: block;
 }
 
-/* #####################################
 Formatting the database table: */
 .table {
   color: #black;

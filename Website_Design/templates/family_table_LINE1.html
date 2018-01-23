@@ -1,48 +1,62 @@
 <!DOCTYPE html>
-
 <html>
-	<head>
+<head>
 		<title>RT Family Table</title>
-	</head>
-	<body>
+		<link rel="stylesheet" href="http://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<script src="http://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+		<script>
+        $(document).ready( function () {
+            $('#L1_Families').DataTable();
+        } );
+    </script>
 		<link rel="stylesheet" type="text/css" href="static/index.css"/>
+</head>
+	<body>
 
-		<header>
-			<nav>
-				<ul>
-					<li><a href="{{ url_for('indexpage')}}">HomePage</a></li>
-					<li><a href="{{ url_for('family_table')}}">Family table </a></li>
-					<li><a href="{{ url_for('distribution')}}">Distribution of retroelements</a></li>
-					<li><a href="{{ url_for('AA_seq_list')}}">Translated products (list)</a></li>
-					<li><a href="{{ url_for('relationship_AA')}}">AA Relationship viewer </a></li>
-					<li><a href="{{ url_for('peptide_seq_ident')}}">Peptide sequence identifier</a></li>
-					<li><a href="{{ url_for('upload_peptide')}}">Upload a file </a></li>
-					<li><a href="{{ url_for('atlas')}}">Expression Atlas </a></li>
-					<li><a href="{{ url_for('documentation')}}">Documentation</a></li>
-					<li><a href="{{ url_for('about_us')}}">About us </a></li>
-					<li><input type="text" placeholder="Search.."></li>
-				</ul>
 
-			</nav>
-
-		</header>
+	<header>
+		<nav>
+			<ul>
+				<li><a href="{{ url_for('indexpage')}}">HomePage</a></li>
+				<li><a href="{{ url_for('family_table')}}">Family table </a></li>
+				<li><a href="{{ url_for('distribution')}}">Distribution of retroelements</a></li>
+				<li><a href="{{ url_for('AA_seq_list')}}">Translated products (list)</a></li>
+				<li><a href="{{ url_for('relationship_AA')}}">AA Relationship viewer </a></li>
+				<li><a href="{{ url_for('peptide_seq_ident')}}">Peptide sequence identifier</a></li>
+				<li><a href="{{ url_for('upload_peptide')}}">Upload a file </a></li>
+				<li><a href="{{ url_for('atlas')}}">Expression Atlas </a></li>
+				<li><a href="{{ url_for('documentation')}}">Documentation</a></li>
+				<li><a href="{{ url_for('about_us')}}">About us </a></li>
+				<li><input type="text" placeholder="Search.."></li>
+			</ul>
+		</nav>
+	</header>
 
 	<div class="search">
-	<div class="dropdown_familytable">
-	 <button class="dropbtn_ft">Search by Family
-	   <i class="fa fa-caret-down_ft"></i>
-	 </button>
-	 <div class="dropdown-content_ft">
-	   <a href="{{ url_for('family_table')}}">All</a>
-	   <a href="{{ url_for('family_table_LINE1')}}">Line-1</a>
-	   <a href="{{ url_for('family_table_HERV')}}">HERV</a>
-		 <a href="{{ url_for('family_table_O')}}">O</a>
-	 </div>
+		<div class="dropdown_familytable">
+	 		<button class="dropbtn_ft">Search by Family</button>
+	 		<div class="dropdown-content_ft">
+				<a href="{{ url_for('family_table')}}">HERV</a>
+				<a href="{{ url_for('family_table_LINE1')}}">Line-1</a>
+	 		</div>
+		</div>
+	</div>
 
-	<div class="table">
-	{{data2|safe}} <!--safe=shows as html object rather than code-->
-	<div>
-
-	</body>
-
-</html>
+	 <table id = "L1_Families" class = "display">
+		 <thead>
+			<tr>
+				<th>Family</th>
+				<th>Counts</th>
+			</tr>
+		</thead>
+		<tbody>
+	     {% for row in datad %}
+	         <tr>
+	         {% for d in row %}
+	             <td>{{ d }}</td>
+	         {% endfor %}
+	         </tr>
+	     {% endfor %}
+		</tbody>
+	 </table>
