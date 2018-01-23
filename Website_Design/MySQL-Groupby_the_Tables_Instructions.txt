@@ -1,0 +1,17 @@
+#GROUP HERVs by Family:
+SET SESSION group_concat_max_len = 1000000000000;
+CREATE TABLE HERV_Groupby_Families2 as
+SELECT Family, GROUP_CONCAT(DISTINCT Repeat_Name SEPARATOR ', ') as Repeat_Name,
+GROUP_CONCAT(DISTINCT ID SEPARATOR ', ') as ID,
+COUNT(ID) as Counts
+FROM HERV_Repeats
+WHERE Family <> "Unassigned"
+GROUP BY Family
+
+#GROUP L1 by Repeats:
+SET SESSION group_concat_max_len = 1000000000000;
+CREATE TABLE L1_Groupby_Repeats as
+SELECT Repeat_Name, GROUP_CONCAT(DISTINCT ID SEPARATOR ', ') as ID,
+COUNT(ID) as Counts
+FROM L1_Repeats
+GROUP BY Repeat_Name
