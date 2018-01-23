@@ -30,7 +30,7 @@
 		<p>
 				Please Upload a mzid or mztab formatted file
 				<form id="upload-form" action="{{ url_for("upload_peptide")}}" method="POST" enctype="multipart/form-data">
-		 		<input type="file" name="file" accept=".xml">
+		 		<input type="file" name="file" accept=".xml, .mzid, .mzTab">
 		 		<input type="submit" value="Upload">
 
 
@@ -42,5 +42,11 @@
 				<input type="checkbox" name="filetype" value="MzTab">MzTab
 			</form>
 		</p>
+
+		{{ result_family }}
+		{{ result_seq1 }}
+		{{ empty }}
+
+
 	</body>
 </html>

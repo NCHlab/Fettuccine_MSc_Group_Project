@@ -13,6 +13,7 @@
 - Basic UI complete
 - Documentation tab, semi-complete: DOCUMENTATION still required. Random placeholder file used.
 - Upload function works (uploaded file gets placed into the /uploaded folder)
+- Fasta file can now be read in (upload or search field, also accepts multuple fasta sequences in upload)
 
 
 

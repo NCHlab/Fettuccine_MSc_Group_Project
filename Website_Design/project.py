@@ -1,18 +1,24 @@
-from flask import Flask, send_from_directory, render_template, request, url_for
+from flask import Flask, send_from_directory, render_template, request, url_for, flash
 from datetime import datetime
 from pytz import timezone
 import os
 import MySQLdb
 import pandas as pd
 import numpy as py
-#import fasta
 from Bio import SeqIO
 import re
-import xml.etree.ElementTree as ET
+#import xml.etree.ElementTree as ET
 #from pyfastaq import sequences
+#import fasta
 
 app = Flask(__name__)
 APP_ROOT = os.path.dirname(os.path.abspath(__file__))
+#app.secret_key = 'SUPER_SECRET_KEY_BIO_PROJECT'
+
+ALLOWED_EXTENSIONS = set(["xml", "mzid", "mzTab", "mztab" ,"fasta"])
+ALLOWED_EX_XML = set(["xml", "mzid"])
+ALLOWED_EX_MZTAB = set(["mzTab", "mztab"])
+ALLOWED_EX_FASTA = set(["fasta"])
 
 # Connect to the database
 try:
@@ -100,6 +106,8 @@ def peptide_seq_ident():
 	global result_seq
 	global no_match
 	global recordID
+	global result_seq_multi
+	result_seq_multi=[]
 	result_seq=""
 	rows_count = ""
 	error_empty2 = "This is an empty file! Please upload a populated FASTA file"
@@ -133,7 +141,14 @@ def peptide_seq_ident():
 				destination = "/".join([target, filename])
 				file.save(destination)
 
+			if os.getcwd() == APP_ROOT:
+				os.chdir("sequence_ident")
+			elif os.getcwd() == APP_ROOT+"\sequence_ident":
+				pass
+			elif os.getcwd() == APP_ROOT+"\uploaded":
+				os.chdir("..\sequence_ident")
 
+			#fpath = os.path.join(direct, filename)
 			# Goes through fasta file and checks whether if its empty
 			seqfile = SeqIO.parse(filename, "fasta")
 			if os.stat(filename).st_size == 0:
@@ -142,27 +157,58 @@ def peptide_seq_ident():
 				# if file contains information, retrieve data from the DB,
 				# if request from DB does not have data returned (rowcount=0), show no match,
 				# otherwise display Family + sequence
-				for record in SeqIO.parse(filename, "fasta"):
-					recordID = record.seq
-					rows_count = cur.execute("SELECT Family, Sequence FROM prelim2 WHERE Sequence = %s", recordID)
-					cur.execute("SELECT Family, Sequence FROM prelim2 WHERE Sequence = %s", recordID)
-					result_seq =  cur.fetchall()
+				record_list = list(SeqIO.parse(filename, "fasta"))
+				if len(record_list) == 1:
+					#If only 1 fasta sequence in file
+					for record in SeqIO.parse(filename, "fasta"):
+						recordID = record.seq
+						rows_count = cur.execute("SELECT Family, Sequence FROM prelim2 WHERE Sequence = %s", recordID)
+						cur.execute("SELECT Family, Sequence FROM prelim2 WHERE Sequence = %s", recordID)
+						result_seq =  cur.fetchall()
 					if not cur.rowcount:
 					  return render_template("peptide_seq_ident.html", result_family=no_match)
 					else:
-					  return render_template("peptide_seq_ident.html", result_family=result_seq[0][0], result_seq1=result_seq[0][1])
-		# If the peptide sequence search form is empty, return empty error
+						return render_template("peptide_seq_ident.html", result_family=result_seq[0][0], result_seq1=result_seq[0][1])
+				else:
+					for record in SeqIO.parse(filename, "fasta"):
+						# Loop which iterates through ever fasta sequence and appends the results
+						recordID = record.seq
+						rows_count = cur.execute("SELECT Family, Sequence FROM prelim2 WHERE Sequence = %s", recordID)
+						cur.execute("SELECT Family, Sequence FROM prelim2 WHERE Sequence = %s", recordID)
+						result_seq =  cur.fetchall()
+						result_seq_multi.append(result_seq)
+						test1=pd.DataFrame(result_seq_multi)
+						test2=test1.to_html()
+					if not cur.rowcount:
+					  return render_template("peptide_seq_ident.html", result_family=no_match)
+					else:
+					  return render_template("peptide_seq_ident.html", result_family=test2)#result_seq_multi)
 		elif request.form["fasta_content"] == "":
 			return render_template("peptide_seq_ident.html", empty = error_empty2)
-
 	else:
-	  	return render_template("peptide_seq_ident.html")
+		return render_template("peptide_seq_ident.html")
+
 
 
 @app.route("/upload_peptide", methods=["GET","POST"])
 def upload_peptide():
 	global filename2
 	global pepseq
+	global list_of_matches
+	global list_of_pep_seqs
+	global empty_error
+	global rows_count
+	global result_seq
+	global no_match
+	global recordID
+	global result_seq_multi
+	result_seq_multi=[]
+	result_seq=""
+	rows_count = ""
+	error_empty2 = "This is an empty file! Please upload a populated FASTA file"
+	no_match= "No Match was found"
+	list_of_matches = []
+	list_of_pep_seqs = []
 
 	if request.method == "POST":
 		target = os.path.join(APP_ROOT, "uploaded/")
@@ -174,19 +220,64 @@ def upload_peptide():
 			filename2 = file.filename
 			destination = "/".join([target, filename2])
 			file.save(destination)
-		pepseq=[]
-		tree = ET.parse("Galaxy18.xml")
-		root = tree.getroot()
-		#root = ET.fromstring(Galaxy18_as_string)
-		for Peptide in root.findall("Peptide"):
-			pepseq.append(Peptide.find("PeptideSequence").text)
-		#for i in range(0,4):
-		#	pepseq.append(i)
 
-		return render_template("uploaded.html", matches1 = pepseq)
-		#return uploaded() #render_template("uploaded.html")
+		if os.getcwd() == APP_ROOT:
+			os.chdir("uploaded")
+		elif os.getcwd() == APP_ROOT+"\uploaded":
+			pass
+		elif os.getcwd() == APP_ROOT+"\sequence_ident":
+			os.chdir("..\uploaded")
+
+		if filename2.rsplit('.', 1)[1].lower() in ALLOWED_EX_XML:
+			file_mz_seq = open(filename2, "r")
+			whole_file = file_mz_seq.read()
+
+			regex = r">[a-zA-z]+"
+			matches = re.finditer(regex, whole_file)
+			for matchNum, match in enumerate(matches):
+			    matchNum = matchNum + 1
+			    list_of_matches.append(match.group())
+
+			list_of_pep_seqs = [character.replace('>', '') for character in list_of_matches]
+
+		elif filename2.rsplit('.', 1)[1].lower() in ALLOWED_EX_MZTAB:
+
+			file_mztab_seq = open(filename2, "r")
+			whole_file = file_mztab_seq.read()
+
+			regex = r"[A-Z]+\S\B[A-Z]"
+			matches = re.finditer(regex, whole_file)
+			for matchNum, match in enumerate(matches):
+			    matchNum = matchNum + 1
+			    list_of_matches.append(match.group())
+			list_of_words = ["UNIMOD", "PSM", "COM", "TRAQ", "MTD", "PRIDE"]
+			mztab_seq_mixed = [word for word in list_of_matches if word not in list_of_words]
+			list_of_pep_seqs = [sequence for sequence in mztab_seq_mixed if len(sequence) > 5]
+
+		else:
+			result_seq_multi = "Incorrect filetype uploaded! Please Upload a MzIdent or mzTab formatted file"
+			return render_template("upload_peptide.html", result_family=result_seq_multi)
+
+		if len(list_of_pep_seqs) == 1:
+			#If only 1 fasta sequence in file
+			for seqs in list_of_pep_seqs:
+				rows_count = cur.execute("SELECT Family, Sequence FROM prelim2 WHERE Sequence = %s", seqs)
+				cur.execute("SELECT Family, Sequence FROM prelim2 WHERE Sequence = %s", seqs)
+				result_seq =  cur.fetchall()
+			if not cur.rowcount:
+			  return render_template("upload_peptide.html", result_family=no_match)
+			else:
+				return render_template("upload_peptide.html", result_family=result_seq[0][0], result_seq1=result_seq[0][1])
+		else:
+			for seqs in list_of_pep_seqs:
+				rows_count = cur.execute("SELECT Family, Sequence FROM prelim2 WHERE Sequence = %s", seqs)
+				cur.execute("SELECT Family, Sequence FROM prelim2 WHERE Sequence = %s", seqs)
+				result_seq =  cur.fetchall()
+				result_seq_multi.append(result_seq)
+			return render_template("upload_peptide.html", result_family=result_seq_multi)
 	else:
 		return render_template("upload_peptide.html")
+
 
 @app.route("/uploaded")
 def uploaded():
