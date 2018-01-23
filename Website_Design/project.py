@@ -177,10 +177,12 @@ def peptide_seq_ident():
 						cur.execute("SELECT Family, Sequence FROM prelim2 WHERE Sequence = %s", recordID)
 						result_seq =  cur.fetchall()
 						result_seq_multi.append(result_seq)
+						test1=pd.DataFrame(result_seq_multi)
+						test2=test1.to_html()
 					if not cur.rowcount:
 					  return render_template("peptide_seq_ident.html", result_family=no_match)
 					else:
-					  return render_template("peptide_seq_ident.html", result_family=result_seq_multi)
+					  return render_template("peptide_seq_ident.html", result_family=test2)#result_seq_multi)
 		elif request.form["fasta_content"] == "":
 			return render_template("peptide_seq_ident.html", empty = error_empty2)
 	else:
@@ -227,7 +229,6 @@ def upload_peptide():
 			os.chdir("..\uploaded")
 
 		if filename2.rsplit('.', 1)[1].lower() in ALLOWED_EX_XML:
-
 			file_mz_seq = open(filename2, "r")
 			whole_file = file_mz_seq.read()
 
@@ -240,7 +241,7 @@ def upload_peptide():
 			list_of_pep_seqs = [character.replace('>', '') for character in list_of_matches]
 
 		elif filename2.rsplit('.', 1)[1].lower() in ALLOWED_EX_MZTAB:
-		#else:
+
 			file_mztab_seq = open(filename2, "r")
 			whole_file = file_mztab_seq.read()
 
@@ -252,7 +253,7 @@ def upload_peptide():
 			list_of_words = ["UNIMOD", "PSM", "COM", "TRAQ", "MTD", "PRIDE"]
 			mztab_seq_mixed = [word for word in list_of_matches if word not in list_of_words]
 			list_of_pep_seqs = [sequence for sequence in mztab_seq_mixed if len(sequence) > 5]
-			#return render_template("peptide_seq_ident.html", result_family=list_of_pep_seqs)
+
 		else:
 			result_seq_multi = "Incorrect filetype uploaded! Please Upload a MzIdent or mzTab formatted file"
 			return render_template("upload_peptide.html", result_family=result_seq_multi)
@@ -266,25 +267,14 @@ def upload_peptide():
 			if not cur.rowcount:
 			  return render_template("upload_peptide.html", result_family=no_match)
 			else:
-
 				return render_template("upload_peptide.html", result_family=result_seq[0][0], result_seq1=result_seq[0][1])
 		else:
 			for seqs in list_of_pep_seqs:
-				# do the code here for loop for multiple fasta
-
 				rows_count = cur.execute("SELECT Family, Sequence FROM prelim2 WHERE Sequence = %s", seqs)
 				cur.execute("SELECT Family, Sequence FROM prelim2 WHERE Sequence = %s", seqs)
 				result_seq =  cur.fetchall()
 				result_seq_multi.append(result_seq)
-			#if not cur.rowcount:
-			#  return render_template("peptide_seq_ident.html", result_family=no_match)
-			#else:
-			  #return render_template("peptide_seq_ident.html", result_family=result_seq[0][0], result_seq1=result_seq[0][1])
-
 			return render_template("upload_peptide.html", result_family=result_seq_multi)
-
-		#return render_template("uploaded.html", matches1 = list_of_pep_seqs)
-		#return uploaded() #render_template("uploaded.html")
 	else:
 		return render_template("upload_peptide.html")
 
