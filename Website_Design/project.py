@@ -141,8 +141,12 @@ def peptide_seq_ident():
 				destination = "/".join([target, filename])
 				file.save(destination)
 
-			if os.getcwd() != APP_ROOT+"\sequence_ident":
+			if os.getcwd() == APP_ROOT:
 				os.chdir("sequence_ident")
+			elif os.getcwd() == APP_ROOT+"\sequence_ident":
+				pass
+			elif os.getcwd() == APP_ROOT+"\uploaded":
+				os.chdir("..\sequence_ident")
 
 			#fpath = os.path.join(direct, filename)
 			# Goes through fasta file and checks whether if its empty
@@ -218,8 +222,14 @@ def upload_peptide():
 			destination = "/".join([target, filename2])
 			file.save(destination)
 
-		if os.getcwd() != APP_ROOT+"\uploaded":
+	
+
+		if os.getcwd() == APP_ROOT:
 			os.chdir("uploaded")
+		elif os.getcwd() == APP_ROOT+"\uploaded":
+			pass
+		elif os.getcwd() == APP_ROOT+"\sequence_ident":
+			os.chdir("..\uploaded")
 
 		if filename2.rsplit('.', 1)[1].lower() in ALLOWED_EX_XML:
 
