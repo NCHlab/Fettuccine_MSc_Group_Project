@@ -171,7 +171,7 @@ def peptide_seq_ident():
 						return render_template("peptide_seq_ident.html", result_family=result_seq[0][0], result_seq1=result_seq[0][1])
 				else:
 					for record in SeqIO.parse(filename, "fasta"):
-						# do the code here for loop for multiple fasta
+						# Loop which iterates through ever fasta sequence and appends the results
 						recordID = record.seq
 						rows_count = cur.execute("SELECT Family, Sequence FROM prelim2 WHERE Sequence = %s", recordID)
 						cur.execute("SELECT Family, Sequence FROM prelim2 WHERE Sequence = %s", recordID)
@@ -180,12 +180,9 @@ def peptide_seq_ident():
 					if not cur.rowcount:
 					  return render_template("peptide_seq_ident.html", result_family=no_match)
 					else:
-					  #return render_template("peptide_seq_ident.html", result_family=result_seq[0][0], result_seq1=result_seq[0][1])
 					  return render_template("peptide_seq_ident.html", result_family=result_seq_multi)
-			# If the peptide sequence search form is empty, return empty error
 		elif request.form["fasta_content"] == "":
 			return render_template("peptide_seq_ident.html", empty = error_empty2)
-
 	else:
 		return render_template("peptide_seq_ident.html")
 
@@ -222,8 +219,6 @@ def upload_peptide():
 			destination = "/".join([target, filename2])
 			file.save(destination)
 
-	
-
 		if os.getcwd() == APP_ROOT:
 			os.chdir("uploaded")
 		elif os.getcwd() == APP_ROOT+"\uploaded":
@@ -244,8 +239,8 @@ def upload_peptide():
 
 			list_of_pep_seqs = [character.replace('>', '') for character in list_of_matches]
 
-		#elif filename2.rsplit('.', 1)[1].lower() in ALLOWED_EX_MZTAB:
-		else:
+		elif filename2.rsplit('.', 1)[1].lower() in ALLOWED_EX_MZTAB:
+		#else:
 			file_mztab_seq = open(filename2, "r")
 			whole_file = file_mztab_seq.read()
 
@@ -258,9 +253,9 @@ def upload_peptide():
 			mztab_seq_mixed = [word for word in list_of_matches if word not in list_of_words]
 			list_of_pep_seqs = [sequence for sequence in mztab_seq_mixed if len(sequence) > 5]
 			#return render_template("peptide_seq_ident.html", result_family=list_of_pep_seqs)
-		#else:
-		#	result_seq_multi = "Incorrect file uploaded"
-			#return render_template("peptide_seq_ident.html", result_family=result_seq_multi)
+		else:
+			result_seq_multi = "Incorrect filetype uploaded! Please Upload a MzIdent or mzTab formatted file"
+			return render_template("upload_peptide.html", result_family=result_seq_multi)
 
 		if len(list_of_pep_seqs) == 1:
 			#If only 1 fasta sequence in file
