@@ -55,10 +55,13 @@ def family_table_LINE1():
 	HERV_LbR_rows = cur.fetchall()
 	return render_template("family_table_LINE1.html", datad=HERV_LbR_rows)
 
-@app.route('/family_table_HERV')
+@app.route("/family_table_HERV")
+
 def family_table_HERV():
-    Sum="variable passed on"
-    return render_template('family_table_HERV.html',data2=HF)
+	cur.execute("SELECT Family, Repeat_Name, Counts FROM `HERV_Groupby_Families`")
+	HERV_GbF_rows = cur.fetchall()
+	return render_template("family_table_HERV.html", data=HERV_GbF_rows)
+
 
 @app.route('/family_table_O')
 def family_table_O():

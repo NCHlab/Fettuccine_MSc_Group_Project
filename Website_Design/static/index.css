@@ -43,67 +43,47 @@ footer {
     width: 22cm;  height: 2cm;
 }
 
-/* #####################################
-Formatting the search bar for fam tables: */
 
-/* search container */
-.search {
- overflow: hidden;
- background-color: #008080;
- font-family: Arial;
+<style>
+.dropbtn {
+    background-color: #696969;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
 }
 
-/* The dropdown container */
-.dropdown_familytable {
- float: left;
- background-color: #4CAF50;
- overflow: hidden;
+.dropbtn:hover, .dropbtn:focus {
+    background-color: #2980B9;
 }
 
-/* Dropdown button */
-.dropdown_familytable .dropbtn_ft {
- background-color: #4CAF50;
- font-size: 16px;
- border: black;
- outline: none;
- color: white;
- padding: 14px 16px;
- 
+.dropdown {
+    position: relative;
+    display: inline-block;
 }
 
-/* Add a background color to searchbar links on hover */
-.search a:hover, .dropdown_familytable:hover .dropbtn_ft {
- background-color: #4CAF50;
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    overflow: auto;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
 }
 
-/* Dropdown content (hidden by default) */
-.dropdown-content_ft {
- display: none;
- position: absolute;
- background-color: #f9f9f9;
- min-width: 160px;
- box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
- z-index: 1;
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
 }
 
-/* Links inside the dropdown */
-.dropdown-content_ft a {
- float: none;
- color: black;
- padding: 12px 16px;
- text-decoration: none;
- display: block;
- text-align: left;
-}
+.dropdown a:hover {background-color: #f1f1f1}
 
-/* Add a grey background color to dropdown links on hover */
-.dropdown-content_ft a:hover {
- background-color: #4CAF50;
-}
-
-/* Show the dropdown menu on hover */
-.dropdown_familytable: .dropdown-content_ft {
- display: block;
+.show {display:block;}
+</style>
 }
 
 Formatting the database table: */
