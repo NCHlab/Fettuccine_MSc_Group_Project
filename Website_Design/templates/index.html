@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
 	<head>
+		<!-- Required meta tags -->
+	 <meta charset="utf-8">
+	 <meta name="viewport" content="width=device-width, initial-scale=1">
+	 <link rel="stylesheet" type="text/css" href="/static/index.css"/>
+	 <link rel="stylesheet" href="/static/css/bootstrap.min.css">
 		<title>Retrotransposons Analyser Homepage</title>
 	</head>
 	<body>
-		<link rel="stylesheet" type="text/css" href="static/index.css"/>
-
 		<header>
 			<nav>
 				<ul>
@@ -22,22 +25,35 @@
 					<li><a href="{{ url_for('about_us')}}">About us </a></li>
 					<li><input type="text" placeholder="Search.."></li>
 				</ul>
-
-
 			</nav>
 		</header>
+		<hr>
 
-		<h1>Hello there</h1>
-		<h2>The current date and time is:<br>
-		{{ time }}
-		</h2>
+		<h1>
+		<p class="text-center">The current date and time is:
+		<br>
+		{{ time }}</p></h1>
+
 
 
 		<P><img src="image2.jpg" onclick="imageclick()"/>
 		<script type="text/javascript" src="java1.js"></script>
 		</P>
 
+		<div class="clearfix"></div>
 
+		<hr>
+
+		<blockquote class="blockquote">
+			<p>This website is still in progress</p>
+			<footer class="blockquote-footer">Quote by <cite title="Nobody">Nobody</cite></footer>
+		</blockquote>
+
+		<div class="clearfix"></div>
+
+		<hr>
+		<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 	</body>
 
 </html>
