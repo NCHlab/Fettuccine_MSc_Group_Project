@@ -6,7 +6,15 @@
 	</head>
 	<body>
 		<link rel="stylesheet" type="text/css" href="static/index.css"/>
-
+		<link rel="stylesheet" href="/static/css/bootstrap.min.css">
+		<link rel="stylesheet" href="http://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<script src="http://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+		<script>
+        $(document).ready( function () {
+            $('#Fam_seq').DataTable();FFF
+        } );
+		</script>
 		<header>
 			<nav>
 				<ul>
@@ -44,6 +52,30 @@
 		{{ result_family|safe }}
 		{{ result_seq1 }}
 		{{ empty }}
+		</body>
+		<body>
+		 <table id = "Fam_seq" class = "display">
+			 <thead>
+				<tr>
+					<th>Family Name</th>
+					<th>Sequence</th>
+				</tr>
+			</thead>
+			<tbody>
+			 {% for row in data %}
+				 <tr>
+				 {% for d in row %}
+					 <td>{{ d[0] }}</td>
+					 <td>{{ d[1] }}</td>
+				 {% endfor %}
+				 </tr>
+			 {% endfor %}
+			</tbody>
+		 </table>		
+		</body>
+
+		<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity "sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 	</body>
 
 </html>

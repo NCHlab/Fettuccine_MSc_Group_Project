@@ -180,7 +180,7 @@ def peptide_seq_ident():
 					if not cur.rowcount:
 					  return render_template("peptide_seq_ident.html", result_family=no_match)
 					else:
-					  return render_template("peptide_seq_ident.html", result_family=result_seq_df)#result_seq_multi)
+					  return render_template("peptide_seq_ident.html", result_family=result_seq_df, data=result_seq_multi)#result_seq_multi)
 		elif request.form["fasta_content"] == "":
 			return render_template("peptide_seq_ident.html", empty = error_empty2)
 	else:
