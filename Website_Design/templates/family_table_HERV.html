@@ -1,48 +1,138 @@
 <!DOCTYPE html>
-
 <html>
-	<head>
+<head>
 		<title>RT Family Table</title>
-	</head>
-	<body>
+		<link rel="stylesheet" href="http://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<script src="http://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+		<script>
+        $(document).ready( function () {
+            $('#Families').DataTable();
+        } );
+    </script>
 		<link rel="stylesheet" type="text/css" href="static/index.css"/>
+</head>
+<body>
 
-		<header>
-			<nav>
-				<ul>
-					<li><a href="{{ url_for('indexpage')}}">HomePage</a></li>
-					<li><a href="{{ url_for('family_table')}}">Family table </a></li>
-					<li><a href="{{ url_for('distribution')}}">Distribution of retroelements</a></li>
-					<li><a href="{{ url_for('AA_seq_list')}}">Translated products (list)</a></li>
-					<li><a href="{{ url_for('relationship_AA')}}">AA Relationship viewer </a></li>
-					<li><a href="{{ url_for('peptide_seq_ident')}}">Peptide sequence identifier</a></li>
-					<li><a href="{{ url_for('upload_peptide')}}">Upload a file </a></li>
-					<li><a href="{{ url_for('atlas')}}">Expression Atlas </a></li>
-					<li><a href="{{ url_for('documentation')}}">Documentation</a></li>
-					<li><a href="{{ url_for('about_us')}}">About us </a></li>
-					<li><input type="text" placeholder="Search.."></li>
-				</ul>
 
-			</nav>
+	<header>
+		<nav>
+			<ul>
+				<li><a href="{{ url_for('indexpage')}}">HomePage</a></li>
+				<li><a href="{{ url_for('family_table')}}">Family table </a></li>
+				<li><a href="{{ url_for('distribution')}}">Distribution of retroelements</a></li>
+				<li><a href="{{ url_for('AA_seq_list')}}">Translated products (list)</a></li>
+				<li><a href="{{ url_for('relationship_AA')}}">AA Relationship viewer </a></li>
+				<li><a href="{{ url_for('peptide_seq_ident')}}">Peptide sequence identifier</a></li>
+				<li><a href="{{ url_for('upload_peptide')}}">Upload a file </a></li>
+				<li><a href="{{ url_for('atlas')}}">Expression Atlas </a></li>
+				<li><a href="{{ url_for('documentation')}}">Documentation</a></li>
+				<li><a href="{{ url_for('about_us')}}">About us </a></li>
+				<li><input type="text" placeholder="Search.."></li>
+			</ul>
+		</nav>
+	</header>
+</body>
 
-		</header>
+<style>
+.dropbtn {
+    background-color: #696969;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
 
-	<div class="search">
-	<div class="dropdown_familytable">
-	 <button class="dropbtn_ft">Search by Family
-	   <i class="fa fa-caret-down_ft"></i>
-	 </button>
-	 <div class="dropdown-content_ft">
-	   <a href="{{ url_for('family_table')}}">All</a>
-	   <a href="{{ url_for('family_table_LINE1')}}">Line-1</a>
-	   <a href="{{ url_for('family_table_HERV')}}">HERV</a>
-		 <a href="{{ url_for('family_table_O')}}">O</a>
-	 </div>
+.dropbtn:hover, .dropbtn:focus {
+    background-color: #2980B9;
+}
 
-	<div class="table">
-	{{data2|safe}} <!--safe=shows as html object rather than code-->
-	<div>
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
 
-	</body>
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    overflow: auto;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown a:hover {background-color: #f1f1f1}
+
+.show {display:block;}
+</style>
+<p>Please select a retrotransposon class:</p>
+<div class="dropdown">
+<button onclick="myFunction()" class="dropbtn">Dropdown</button>
+  <div id="myDropdown" class="dropdown-content">
+		<a href="{{ url_for('family_table_LINE1')}}">Line-1</a>
+		<a href="{{ url_for('family_table_HERV')}}">HERV</a>
+  </div>
+</div>
+
+<script>
+/* When the user clicks on the button,
+toggle between hiding and showing the dropdown content */
+function myFunction() {
+    document.getElementById("myDropdown").classList.toggle("show");
+}
+
+// Close the dropdown if the user clicks outside of it
+window.onclick = function(event) {
+  if (!event.target.matches('.dropbtn')) {
+
+    var dropdowns = document.getElementsByClassName("dropdown-content");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
+      }
+    }
+  }
+}
+</script>
+
+</body>
+<P> &nbsp; </P>
+<P> &nbsp; </P>
+<P> &nbsp; </P>
+<body>
+
+
+
+	 <table id = "Families" class = "display">
+		 <thead>
+			<tr>
+				<th>Family</th>
+				<th>Repeat Name</th>
+				<th>Counts</th>
+			</tr>
+		</thead>
+		<tbody>
+	     {% for row in data %}
+	         <tr>
+	         {% for d in row %}
+	             <td>{{ d }}</td>
+	         {% endfor %}
+	         </tr>
+	     {% endfor %}
+		</tbody>
+	 </table>
+
+</body>
 
 </html>
