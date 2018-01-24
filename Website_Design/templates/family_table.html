@@ -7,7 +7,7 @@
 		<script src="http://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 		<script>
         $(document).ready( function () {
-            $('#Families').DataTable();
+            $('#Families').DataTable();FFF
         } );
     </script>
 		<link rel="stylesheet" type="text/css" href="static/index.css"/>
@@ -34,54 +34,16 @@
 	</header>
 </body>
 
-<style>
-.dropbtn {
-    background-color: #696969;
-    color: white;
-    padding: 16px;
-    font-size: 16px;
-    border: none;
-    cursor: pointer;
-}
 
-.dropbtn:hover, .dropbtn:focus {
-    background-color: #2980B9;
-}
-
-.dropdown {
-    position: relative;
-    display: inline-block;
-}
-
-.dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #f9f9f9;
-    min-width: 160px;
-    overflow: auto;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
-}
-
-.dropdown-content a {
-    color: black;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-}
-
-.dropdown a:hover {background-color: #f1f1f1}
-
-.show {display:block;}
-</style>
 <p>Please select a retrotransposon class:</p>
 <div class="dropdown">
-<button onclick="myFunction()" class="dropbtn">Dropdown</button>
+<button onclick="myFunction()" class="dropbtn">RT Class</button>
   <div id="myDropdown" class="dropdown-content">
 		<a href="{{ url_for('family_table_LINE1')}}">Line-1</a>
 		<a href="{{ url_for('family_table_HERV')}}">HERV</a>
   </div>
 </div>
+<p>
 
 <script>
 /* When the user clicks on the button,
@@ -108,31 +70,6 @@ window.onclick = function(event) {
 
 </body>
 <P> &nbsp; </P>
-<P> &nbsp; </P>
-<P> &nbsp; </P>
-<body>
 
-
-
-	 <table id = "Families" class = "display">
-		 <thead>
-			<tr>
-				<th>Family</th>
-				<th>Repeat Name</th>
-				<th>Counts</th>
-			</tr>
-		</thead>
-		<tbody>
-	     {% for row in data %}
-	         <tr>
-	         {% for d in row %}
-	             <td>{{ d }}</td>
-	         {% endfor %}
-	         </tr>
-	     {% endfor %}
-		</tbody>
-	 </table>
-
-</body>
 
 </html>
