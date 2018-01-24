@@ -38,13 +38,6 @@ footer {
     width: 100%;
     overflow:hidden;
 }
-
-#fasta_search {
-    width: 22cm;  height: 2cm;
-}
-
-
-<style>
 .dropbtn {
     background-color: #696969;
     color: white;
@@ -80,22 +73,11 @@ footer {
     display: block;
 }
 
-.dropdown a:hover {background-color: #f1f1f1}
+.dropdown a:hover {background-color: #2980B9}
 
 .show {display:block;}
-</style>
+
+#fasta_search {
+    width: 22cm;  height: 2cm;
 }
-
-Formatting the database table: */
-.table {
-  color: #black;
-  background-color: #white;
-  font-family: Arial;
-  padding: 12px 16px;
-  font-size: 1em;
-}
-
-tr:nth-child(odd)		{ background-color:#eee; }
-tr:nth-child(even)	{ background-color:#fff; }
-
-tr:hover { background-color: #008080;}
+tr:hover {background: #A9A9A9}

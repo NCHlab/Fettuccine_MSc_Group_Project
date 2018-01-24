@@ -53,20 +53,28 @@ def family_table():
 def family_table_LINE1():
 	cur.execute("SELECT Repeat_Name, Counts FROM `L1_Groupby_Repeats`")
 	HERV_LbR_rows = cur.fetchall()
-	return render_template("family_table_LINE1.html", datad=HERV_LbR_rows)
+	return render_template("family_table_LINE1.html", data=HERV_LbR_rows)
 
 @app.route("/family_table_HERV")
-
 def family_table_HERV():
 	cur.execute("SELECT Family, Repeat_Name, Counts FROM `HERV_Groupby_Families`")
 	HERV_GbF_rows = cur.fetchall()
-	return render_template("family_table_HERV.html", data=HERV_GbF_rows)
+	wisit="Family"
+	return render_template("family_table_HERV.html", data="", firstcolumn="")
 
+@app.route("/family_table_HERV_Families")
+def family_table_HERV_Families():
+	cur.execute("SELECT Family, Repeat_Name, Counts FROM `HERV_Groupby_Families`")
+	HERV_GbF_rows = cur.fetchall()
+	wisit="Family"
+	return render_template("family_table_HERV.html", data=HERV_GbF_rows, firstcolumn=wisit)
 
-@app.route('/family_table_O')
-def family_table_O():
-    Sum="variable passed on"
-    return render_template('family_table_O.html',data3=DATA3)
+@app.route("/family_table_HERV_Superfamilies")
+def family_table_HERV_Superfamilies():
+	cur.execute("SELECT Superfamily, Repeat_Name, Counts FROM `HERV_Groupby_Superfamilies`")
+	HERV_GbS_rows = cur.fetchall()
+	wisit="Superfamily"
+	return render_template("family_table_HERV.html", data=HERV_GbS_rows, firstcolumn=wisit)
 
 @app.route("/distribution")
 def distribution():
