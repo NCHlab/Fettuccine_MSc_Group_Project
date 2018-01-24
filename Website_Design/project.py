@@ -34,7 +34,7 @@ except:
 	pass
 
 
-cur = connection.cursor()
+cur = connection.cursor() # May need to open it in each function instead of globally
 
 
 @app.route("/")
@@ -106,7 +106,9 @@ def peptide_seq_ident():
 	global result_seq
 	global no_match
 	global recordID
-	global result_seq_multi
+	global result_seq_one
+	global data11
+	result_seq_one=[]
 	result_seq_multi=[]
 	result_seq=""
 	rows_count = ""
@@ -123,10 +125,13 @@ def peptide_seq_ident():
 			rows_count = cur.execute("SELECT Family, Sequence FROM prelim2 WHERE Sequence = %s", fastaseq)
 			cur.execute("SELECT Family, Sequence FROM prelim2 WHERE Sequence = %s", fastaseq)
 			result_seq =  cur.fetchall()
+			result_seq_one.append(result_seq)
+			DF_PD=pd.DataFrame(result_seq_one)
+			result_seq_df=DF_PD.to_html()
 			if not cur.rowcount:
 			  return render_template("peptide_seq_ident.html", result_family=no_match)
 			else:
-			  return render_template("peptide_seq_ident.html", result_family=result_seq[0][0], result_seq1=result_seq[0][1])
+			  return render_template("peptide_seq_ident.html", result_family=result_seq_df)
 		# If a file has been uploaded (file2 - name of upload form), this if statement occurs
 		elif 'file2' in request.files:
 			# Creates a path to the specified folder
@@ -165,10 +170,13 @@ def peptide_seq_ident():
 						rows_count = cur.execute("SELECT Family, Sequence FROM prelim2 WHERE Sequence = %s", recordID)
 						cur.execute("SELECT Family, Sequence FROM prelim2 WHERE Sequence = %s", recordID)
 						result_seq =  cur.fetchall()
+						result_seq_one.append(result_seq)
+						DF_PD=pd.DataFrame(result_seq_one)
+						result_seq_df=DF_PD.to_html()
 					if not cur.rowcount:
 					  return render_template("peptide_seq_ident.html", result_family=no_match)
 					else:
-						return render_template("peptide_seq_ident.html", result_family=result_seq[0][0], result_seq1=result_seq[0][1])
+						return render_template("peptide_seq_ident.html", result_family=result_seq_df)#, result_seq1=result_seq_df)#result_seq[0][1])
 				else:
 					for record in SeqIO.parse(filename, "fasta"):
 						# Loop which iterates through ever fasta sequence and appends the results
@@ -176,13 +184,14 @@ def peptide_seq_ident():
 						rows_count = cur.execute("SELECT Family, Sequence FROM prelim2 WHERE Sequence = %s", recordID)
 						cur.execute("SELECT Family, Sequence FROM prelim2 WHERE Sequence = %s", recordID)
 						result_seq =  cur.fetchall()
-						result_seq_multi.append(result_seq)
-						test1=pd.DataFrame(result_seq_multi)
-						test2=test1.to_html()
+						if cur.rowcount > 0:
+							result_seq_multi.append(result_seq)
+					DF_PD=pd.DataFrame(result_seq_multi)
+					result_seq_df=DF_PD.to_html()
 					if not cur.rowcount:
 					  return render_template("peptide_seq_ident.html", result_family=no_match)
 					else:
-					  return render_template("peptide_seq_ident.html", result_family=test2)#result_seq_multi)
+					  return render_template("peptide_seq_ident.html", result_family=result_seq_df)#result_seq_multi)
 		elif request.form["fasta_content"] == "":
 			return render_template("peptide_seq_ident.html", empty = error_empty2)
 	else:
@@ -273,8 +282,11 @@ def upload_peptide():
 				rows_count = cur.execute("SELECT Family, Sequence FROM prelim2 WHERE Sequence = %s", seqs)
 				cur.execute("SELECT Family, Sequence FROM prelim2 WHERE Sequence = %s", seqs)
 				result_seq =  cur.fetchall()
-				result_seq_multi.append(result_seq)
-			return render_template("upload_peptide.html", result_family=result_seq_multi)
+				if cur.rowcount > 0:
+					result_seq_multi.append(result_seq)
+			DF_PD=pd.DataFrame(result_seq_multi)
+			result_seq_df=DF_PD.to_html()
+			return render_template("upload_peptide.html", result_family=result_seq_df)#result_seq_multi)
 	else:
 		return render_template("upload_peptide.html")
 
