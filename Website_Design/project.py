@@ -111,8 +111,8 @@ def peptide_seq_ident():
 		# Otherwise if no match found, displays no match
 		if request.form["fasta_content"] != "":
 			fastaseq = request.form["fasta_content"]
-			rows_count = cur.execute("SELECT Family, Sequence FROM prelim2 WHERE Sequence = %s", fastaseq)
-			cur.execute("SELECT Family, Sequence FROM prelim2 WHERE Sequence = %s", fastaseq)
+			rows_count = cur.execute("SELECT Family, Sequence FROM herv_repeats WHERE Sequence = %s", fastaseq)
+			cur.execute("SELECT Family, Sequence FROM herv_repeats WHERE Sequence = %s", fastaseq)
 			result_seq =  cur.fetchall()
 			result_seq_one.append(result_seq)
 			DF_PD=pd.DataFrame(result_seq_one)
@@ -120,7 +120,7 @@ def peptide_seq_ident():
 			if not cur.rowcount:
 			  return render_template("peptide_seq_ident.html", result_family=no_match)
 			else:
-			  return render_template("peptide_seq_ident.html", result_family=result_seq_df)
+			  return render_template("peptide_seq_ident.html", data1=result_seq)
 		# If a file has been uploaded (file2 - name of upload form), this if statement occurs
 		elif 'file2' in request.files:
 			# Creates a path to the specified folder
@@ -156,29 +156,29 @@ def peptide_seq_ident():
 					#If only 1 fasta sequence in file
 					for record in SeqIO.parse(filename, "fasta"):
 						recordID = record.seq
-						rows_count = cur.execute("SELECT Family, Sequence FROM prelim2 WHERE Sequence = %s", recordID)
-						cur.execute("SELECT Family, Sequence FROM prelim2 WHERE Sequence = %s", recordID)
+						rows_count = cur.execute("SELECT Family, Sequence FROM herv_repeats WHERE Sequence = %s", recordID)
+						cur.execute("SELECT Family, Sequence FROM herv_repeats WHERE Sequence = %s", recordID)
 						result_seq =  cur.fetchall()
 						result_seq_one.append(result_seq)
 						DF_PD=pd.DataFrame(result_seq_one)
 						result_seq_df=DF_PD.to_html()
 					if not cur.rowcount:
-					  return render_template("peptide_seq_ident.html", result_family=no_match)
+					  return render_template("peptide_seq_ident.html", empty=no_match)
 					else:
-						return render_template("peptide_seq_ident.html", result_family=result_seq_df)#, result_seq1=result_seq_df)#result_seq[0][1])
+						return render_template("peptide_seq_ident.html", data=result_seq_one)#, result_seq1=result_seq_df)#result_seq[0][1])
 				else:
 					for record in SeqIO.parse(filename, "fasta"):
 						# Loop which iterates through ever fasta sequence and appends the results
 						recordID = record.seq
-						rows_count = cur.execute("SELECT Family, Sequence FROM prelim2 WHERE Sequence = %s", recordID)
-						cur.execute("SELECT Family, Sequence FROM prelim2 WHERE Sequence = %s", recordID)
+						rows_count = cur.execute("SELECT Family, Sequence FROM herv_repeats WHERE Sequence = %s", recordID)
+						cur.execute("SELECT Family, Sequence FROM herv_repeats WHERE Sequence = %s", recordID)
 						result_seq =  cur.fetchall()
 						if cur.rowcount > 0:
 							result_seq_multi.append(result_seq)
 					DF_PD=pd.DataFrame(result_seq_multi)
 					result_seq_df=DF_PD.to_html()
 					if not cur.rowcount:
-					  return render_template("peptide_seq_ident.html", result_family=no_match)
+					  return render_template("peptide_seq_ident.html", empty=no_match)
 					else:
 					  return render_template("peptide_seq_ident.html", result_family=result_seq_df, data=result_seq_multi)#result_seq_multi)
 		elif request.form["fasta_content"] == "":
@@ -265,7 +265,7 @@ def upload_peptide():
 			if not cur.rowcount:
 			  return render_template("upload_peptide.html", result_family=no_match)
 			else:
-				return render_template("upload_peptide.html", result_family=result_seq[0][0], result_seq1=result_seq[0][1])
+				return render_template("upload_peptide.html", data=result_seq)#, result_seq1=result_seq[0][1])
 		else:
 			for seqs in list_of_pep_seqs:
 				rows_count = cur.execute("SELECT Family, Sequence FROM prelim2 WHERE Sequence = %s", seqs)
@@ -275,7 +275,7 @@ def upload_peptide():
 					result_seq_multi.append(result_seq)
 			DF_PD=pd.DataFrame(result_seq_multi)
 			result_seq_df=DF_PD.to_html()
-			return render_template("upload_peptide.html", result_family=result_seq_df)#result_seq_multi)
+			return render_template("upload_peptide.html", data=result_seq_multi)#result_seq_multi)
 	else:
 		return render_template("upload_peptide.html")
 
