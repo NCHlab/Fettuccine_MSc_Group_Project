@@ -184,7 +184,9 @@ def peptide_seq_ident():
 		elif request.form["fasta_content"] == "":
 			return render_template("peptide_seq_ident.html", empty = error_empty2)
 	else:
-		return render_template("peptide_seq_ident.html")
+		cur.execute("SELECT Family, Sequence FROM herv_repeats LIMIT 0, 1000")
+		result_seq =  cur.fetchall()
+		return render_template("peptide_seq_ident.html", data1=result_seq)
 
 
 
