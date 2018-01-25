@@ -3,6 +3,7 @@
 <html>
 	<head>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js">
+		<script src="JQuery.js">
 		</script>
 		<script>
 		$(document).ready(function(){
@@ -71,6 +72,12 @@
 		  });
 			$(".Chromosome22").click(function(){
 		    $(".Chr22").toggle();
+		  });
+			$(".ChromosomeX").click(function(){
+		    $(".ChrX").toggle();
+		  });
+			$(".ChromosomeY").click(function(){
+		    $(".ChrY").toggle();
 		  });
 		});
 		</script>
@@ -362,6 +369,30 @@
 		  </div>
 		  <div class="Chr22">
 		  <img src="static/chr22.png">
+		  </div>
+
+			<div class="ChromosomeX">ChrX
+		    <button class="ChrX_drop">
+		      <i class"fa fa-caret-down"><i/>
+		    </button>
+		    <div class="ChrX_drop_info">
+		      <a href="">RTs:<br>HERV=? <br> LINE1=?</a>
+		    </div>
+		  </div>
+		  <div class="ChrX">
+		  <img src="static/chrX.png">
+		  </div>
+
+			<div class="ChromosomeY">ChrY
+		    <button class="ChrY_drop">
+		      <i class"fa fa-caret-down"><i/>
+		    </button>
+		    <div class="ChrY_drop_info">
+		      <a href="">RTs:<br>HERV=? <br> LINE1=?</a>
+		    </div>
+		  </div>
+		  <div class="ChrY">
+		  <img src="static/chrY.png">
 		  </div>
 
 	</body>

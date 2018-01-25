@@ -1353,3 +1353,127 @@ visualisation of distribution: */
   left:0px;
   top:-1000px;
 }
+
+.ChromosomeX {
+    width: 50px;
+    height: 50px;
+    background: gray;
+    position: relative;
+    left:1210px;
+    top:-1100px;
+    color: white;
+}
+
+/* Dropdown button */
+.ChromosomeX .ChrX_drop {
+ font-size: 16px;
+ border: none;
+ outline: none;
+ color: white;
+ padding: 14px 16px;
+ background-color: inherit;
+}
+/* Dropdown content (hidden by default) */
+.ChrX_drop_info {
+ display: none;
+ position: absolute;
+ background-color: #f9f9f9;
+ min-width: 160px;
+ box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+ z-index: 1;
+}
+
+/* Links inside the dropdown */
+.ChrX_drop_info a {
+ float: none;
+ color: black;
+ padding: 12px 16px;
+ text-decoration: none;
+ display: block;
+ text-align: center;
+}
+
+/* Add a grey background color to dropdown links on hover */
+.ChrX_drop_info a:hover {
+ background-color: #ddd;
+}
+
+/* Show the dropdown menu on hover */
+.ChromosomeX:hover .ChrX_drop_info {
+ display: block;
+ position: relative;
+ right:110px;
+}
+
+/* container for the images and embeded url*/
+.ChrX {
+  display: none;
+  width: 100px;
+  height: 50px;
+  background: deepskyblue;
+  position: relative;
+  left:0px;
+  top:-1050px;
+}
+
+.ChromosomeY {
+    width: 50px;
+    height: 50px;
+    background: gray;
+    position: relative;
+    left:1265px;
+    top:-1150px;
+    color: white;
+}
+
+/* Dropdown button */
+.ChromosomeY .ChrY_drop {
+ font-size: 16px;
+ border: none;
+ outline: none;
+ color: white;
+ padding: 14px 16px;
+ background-color: inherit;
+}
+/* Dropdown content (hidden by default) */
+.ChrY_drop_info {
+ display: none;
+ position: absolute;
+ background-color: #f9f9f9;
+ min-width: 160px;
+ box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+ z-index: 1;
+}
+
+/* Links inside the dropdown */
+.ChrY_drop_info a {
+ float: none;
+ color: black;
+ padding: 12px 16px;
+ text-decoration: none;
+ display: block;
+ text-align: center;
+}
+
+/* Add a grey background color to dropdown links on hover */
+.ChrY_drop_info a:hover {
+ background-color: #ddd;
+}
+
+/* Show the dropdown menu on hover */
+.ChromosomeY:hover .ChrY_drop_info {
+ display: block;
+ position: relative;
+ right:110px;
+}
+
+/* container for the images and embeded url*/
+.ChrY {
+  display: none;
+  width: 100px;
+  height: 50px;
+  background: deepskyblue;
+  position: relative;
+  left:0px;
+  top:-1100px;
+}
