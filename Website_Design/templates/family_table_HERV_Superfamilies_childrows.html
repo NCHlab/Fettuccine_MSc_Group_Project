@@ -2,15 +2,40 @@
 <html>
 <head>
 		<title>RT Family Table</title>
+		<link rel="stylesheet" type="text/css" href="static/index.css"/>
 		<link rel="stylesheet" href="http://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 		<script src="http://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+		<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+		<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 		<script>
-        $(document).ready( function () {
-            $('#Families').DataTable();FFF
-        } );
-    </script>
-		<link rel="stylesheet" type="text/css" href="static/index.css"/>
+				function format(value) {
+						return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
+        			'<tr>'+
+            			'<td>'+value+'</td>'+
+        			'</tr>'+
+					  '</table>'
+				}
+				$(document).ready(function () {
+						var table = $('#Families').DataTable({});
+
+						// Add event listener for opening and closing details
+						$('#Families').on('click', 'td.details-control', function () {
+								var tr = $(this).closest('tr');
+								var row = table.row(tr);
+
+								if (row.child.isShown()) {
+										// This row is already open - close it
+										row.child.hide();
+										tr.removeClass('shown');
+								} else {
+										// Open this row
+										row.child(format(tr.data('child-value'))).show();
+										tr.addClass('shown');
+								}
+						});
+				});
+	  </script>
 </head>
 <body>
 
@@ -49,7 +74,6 @@
   <div id="myDropdown2" class="dropdown-content">
 		<a href="{{ url_for('family_table_HERV_Superfamilies')}}">SuperFamily</a>
 		<a href="{{ url_for('family_table_HERV_Families')}}">Family</a>
-		<a href="{{ url_for('family_table_HERV_Families')}}">Repeat Name</a>
   </div>
 </div>
 </body>
@@ -102,18 +126,19 @@ window.onclick = function(event) {
 
 
 
-	 <table id = "Families" class = "display">
+	 <table id = "Families" class="display nowrap" cellspacing="0" width="100%">>
 		 <thead>
 			<tr>
+				<th></th>
 				<th>{{ firstcolumn }}</th>
-				<th>Repeat Name</th>
 				<th>Counts</th>
 			</tr>
 		</thead>
 		<tbody>
-	     {% for row in data %}
-	         <tr>
-	         {% for d in row %}
+	     {% for i in range(0,datal) %}
+	         <tr data-child-value={{data2[i]}}>
+						 	 <td class="details-control"></td>
+	         {% for d in data[i] %}
 	             <td>{{ d }}</td>
 	         {% endfor %}
 	         </tr>
