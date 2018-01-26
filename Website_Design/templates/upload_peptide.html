@@ -5,7 +5,16 @@
 		<title>Upload Peptide Sequence</title>
 	</head>
 	<body>
-		<link rel="stylesheet" type="text/css" href="static/index.css")}}"/>
+		<link rel="stylesheet" type="text/css" href="static/index.css"/>
+		<link rel="stylesheet" href="/static/css/bootstrap.min.css">
+		<link rel="stylesheet" href="http://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<script src="http://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+		<script>
+			$(document).ready(function() {
+				var table = $('#mz_seq').DataTable();
+		} );
+		</script>
 
 		<header>
 			<nav>
@@ -26,27 +35,44 @@
 
 			</nav>
 		</header>
-
+	<div class="container">
 		<p>
 				Please Upload a mzid or mztab formatted file
 				<form id="upload-form" action="{{ url_for("upload_peptide")}}" method="POST" enctype="multipart/form-data">
 		 		<input type="file" name="file" accept=".xml, .mzid, .mzTab">
 		 		<input type="submit" value="Upload">
 
-
+		<hr>
 				<!–– THIS IS A COMMENT input type="text" id="player" value="" style="width:100px; height:40px;"––>
 		</p>
-		<p>
-			<form>
-				<input type="checkbox" name="filetype" value="Mzid/MzIdent">Mzid/MzIdent<br>
-				<input type="checkbox" name="filetype" value="MzTab">MzTab
-			</form>
-		</p>
-
-		{{ result_family }}
+	</div>
+	<div class="container">
 		{{ result_seq1 }}
 		{{ empty }}
+		</body>
+		<body>
+		 <table id = "mz_seq" class = "display">
+			 <thead>
+				<tr>
+					<th>Family Name</th>
+					<th>Sequence</th>
+				</tr>
+			</thead>
+			<tbody>
+			 {% for row in data %}
+				 <tr>
+				 {% for d in row %}
+					 <td>{{ d[0] }}</td>
+					 <td>{{ d[1] }}</td>
+				 {% endfor %}
+				 </tr>
+			 {% endfor %}
+			</tbody>
+		 </table>
+	 	</div>
+		</body>
 
-
+		<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity "sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 	</body>
 </html>
