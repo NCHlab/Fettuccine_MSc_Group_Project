@@ -1,3 +1,426 @@
+<<<<<<< HEAD
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Home</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<meta name="format-detection" content="telephone=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<!-- Fonts-->
+		<link rel="stylesheet" type="text/css" href="static/assets/fonts/fontawesome/font-awesome.min.css">
+		<link rel="stylesheet" type="text/css" href="static/assets/fonts/themify-icons/themify-icons.css">
+		<!-- Vendors-->
+		<link rel="stylesheet" type="text/css" href="static/assets/vendors/bootstrap4/bootstrap-grid.min.css">
+		<link rel="stylesheet" type="text/css" href="static/assets/vendors/magnific-popup/magnific-popup.min.css">
+		<link rel="stylesheet" type="text/css" href="static/assets/vendors/owl.carousel/owl.carousel.css">
+		<link rel="stylesheet" type="text/css" href="static/assets/vendors/_jquery/jquery.min.css">
+		<!-- <link rel="stylesheet" type="text/css" href="static/assets/vendors/bootstrap4/bootstrap-grid.min.css"> -->
+		<!-- <link rel="stylesheet" type="text/css" href="static/assets/vendors/bootstrap4/bootstrap-grid.min.css"> -->
+		<!-- App & fonts-->
+		<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i&amp;amp;subset=latin-ext">
+		<link rel="stylesheet" type="text/css" href="static/assets/css/main.css"><!--[if lt IE 9]>
+			<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+		<div class="page-wrap">
+
+			<!-- header -->
+			<header class="header header__style-02">
+				<div class="container">
+					<div class="header__logo"><a href=""><img src="static/assets/img/logo.png" alt=""/></a></div>
+					<div class="header__toogleGroup">
+						<div class="search-form">
+							<div class="search-form__toggle"><i class="ti-search"></i></div>
+							<div class="search-form__form">
+
+												<!-- form-search -->
+												<div class="form-search">
+													<form>
+														<input class="form-control" type="text" placeholder="Hit enter to search or ESC to close"/>
+													</form>
+												</div><!-- End / form-search -->
+
+							</div>
+						</div>
+					</div>
+
+					<!-- consult-nav -->
+					<nav class="consult-nav">
+
+						<!-- consult-menu -->
+						<ul class="consult-menu">
+							<li class="current-menu-item"><a href="{{ url_for('indexpage')}}">Home</a>
+							</li>
+							<li><a href="{{ url_for('family_table')}}">Family Table</a>
+							</li>
+							<li><a href="{{ url_for('distribution')}}">Distribution</a>
+							</li>
+							<li class="menu-item-has-children"><a href="#">Translated</a>
+								<ul class="sub-menu">
+									<li><a href="{{ url_for('AA_seq_list')}}">Translated products</a>
+									</li>
+									<li><a href="{{ url_for('relationship_AA')}}">AA Relationship Viewer</a>
+									</li>
+								</ul>
+							</li>
+							<li class="menu-item-has-children"><a href="#">Upload Files</a>
+								<ul class="sub-menu">
+									<li><a href="{{ url_for('peptide_seq_ident')}}">Peptide Sequence identifier</a>
+									</li>
+									<li><a href="{{ url_for('upload_peptide')}}">MzIdent / MzTab</a>
+									</li>
+								</ul>
+							</li>
+							<li><a href="{{ url_for('atlas')}}">Atlas</a>
+							</li>
+							<li class="menu-item-has-children"><a href="project.html">project</a>
+								<ul class="sub-menu">
+									<li><a href="{{ url_for('documentation')}}">Documentation</a>
+									</li>
+									<li><a href="{{ url_for('about_us')}}">About Us</a>
+									</li>
+								</ul>
+						</ul><!-- consult-menu -->
+
+						<div class="navbar-toggle"><span></span><span></span><span></span></div>
+					</nav><!-- End / consult-nav -->
+
+				</div>
+			</header><!-- End / header -->
+
+			<!-- Content-->
+			<div class="md-content">
+
+				<!-- slider -->
+				<div class="slider">
+
+					<!-- carousel__element owl-carousel -->
+					<div class="carousel__element owl-carousel" data-options='{"items":1,"loop":true,"dots":false,"nav":false,"margin":0, "autoplay": true, "autoplayTimeout": 10000}'>
+						<div class="slider__item" style="background-image: url('static/image4.jpg');">
+							<div class="md-tb">
+								<div class="md-tb__cell">
+									<div class="slider__content">
+										<div class="container">
+											<h2>Welcome to Fettuccine BioInformatics</h2>
+											<p>A Group of 4 People working together to make a project happen</p>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="slider__item" style="background-image: url('static/image3.jpg');">
+							<div class="md-tb">
+								<div class="md-tb__cell">
+									<div class="slider__content">
+										<div class="container">
+											<h2>Retrotransposon Data</h2>
+											<p> Using retrotransposon data to visualise families and repeats </p>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div><!-- End / carousel__element owl-carousel -->
+
+				</div><!-- End / slider -->
+
+				<!-- Service-->
+
+				<!-- Section -->
+				<section class="md-section" style="background-color:#f7f7f7;padding:0;">
+					<div class="container">
+						<div class="textbox-group">
+							<div class="row">
+								<div class="col-md-4 col-lg-4 ">
+
+									<!-- textbox -->
+									<div class="textbox">
+										<div class="textbox__image"><a href="#"><img src="static/assets/img/services/4.jpg" alt=""/></a></div>
+										<div class="textbox__body">
+											<h2 class="textbox__title"><a href="#">Free template</a></h2>
+											<div class="textbox__description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut laoreet ut lacus a tincidunt. Quisque lu</div>
+										</div>
+									</div><!-- End / textbox -->
+
+								</div>
+								<div class="col-md-4 col-lg-4 ">
+
+									<!-- textbox -->
+									<div class="textbox">
+										<div class="textbox__image"><a href="#"><img src="static/assets/img/services/5.jpg" alt=""/></a></div>
+										<div class="textbox__body">
+											<h2 class="textbox__title"><a href="#">Responsive Layout</a></h2>
+											<div class="textbox__description">Nam elit ligula, egestas et ornare non, viverra eu justo. Aliquam ornare lectus ut pharetra dictum. </div>
+										</div>
+									</div><!-- End / textbox -->
+
+								</div>
+								<div class="col-md-4 col-lg-4 ">
+
+									<!-- textbox -->
+									<div class="textbox">
+										<div class="textbox__image"><a href="#"><img src="static/assets/img/services/6.jpg" alt=""/></a></div>
+										<div class="textbox__body">
+											<h2 class="textbox__title"><a href="#">SEO Optimized</a></h2>
+											<div class="textbox__description">Mauris lacinia venenatis dolor sit amet viverra. Integer malesuada nulla neque. Sed rutrum ligula eu</div>
+										</div>
+									</div><!-- End / textbox -->
+
+								</div>
+							</div>
+						</div>
+					</div>
+				</section>
+				<!-- End / Section -->
+
+
+				<!-- Section -->
+				<section class="md-section" style="background-color:#f7f7f7;padding-top:0;">
+					<div class="container">
+						<div class="row">
+							<div class="col-md-10 col-lg-8 offset-0 offset-sm-0 offset-md-1 offset-lg-2 ">
+
+								<!-- iconbox -->
+								<div class="iconbox">
+									<div class="iconbox__icon"><i class="ti-headphone-alt"></i></div>
+									<div>
+										<h2 class="iconbox__title"><a href="#">Best Algorithms Used</a></h2>
+										<div class="iconbox__description"> With only half a years experience x4 = 2 years!</div>
+									</div>
+								</div><!-- End / iconbox -->
+
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-6 col-md-6 col-lg-3 ">
+
+								<!-- iconbox -->
+								<div class="iconbox iconbox__style-02">
+									<div class="iconbox__icon"><i class="ti-announcement"></i></div>
+									<div>
+										<h2 class="iconbox__title"><a href="#">Brand &amp; Identity</a></h2>
+										<div class="iconbox__description">Mauris lacinia venenatis dolor sit amet viverra. Integer malesuada nulla neque. Sed rutrum ligula eu</div>
+									</div>
+								</div><!-- End / iconbox -->
+
+							</div>
+							<div class="col-sm-6 col-md-6 col-lg-3 ">
+
+								<!-- iconbox -->
+								<div class="iconbox iconbox__style-02">
+									<div class="iconbox__icon"><i class="ti-headphone"></i></div>
+									<div>
+										<h2 class="iconbox__title"><a href="#">Marketing Planning</a></h2>
+										<div class="iconbox__description">Etiam non varius justo, vel tempor mi. Nulla facilisi. Fusce at tortor arcu. Suspendisse maximus ac </div>
+									</div>
+								</div><!-- End / iconbox -->
+
+							</div>
+							<div class="col-sm-6 col-md-6 col-lg-3 ">
+
+								<!-- iconbox -->
+								<div class="iconbox iconbox__style-02">
+									<div class="iconbox__icon"><i class="ti-timer"></i></div>
+									<div>
+										<h2 class="iconbox__title"><a href="#">Business Planning</a></h2>
+										<div class="iconbox__description">Mauris lacinia venenatis dolor sit amet viverra. Integer malesuada nulla neque. Sed rutrum ligula eu</div>
+									</div>
+								</div><!-- End / iconbox -->
+
+							</div>
+							<div class="col-sm-6 col-md-6 col-lg-3 ">
+
+								<!-- iconbox -->
+								<div class="iconbox iconbox__style-02">
+									<div class="iconbox__icon"><i class="ti-briefcase"></i></div>
+									<div>
+										<h2 class="iconbox__title"><a href="#">Email Marketing</a></h2>
+										<div class="iconbox__description">Suspendisse ac elit vitae est lacinia interdum eu sit amet mauris. Phasellus aliquam nisi sit amet l</div>
+									</div>
+								</div><!-- End / iconbox -->
+
+							</div>
+						</div>
+					</div>
+				</section>
+				<!-- End / Section -->
+
+				<!-- About-->
+
+				<!-- Section -->
+				<section class="md-section">
+					<div class="container">
+						<div class="row">
+							<div class="col-lg-6 ">
+
+								<!-- title-01 -->
+								<div class="title-01 title-01__style-03 md-text-left">
+									<h6 class="title-01__subTitle">about</h6>
+									<h2 class="title-01__title">We Are The Leaders In This Industry</h2>
+									<div>Nam suscipit nisi risus, et porttitor metus molestie a. Phasellus id quam id turpis suscipit pretium. Maecenas ultrices, lacus ut accumsan maximus, odio augue rhoncus augue, vulputate maximus mi sapien sed nisl. Sed fermentum congue orci sed lacinia. Nulla nunc purus, consectetur</div>
+								</div><!-- End / title-01 -->
+
+								<div class="row">
+									<div class=" row-sm-1 ">
+
+										<!-- box-number -->
+										<div class="box-number">
+											<div class="box-number__number">
+												<h2 class="js-counter" data-counter-time="2000" data-counter-delay="10">38,000,000</h2>
+											</div>
+											<div class="box-number__description">Retrotransposons</div>
+										</div><!-- End / box-number -->
+
+									</div>
+									<div class="col-sm-5 ">
+
+										<!-- box-number -->
+										<div class="box-number">
+											<div class="box-number__number">
+												<h2 class="js-counter" data-counter-time="2000" data-counter-delay="10">24,000,000</h2>
+											</div>
+											<div class="box-number__description">LINE1s</div>
+										</div><!-- End / box-number -->
+
+									</div>
+									<div class="col-sm-4 ">
+
+										<!-- box-number -->
+										<div class="box-number">
+											<div class="box-number__number">
+												<h2 class="js-counter" data-counter-time="2000" data-counter-delay="10">14,000,000</h2>
+											</div>
+											<div class="box-number__description">HERVs</div>
+										</div><!-- End / box-number -->
+
+									</div>
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</section>
+				<!-- End / Section -->
+
+				<!-- Contact us-->
+
+				<!-- Section -->
+				<section class="md-section md-skin-dark js-consult-form" style="background-image:url(static/image1.jpg);">
+					<div class="md-overlay"></div>
+					<div class="container">
+						<div class="row">
+							<div class="col-lg-8 offset-0 offset-sm-0 offset-md-0 offset-lg-2 ">
+
+								<!-- title-01 -->
+								<div class="title-01 title-01__style-02">
+									<h2 class="title-01__title">Contact With Us via our email</h2>
+									<div>Operating hours 4am-5am Friday only </div>
+								</div><!-- End / title-01 -->
+
+								<div class="consult-phone">Fettucine@qmul.ac.uk</div>
+							</div>
+						</div>
+
+
+
+					</div>
+				</section>
+				<!-- End / Section -->
+
+
+			<!-- footer -->
+			<footer class="footer">
+				<div class="footer__main">
+					<div class="row row-eq-height">
+						<div class="col-8 col-sm-7 col-md-9 col-lg-3 ">
+							<div class="footer__item"><a class="consult_logo" href="#"><img src="static/assets/img/logo.png" alt=""/></a>
+								<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut laoreet ut lacus a tincidunt.</p>
+							</div>
+						</div>
+						<div class="col-sm-6 col-md-4 col-lg-3 col-xl-2 offset-0 offset-sm-0 offset-md-0 offset-lg-0 offset-xl-1 ">
+							<div class="footer__item">
+
+									<!-- widget-text__widget -->
+									<section class="widget-text__widget widget">
+										<div class="widget-text__content">
+											<ul>
+												<li><a href="#">Term of Services </a></li>
+												<li><a href="#">Privacy Policy </a></li>
+												<li><a href="#">Sitemap </a></li>
+												<li><a href="#">Help</a></li>
+											</ul>
+										</div>
+									</section><!-- End / widget-text__widget -->
+
+							</div>
+						</div>
+						<div class="col-sm-6 col-md-4 col-lg-2 col-xl-2 ">
+							<div class="footer__item">
+
+									<!-- widget-text__widget -->
+									<section class="widget-text__widget widget">
+										<div class="widget-text__content">
+											<ul>
+												<li><a href="#">How It Work </a></li>
+												<li><a href="#">Carrier </a></li>
+												<li><a href="#">Pricing </a></li>
+												<li><a href="#">Support</a></li>
+											</ul>
+										</div>
+									</section><!-- End / widget-text__widget -->
+
+							</div>
+						</div>
+						<div class="col-md-4 col-lg-2 col-xl-2 ">
+							<div class="footer__item">
+
+									<!-- form-sub -->
+									<div class="form-sub">
+										<h4 class="form-sub__title">Our Newsletter</h4>
+										<form class="form-sub__form">
+											<div class="form-item">
+												<input class="form-control" type="email" placeholder="Enter Your Email Address..."/>
+											</div>
+											<div class="form-submit">
+												<button class="form-button" type="submit"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+											</div>
+										</form>
+									</div><!-- End / form-sub -->
+
+							</div>
+						</div>
+						<div class="col-sm-6 col-md-4 col-lg-2 col-xl-2  consult_backToTop">
+							<div class="footer__item"><a href="#" id="back-to-top"> <i class="fa fa-angle-up" aria-hidden="true"> </i><span>Back To Top</span></a></div>
+						</div>
+					</div>
+				</div>
+				<div class="footer__copyright">2017 &copy; Copyright Awe7. All rights Reserved.</div>
+			</footer><!-- End / footer -->
+
+		</div>
+		<!-- Vendors-->
+		<script type="text/javascript" src="static/assets/vendors/jquery/jquery.min.js"></script>
+		<script type="text/javascript" src="static/assets/vendors/imagesloaded/imagesloaded.pkgd.js"></script>
+		<script type="text/javascript" src="static/assets/vendors/isotope-layout/isotope.pkgd.js"></script>
+		<script type="text/javascript" src="static/assets/vendors/jquery.countdown/jquery.countdown.min.js"></script>
+		<script type="text/javascript" src="static/assets/vendors/jquery.countTo/jquery.countTo.min.js"></script>
+		<script type="text/javascript" src="static/assets/vendors/jquery.countUp/jquery.countup.min.js"></script>
+		<script type="text/javascript" src="static/assets/vendors/jquery.matchHeight/jquery.matchHeight.min.js"></script>
+		<script type="text/javascript" src="static/assets/vendors/jquery.mb.ytplayer/jquery.mb.YTPlayer.min.js"></script>
+		<script type="text/javascript" src="static/assets/vendors/magnific-popup/jquery.magnific-popup.min.js"></script>
+		<script type="text/javascript" src="static/assets/vendors/masonry-layout/masonry.pkgd.js"></script>
+		<script type="text/javascript" src="static/assets/vendors/owl.carousel/owl.carousel.js"></script>
+		<script type="text/javascript" src="static/assets/vendors/jquery.waypoints/jquery.waypoints.min.js"></script>
+		<script type="text/javascript" src="static/assets/vendors/menu/menu.min.js"></script>
+		<script type="text/javascript" src="static/assets/vendors/smoothscroll/SmoothScroll.min.js"></script>
+		<!-- App-->
+		<script type="text/javascript" src="static/assets/js/main.js"></script>
+	</body>
+</html>
+=======
 <!DOCTYPE html>
 
 <html lang="en">
@@ -99,3 +522,4 @@
 	</body>
 
 </html>
+>>>>>>> 83190c26b4ced7ab5f960f5195b7c22b7a893fc3
