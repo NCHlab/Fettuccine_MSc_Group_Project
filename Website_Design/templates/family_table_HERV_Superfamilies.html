@@ -7,7 +7,7 @@
 		<script src="http://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 		<script>
         $(document).ready( function () {
-            $('#Families').DataTable();FFF
+            $('#Superfamilies').DataTable();FFF
         } );
     </script>
 		<link rel="stylesheet" type="text/css" href="static/index.css"/>
@@ -49,7 +49,6 @@
   <div id="myDropdown2" class="dropdown-content">
 		<a href="{{ url_for('family_table_HERV_Superfamilies')}}">SuperFamily</a>
 		<a href="{{ url_for('family_table_HERV_Families')}}">Family</a>
-		<a href="{{ url_for('family_table_HERV_Families')}}">Repeat Name</a>
   </div>
 </div>
 </body>
@@ -102,7 +101,7 @@ window.onclick = function(event) {
 
 
 
-	 <table id = "Families" class = "display">
+	 <table id = "Superfamilies" class = "display">
 		 <thead>
 			<tr>
 				<th>{{ firstcolumn }}</th>
