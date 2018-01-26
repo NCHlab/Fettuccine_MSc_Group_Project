@@ -11,9 +11,9 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 		<script src="http://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 		<script>
-				$(document).ready( function () {
-						$('#mz_seq').DataTable();FFF
-				} );
+			$(document).ready(function() {
+				var table = $('#mz_seq').DataTable();
+		} );
 		</script>
 
 		<header>
@@ -35,24 +35,18 @@
 
 			</nav>
 		</header>
-
+	<div class="container">
 		<p>
 				Please Upload a mzid or mztab formatted file
 				<form id="upload-form" action="{{ url_for("upload_peptide")}}" method="POST" enctype="multipart/form-data">
 		 		<input type="file" name="file" accept=".xml, .mzid, .mzTab">
 		 		<input type="submit" value="Upload">
 
-
+		<hr>
 				<!–– THIS IS A COMMENT input type="text" id="player" value="" style="width:100px; height:40px;"––>
 		</p>
-		<p>
-			<form>
-				<input type="checkbox" name="filetype" value="Mzid/MzIdent">Mzid/MzIdent<br>
-				<input type="checkbox" name="filetype" value="MzTab">MzTab
-			</form>
-		</p>
-
-
+	</div>
+	<div class="container">
 		{{ result_seq1 }}
 		{{ empty }}
 		</body>
@@ -75,6 +69,7 @@
 			 {% endfor %}
 			</tbody>
 		 </table>
+	 	</div>
 		</body>
 
 		<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN crossorigin="anonymous"></script>
