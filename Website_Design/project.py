@@ -42,8 +42,8 @@ def indexpage():
 	now = datetime.now(timezone('Europe/London'))
 	return render_template("index.html", time = now)
 	#return "The time is {}".format(now)
-@app.route("/family_table")
 
+@app.route("/family_table")
 def family_table():
 	cur.execute("SELECT Family, Repeat_Name, Counts FROM `HERV_Groupby_Families`")
 	HERV_GbF_rows = cur.fetchall()
