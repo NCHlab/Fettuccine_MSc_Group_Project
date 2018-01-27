@@ -1,31 +1,93 @@
 <!DOCTYPE html>
-
-<html>
+<html lang="en">
 	<head>
 		<title>Expression Atlas</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<!-- Fonts-->
+		<link rel="stylesheet" type="text/css" href="static/fonts/fontawesome/font-awesome.min.css">
+		<link rel="stylesheet" type="text/css" href="static/fonts/themify-icons/themify-icons.css">
+		<!-- Vendors-->
+		<!-- <link rel="stylesheet" type="text/css" href="static/vendors/bootstrap4/bootstrap-grid.min.css"> -->
+		<link rel="stylesheet" type="text/css" href="static/vendors/magnific-popup/magnific-popup.min.css">
+		<link rel="stylesheet" type="text/css" href="static/vendors/owl.carousel/owl.carousel.css">
+		<!-- App & fonts-->
+		<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i&amp;amp;subset=latin-ext">
+		<link rel="stylesheet" type="text/css" href="static/css/main.css">
+		<link rel="stylesheet" href="/static/css/bootstrap.min.css">
+		<link rel="stylesheet" href="http://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<script src="http://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 	</head>
+
 	<body>
-		<link rel="stylesheet" type="text/css" href="static/index.css"/>
+		<div class="page-wrap">
 
-		<header>
-			<nav>
-				<ul>
-					<li><a href="{{ url_for('indexpage')}}">HomePage</a></li>
-					<li><a href="{{ url_for('family_table')}}">Family table </a></li>
-					<li><a href="{{ url_for('distribution')}}">Distribution of retroelements</a></li>
-					<li><a href="{{ url_for('AA_seq_list')}}">Translated products (list)</a></li>
-					<li><a href="{{ url_for('relationship_AA')}}">AA Relationship viewer </a></li>
-					<li><a href="{{ url_for('peptide_seq_ident')}}">Peptide sequence identifier</a></li>
-					<li><a href="{{ url_for('upload_peptide')}}">Upload a file </a></li>
-					<li><a href="{{ url_for('atlas')}}">Expression Atlas </a></li>
-					<li><a href="{{ url_for('documentation')}}">Documentation</a></li>
-					<li><a href="{{ url_for('about_us')}}">About us </a></li>
-					<li><input type="text" placeholder="Search.."></li>
-				</ul>
+			<!-- header -->
+			<header class="header">
+				<div class="container">
+					<div class="header__logo"><a href="index.html"><img src="static/img/logo.png" alt=""/></a></div>
+					<div class="header__toogleGroup">
+						<div class="header__chooseLanguage">
+						<div class="search-form">
+							<div class="search-form__toggle"><i class="ti-search"></i></div>
+							<div class="search-form__form">
 
+												<!-- form-search -->
+												<div class="form-search">
+													<form>
+														<input class="form-control" type="text" placeholder="Hit enter to search or ESC to close"/>
+													</form>
+												</div><!-- End / form-search -->
 
-			</nav>
-		</header>
+							</div>
+						</div>
+					</div>
+				</div>
+
+					<!-- consult-nav -->
+					<nav class="consult-nav">
+
+						<!-- consult-menu -->
+						<ul class="consult-menu">
+							<li class="consult-menu"><a href="{{ url_for('indexpage')}}">Home</a>
+							</li>
+							<li><a href="{{ url_for('family_table')}}">Family Table</a>
+							</li>
+							<li><a href="{{ url_for('distribution')}}">Distribution</a>
+							</li>
+							<li class="menu-item-has-children"><a href="#">Translated</a>
+								<ul class="sub-menu">
+									<li><a href="{{ url_for('AA_seq_list')}}">Translated products</a>
+									</li>
+									<li><a href="{{ url_for('relationship_AA')}}">AA Relationship Viewer</a>
+									</li>
+								</ul>
+							</li>
+							<li class="menu-item-has-children"><a href="#">Upload Files</a>
+								<ul class="sub-menu">
+									<li><a href="{{ url_for('peptide_seq_ident')}}">Peptide Sequence identifier</a>
+									</li>
+									<li><a href="{{ url_for('upload_peptide')}}">MzIdent / MzTab</a>
+									</li>
+								</ul>
+							</li>
+							<li class="current-menu-item"><a href="{{ url_for('atlas')}}">Atlas</a>
+							</li>
+							<li class="menu-item-has-children"><a href="#">project</a>
+								<ul class="sub-menu">
+									<li><a href="{{ url_for('documentation')}}">Documentation</a>
+									</li>
+									<li><a href="{{ url_for('about_us')}}">About Us</a>
+									</li>
+								</ul>
+						</ul><!-- consult-menu -->
+
+						<div class="navbar-toggle"><span></span><span></span><span></span></div>
+					</nav><!-- End / consult-nav -->
+
+				</div>
+			</header><!-- End / header -->
 	</body>
 
 </html>

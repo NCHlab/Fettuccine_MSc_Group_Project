@@ -1,16 +1,19 @@
 <!DOCTYPE html>
-
-<html>
+<html lang="en">
 	<head>
-		<title>Peptide Sequence Ident</title>
-	</head>
-	<style>
-		td {word-wrap: break-word}
-	</style>
-
-
-	<body>
-		<link rel="stylesheet" type="text/css" href="static/index.css"/>
+		<title>Peptide Sequence Identifier</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<!-- Fonts-->
+		<link rel="stylesheet" type="text/css" href="static/fonts/fontawesome/font-awesome.min.css">
+		<link rel="stylesheet" type="text/css" href="static/fonts/themify-icons/themify-icons.css">
+		<!-- Vendors-->
+		<!-- <link rel="stylesheet" type="text/css" href="static/vendors/bootstrap4/bootstrap-grid.min.css"> -->
+		<link rel="stylesheet" type="text/css" href="static/vendors/magnific-popup/magnific-popup.min.css">
+		<link rel="stylesheet" type="text/css" href="static/vendors/owl.carousel/owl.carousel.css">
+		<!-- App & fonts-->
+		<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i&amp;amp;subset=latin-ext">
+		<link rel="stylesheet" type="text/css" href="static/css/main.css">
 		<link rel="stylesheet" href="/static/css/bootstrap.min.css">
 		<link rel="stylesheet" href="http://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -18,55 +21,112 @@
 		<script>
 				$(document).ready(function() {
 			    var table = $('#Fam_seq').DataTable( {
-			        scrollY:        "1000px",
+			        scrollY:        "2000px",
 			        scrollX:        true,
 			        scrollCollapse: true,
 			        paging:         true
 			    } );
 			} );
 		</script>
-		<header>
-			<nav>
-				<ul>
-					<li><a href="{{ url_for('indexpage')}}">HomePage</a></li>
-					<li><a href="{{ url_for('family_table')}}">Family table </a></li>
-					<li><a href="{{ url_for('distribution')}}">Distribution of retroelements</a></li>
-					<li><a href="{{ url_for('AA_seq_list')}}">Translated products (list)</a></li>
-					<li><a href="{{ url_for('relationship_AA')}}">AA Relationship viewer </a></li>
-					<li><a href="{{ url_for('peptide_seq_ident')}}">Peptide sequence identifier</a></li>
-					<li><a href="{{ url_for('upload_peptide')}}">Upload a file </a></li>
-					<li><a href="{{ url_for('atlas')}}">Expression Atlas </a></li>
-					<li><a href="{{ url_for('documentation')}}">Documentation</a></li>
-					<li><a href="{{ url_for('about_us')}}">About us </a></li>
-					<li><input type="text" placeholder="Search.."></li>
-				</ul>
+	</head>
 
+	<body>
+		<div class="page-wrap">
 
-			</nav>
-		</header>
-		<div class="container">
-		<p>
-				Please Upload a fasta file or enter the peptide sequence below
-				<form id="upload-form" action="{{ url_for("peptide_seq_ident")}}" method="POST" enctype="multipart/form-data">
-		 		<input type="file" name="file2" accept=".fasta">
-		 		<input type="submit" value="Upload">
-		</p>
+			<!-- header -->
+			<header class="header">
+				<div class="container">
+					<div class="header__logo"><a href="index.html"><img src="static/img/logo.png" alt=""/></a></div>
+					<div class="header__toogleGroup">
+						<div class="header__chooseLanguage">
+						<div class="search-form">
+							<div class="search-form__toggle"><i class="ti-search"></i></div>
+							<div class="search-form__form">
 
-		<p>
-			<form action="{{ url_for("peptide_seq_ident")}}" method="POST">
-			  <textarea Name="fasta_content" rows=8 cols=90></textarea>
-				<br>
-			  <input type="submit" value="Search" id="fasta_search">
-			</form>
-		</p>
-		<hr>
-		</div>
+												<!-- form-search -->
+												<div class="form-search">
+													<form>
+														<input class="form-control" type="text" placeholder="Hit enter to search or ESC to close"/>
+													</form>
+												</div><!-- End / form-search -->
 
+							</div>
+						</div>
+					</div>
+				</div>
+
+					<!-- consult-nav -->
+					<nav class="consult-nav">
+
+						<!-- consult-menu -->
+						<ul class="consult-menu">
+							<li class="consult-menu"><a href="{{ url_for('indexpage')}}">Home</a>
+							</li>
+							<li><a href="{{ url_for('family_table')}}">Family Table</a>
+							</li>
+							<li><a href="{{ url_for('distribution')}}">Distribution</a>
+							</li>
+							<li class="menu-item-has-children"><a href="#">Translated</a>
+								<ul class="sub-menu">
+									<li><a href="{{ url_for('AA_seq_list')}}">Translated products</a>
+									</li>
+									<li><a href="{{ url_for('relationship_AA')}}">AA Relationship Viewer</a>
+									</li>
+								</ul>
+							</li>
+							<li class="current-menu-item"><a href="#">Upload Files</a>
+								<ul class="sub-menu">
+									<li><a href="{{ url_for('peptide_seq_ident')}}">Peptide Sequence identifier</a>
+									</li>
+									<li><a href="{{ url_for('upload_peptide')}}">MzIdent / MzTab</a>
+									</li>
+								</ul>
+							</li>
+							<li><a href="{{ url_for('atlas')}}">Atlas</a>
+							</li>
+							<li class="menu-item-has-children"><a href="#">project</a>
+								<ul class="sub-menu">
+									<li><a href="{{ url_for('documentation')}}">Documentation</a>
+									</li>
+									<li><a href="{{ url_for('about_us')}}">About Us</a>
+									</li>
+								</ul>
+						</ul><!-- consult-menu -->
+
+						<div class="navbar-toggle"><span></span><span></span><span></span></div>
+					</nav><!-- End / consult-nav -->
+
+				</div>
+			</header><!-- End / header -->
+			<div class="md-content">
+				<!-- page-title -->
+				<div class="page-title">
+							<div class="col-lg-8 offset-0 offset-sm-0 offset-md-0 offset-lg-2 ">
+								<h2 class="page-title__title">Fasta Upload</h2>
+
+								<div class="container">
+								<p>
+										Please Upload a fasta file or enter the peptide sequence below
+										<form id="upload-form" action="{{ url_for("peptide_seq_ident")}}" method="POST" enctype="multipart/form-data">
+								 		<input type="file" name="file2" accept=".fasta">
+								 		<input type="submit" value="Upload">
+								</p>
+
+								<p>
+									<form action="{{ url_for("peptide_seq_ident")}}" method="POST">
+									  <textarea Name="fasta_content" rows=8 cols=90></textarea>
+										<br>
+									  <input type="submit" value="Search" id="fasta_search">
+									</form>
+								</p>
+							</div>
+						</div>
+					</div>
+	</body>
 		<div class="container">
 		{{ result_seq1 }}
 		{{ empty }}
 		<hr>
-		</body>
 		<body>
 		 <table id = "Fam_seq" class = "display">
 			 <thead>
@@ -76,32 +136,47 @@
 				</tr>
 			</thead>
 			<tbody>
-			{% if data1 != "" %}
-				{% for row in data1 %}
-				 <tr>
-				 {% for d in row %}
-					 <td>{{ d }}</td>
+				{% if data1 != "" %}
+					{% for row in data1 %}
+					 <tr>
+					 {% for d in row %}
+						 <td>{{ d }}</td>
+					 {% endfor %}
+					 </tr>
 				 {% endfor %}
-				 </tr>
-			 {% endfor %}
-			{% endif %}
-			{% if data != "" %}
-			 {% for row in data %}
-				 <tr>
-				 {% for d in row %}
-					 <td>{{ d[0] }}</td>
-					 <td2>{{ d[1] }}</td>
+				{% endif %}
+				{% if data != "" %}
+				 {% for row in data %}
+					 <tr>
+					 {% for d in row %}
+						 <td>{{ d[0] }}</td>
+						 <td>{{ d[1] }}</td>
+					 {% endfor %}
+					 </tr>
 				 {% endfor %}
-				 </tr>
-			 {% endfor %}
-			 {% endif %}
+				 {% endif %}
 			</tbody>
 		 </table>
-	 	</div>
 		</body>
+		</div>
 	<body>
+		<!-- Vendors-->
+
+		<script type="text/javascript" src="static/vendors/imagesloaded/imagesloaded.pkgd.js"></script>
+		<script type="text/javascript" src="static/vendors/isotope-layout/isotope.pkgd.js"></script>
+		<script type="text/javascript" src="static/vendors/jquery.countdown/jquery.countdown.min.js"></script>
+		<script type="text/javascript" src="static/vendors/jquery.countTo/jquery.countTo.min.js"></script>
+		<script type="text/javascript" src="static/vendors/jquery.countUp/jquery.countup.min.js"></script>
+		<script type="text/javascript" src="static/vendors/jquery.matchHeight/jquery.matchHeight.min.js"></script>
+		<script type="text/javascript" src="static/vendors/jquery.mb.ytplayer/jquery.mb.YTPlayer.min.js"></script>
+		<script type="text/javascript" src="static/vendors/magnific-popup/jquery.magnific-popup.min.js"></script>
+		<script type="text/javascript" src="static/vendors/masonry-layout/masonry.pkgd.js"></script>
+		<script type="text/javascript" src="static/vendors/owl.carousel/owl.carousel.js"></script>
+		<script type="text/javascript" src="static/vendors/jquery.waypoints/jquery.waypoints.min.js"></script>
+		<script type="text/javascript" src="static/vendors/menu/menu.min.js"></script>
+		<script type="text/javascript" src="static/vendors/smoothscroll/SmoothScroll.min.js"></script>
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN crossorigin="anonymous"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity "sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 	</body>
 
 </html>
