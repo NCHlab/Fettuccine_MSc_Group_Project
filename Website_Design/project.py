@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 from flask import Flask, send_from_directory, render_template, request, url_for, flash
 from datetime import datetime
 from pytz import timezone
@@ -1013,5 +1012,3 @@ def static_file(path):
 
 #if __name__ == "__main__":
 #	app.run(debug=True)
->>>>>>> c1b7dcb70c4f20221f01657bc739e9bb0ebb65de
->>>>>>> 51b8dadf14f1beeb4c7f2377ca1be404c976c0ac
