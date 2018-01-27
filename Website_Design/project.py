@@ -74,7 +74,7 @@ def family_table_HERV_Superfamilies():
 	cur.execute("SELECT Superfamily, Repeat_Name, Counts FROM `HERV_Groupby_Superfamilies`")
 	HERV_GbS_rows = cur.fetchall()
 	wisit="Superfamily"
-	return render_template("family_table_HERV.html", data=HERV_GbS_rows, firstcolumn=wisit)
+	return render_template("family_table_HERV_Superfamilies.html", data=HERV_GbS_rows, firstcolumn=wisit)
 
 @app.route("/distribution")
 def distribution():
