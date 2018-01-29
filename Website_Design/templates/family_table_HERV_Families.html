@@ -25,7 +25,7 @@
 			<script src="http://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 			<script>
 	        $(document).ready( function () {
-	            $('#Repeats_L1').DataTable();FFF
+	            $('#Families').DataTable();FFF
 	        } );
 	    </script>
 		</head>
@@ -104,8 +104,17 @@
 <div/>
 <div style="text-align: center;">
 <h5 style="text-align: center;">Please select a retrotransposon class:</h5>
-<button onclick="window.location.href='{{ url_for('family_table_HERV_Superfamilies')}}'" class="dropbtn">HERV</button>
-<button onclick="return false;" class="dropbtn_selected">LINE-1</button>
+<button onclick="return false;" class="dropbtn_selected">HERV</button>
+<button onclick="window.location.href='{{ url_for('family_table_LINE1')}}'" class="dropbtn">LINE-1</button>
+<p>&nbsp;</p>
+</div>
+
+<div style="text-align: center;">
+<h5 style="text-align: center;">Group HERVs by:</h5>
+<button onclick="window.location.href='{{ url_for('family_table_HERV_Superfamilies')}}'" class="dropbtn">SuperFamilies</button>
+<button onclick="return false;" class="dropbtn_selected">Families</button>
+<button onclick="window.location.href='{{ url_for('family_table_HERV_Repeats')}}'" class="dropbtn">Repeat Names</button>
+</div>
 
 </body>
 <script>
@@ -152,27 +161,30 @@ window.onclick = function(event) {
 </script>
 
 </body>
+<P> &nbsp; </P>
 <body>
 
 
 
-	<table id = "Repeats_L1" class = "display">
-		<thead>
-		 <tr>
-			 <th>Family</th>
-			 <th>Counts</th>
-		 </tr>
-	 </thead>
-	 <tbody>
-			{% for row in data %}
-					<tr>
-					{% for d in row %}
-							<td>{{ d }}</td>
-					{% endfor %}
-					</tr>
-			{% endfor %}
-	 </tbody>
-	</table>
+	 <table id = "Families" class = "display">
+		 <thead>
+			<tr>
+				<th>{{ firstcolumn }}</th>
+				<th>Superfamily</th>
+				<th>Repeat Name</th>
+				<th>Counts</th>
+			</tr>
+		</thead>
+		<tbody>
+	     {% for row in data %}
+	         <tr>
+	         {% for d in row %}
+	             <td>{{ d }}</td>
+	         {% endfor %}
+	         </tr>
+	     {% endfor %}
+		</tbody>
+	 </table>
 
 </body>
 

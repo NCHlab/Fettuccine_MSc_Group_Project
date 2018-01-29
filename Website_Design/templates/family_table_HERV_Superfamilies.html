@@ -1,56 +1,123 @@
 <!DOCTYPE html>
 <html>
-<head>
-		<title>RT Family Table</title>
-		<link rel="stylesheet" href="http://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-		<script src="http://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-		<script>
-        $(document).ready( function () {
-            $('#Superfamilies').DataTable();FFF
-        } );
-    </script>
-		<link rel="stylesheet" type="text/css" href="static/index.css"/>
-</head>
-<body>
+		<head>
+			<title>Home</title>
+			<meta charset="utf-8">
+			<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+			<meta name="format-detection" content="telephone=no">
+			<meta name="apple-mobile-web-app-capable" content="yes">
+			<!-- Fonts-->
+			<link rel="stylesheet" type="text/css" href="static/assets/fonts/fontawesome/font-awesome.min.css">
+			<link rel="stylesheet" type="text/css" href="static/assets/fonts/themify-icons/themify-icons.css">
+			<!-- Vendors-->
+			<link rel="stylesheet" type="text/css" href="static/assets/vendors/bootstrap4/bootstrap-grid.min.css">
+			<link rel="stylesheet" type="text/css" href="static/assets/vendors/magnific-popup/magnific-popup.min.css">
+			<link rel="stylesheet" type="text/css" href="static/assets/vendors/owl.carousel/owl.carousel.css">
+			<link rel="stylesheet" type="text/css" href="static/assets/vendors/_jquery/jquery.min.css">
+			<!-- <link rel="stylesheet" type="text/css" href="static/assets/vendors/bootstrap4/bootstrap-grid.min.css"> -->
+			<!-- <link rel="stylesheet" type="text/css" href="static/assets/vendors/bootstrap4/bootstrap-grid.min.css"> -->
+			<!-- App & fonts-->
+			<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i&amp;amp;subset=latin-ext">
+			<link rel="stylesheet" type="text/css" href="static/assets/css/main.css"><!--[if lt IE 9]>
+				<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+			<![endif]-->		<link rel="stylesheet" href="http://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">
+			<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+			<script src="http://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
+			<script>
+	        $(document).ready( function () {
+	            $('#Superfamilies').DataTable();FFF
+	        } );
+	    </script>
 
+		</head>
+		<body>
+			<div class="page-wrap">
 
-	<header>
-		<nav>
-			<ul>
-				<li><a href="{{ url_for('indexpage')}}">HomePage</a></li>
-				<li><a href="{{ url_for('family_table')}}">Family table </a></li>
-				<li><a href="{{ url_for('distribution')}}">Distribution of retroelements</a></li>
-				<li><a href="{{ url_for('AA_seq_list')}}">Translated products (list)</a></li>
-				<li><a href="{{ url_for('relationship_AA')}}">AA Relationship viewer </a></li>
-				<li><a href="{{ url_for('peptide_seq_ident')}}">Peptide sequence identifier</a></li>
-				<li><a href="{{ url_for('upload_peptide')}}">Upload a file </a></li>
-				<li><a href="{{ url_for('atlas')}}">Expression Atlas </a></li>
-				<li><a href="{{ url_for('documentation')}}">Documentation</a></li>
-				<li><a href="{{ url_for('about_us')}}">About us </a></li>
-				<li><input type="text" placeholder="Search.."></li>
-			</ul>
-		</nav>
-	</header>
+				<!-- header -->
+				<header class="header">
+					<div class="container">
+						<div class="header__logo"><a href="index.html"><img src="static/img/logo.png" alt=""/></a></div>
+						<div class="header__toogleGroup">
+							<div class="header__chooseLanguage">
+							<div class="search-form">
+								<div class="search-form__toggle"><i class="ti-search"></i></div>
+								<div class="search-form__form">
+
+													<!-- form-search -->
+													<div class="form-search">
+														<form>
+															<input class="form-control" type="text" placeholder="Hit enter to search or ESC to close"/>
+														</form>
+													</div><!-- End / form-search -->
+
+								</div>
+							</div>
+						</div>
+					</div>
+
+						<!-- consult-nav -->
+						<nav class="consult-nav">
+
+							<!-- consult-menu -->
+							<ul class="consult-menu">
+								<li class="consult-menu"><a href="{{ url_for('indexpage')}}">Home</a>
+								</li>
+								<li class="current-menu-item"><a href="{{ url_for('family_table')}}">Family Table</a>
+								</li>
+								<li class="consult-menu"><a href="{{ url_for('distribution')}}">Distribution</a>
+								</li>
+								<li class="menu-item-has-children"><a href="#">Translated</a>
+									<ul class="sub-menu">
+										<li><a href="{{ url_for('AA_seq_list')}}">Translated products</a>
+										</li>
+										<li><a href="{{ url_for('relationship_AA')}}">AA Relationship Viewer</a>
+										</li>
+									</ul>
+								</li>
+								<li class="consult-menu"><a href="#">Upload Files</a>
+									<ul class="sub-menu">
+										<li><a href="{{ url_for('peptide_seq_ident')}}">Peptide Sequence identifier</a>
+										</li>
+										<li><a href="{{ url_for('upload_peptide')}}">MzIdent / MzTab</a>
+										</li>
+									</ul>
+								</li>
+								<li><a href="{{ url_for('atlas')}}">Atlas</a>
+								</li>
+								<li class="menu-item-has-children"><a href="#">project</a>
+									<ul class="sub-menu">
+										<li><a href="{{ url_for('documentation')}}">Documentation</a>
+										</li>
+										<li><a href="{{ url_for('about_us')}}">About Us</a>
+										</li>
+									</ul>
+							</ul><!-- consult-menu -->
+
+							<div class="navbar-toggle"><span></span><span></span><span></span></div>
+						</nav><!-- End / consult-nav -->
+
+				</div>
+		</header>
 </body>
-
-
-<p>Please select a retrotransposon class:</p>
-<div class="dropdown">
-<button onclick="myFunction()" class="dropbtn">RT Class</button>
-  <div id="myDropdown" class="dropdown-content">
-		<a href="{{ url_for('family_table_LINE1')}}">Line-1</a>
-		<a href="{{ url_for('family_table_HERV')}}">HERV</a>
-  </div>
+<div class=container>
+<p>&nbsp;</p>
+<h4 style="text-align: center;">Family Tables of Retrotransposonal Repeats</h4>
+<div/>
+<div style="text-align: center;">
+<h5 style="text-align: center;">Please select a retrotransposon class:</h5>
+<button onclick="return false;" class="dropbtn_selected">HERV</button>
+<button onclick="window.location.href='{{ url_for('family_table_LINE1')}}'" class="dropbtn">LINE-1</button>
+<p>&nbsp;</p>
 </div>
-<p>Group HERVs by:</p>
-<div class="dropdown">
-<button onclick="myFunction2()" class="dropbtn">Group By</button>
-  <div id="myDropdown2" class="dropdown-content">
-		<a href="{{ url_for('family_table_HERV_Superfamilies')}}">SuperFamily</a>
-		<a href="{{ url_for('family_table_HERV_Families')}}">Family</a>
-  </div>
+
+<div style="text-align: center;">
+<h5 style="text-align: center;">Group HERVs by:</h5>
+<button  onclick="return false;" class="dropbtn_selected">SuperFamilies</button>
+<button onclick="window.location.href='{{ url_for('family_table_HERV_Families')}}'" class="dropbtn">Families</button>
+<button onclick="window.location.href='{{ url_for('family_table_HERV_Repeats')}}'" class="dropbtn">Repeat Names</button>
 </div>
+
 </body>
 <script>
 /* When the user clicks on the button,
@@ -95,17 +162,79 @@ window.onclick = function(event) {
 }
 </script>
 
-</body>
-<P> &nbsp; </P>
 <body>
+	<p>&nbsp;</p>
+	<div class="pie_sf">
+    <canvas id="myChart"></canvas>
+  </div>
+<script>
+function jsconv(vars) {
+	return vars
+}
 
+let myChart = document.getElementById('myChart').getContext('2d');
 
+// Global Options
+Chart.defaults.global.defaultFontFamily = 'Lato';
+Chart.defaults.global.defaultFontSize = 15;
+Chart.defaults.global.defaultFontColor = '#777';
+
+let barChart = new Chart(myChart, {
+	type:'doughnut', // bar, horizontalBar, pie, line, doughnut, radar, polarArea
+	data:{
+		labels:['ERV1', 'ERV1?', 'ERVK', 'ERVL', 'ERV-MaLR', 'ERVL?'],
+		datasets:[{
+			label:'Population',
+			data:[
+				jsconv({{arr_sc[0]}}),
+				jsconv({{arr_sc[1]}}),
+				jsconv({{arr_sc[2]}}),
+				jsconv({{arr_sc[3]}}),
+				jsconv({{arr_sc[4]}}),
+				jsconv({{arr_sc[5]}})
+			],
+			//backgroundColor:'green',
+			backgroundColor:["#06D124", "#1E1A93", "#D87E08", "#C10B14", "#0CAFA7", "#F4F11F"],
+			borderWidth:1,
+			borderColor:'#777',
+			hoverBorderWidth:3,
+			hoverBorderColor:'#000'
+		}]
+	},
+	options:{
+		title:{
+			display:false,
+			text:'Superfamilies Genome Frequency',
+			fontSize:25
+		},
+		legend:{
+			display:true,
+			position:'top',
+			labels:{
+				fontColor:'#000',
+			usePointStyle: true
+			}
+		},
+		layout:{
+			padding:{
+				left:30,
+				right:0,
+				bottom:0,
+				top:0
+			}
+		},
+		tooltips:{
+			enabled:true
+		}
+	}
+});
+</script>
 
 	 <table id = "Superfamilies" class = "display">
 		 <thead>
 			<tr>
 				<th>{{ firstcolumn }}</th>
-				<th>Repeat Name</th>
+				<th>Description</th>
 				<th>Counts</th>
 			</tr>
 		</thead>
