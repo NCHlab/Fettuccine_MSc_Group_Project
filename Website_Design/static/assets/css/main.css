@@ -41,11 +41,71 @@
 	34. consult_slider
 
 --------------------------------------------------------------------------*/
+/*Pie chart*/
+
+.chart-legend li span{
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    margin-right: 5px;
+}
+
+.dropbtn {
+    background-color: #e2e2e2;
+    color: black;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+
+.dropbtn_selected {
+    background-color: #f39c12;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+
+.dropbtn:hover, .dropbtn:focus {
+    background-color: #f39c12;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    overflow: auto;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.pie_sf {
+    width:350px;
+    height:350px;
+    position: relative;
+    left: 33%;
+}
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
 
 
+.dropdown a:hover {background-color: #2980B9}
 
 /* 1. base
 --------------------------------------------------------------------------------*/
+
 
 a[disabled], input[disabled], button[disabled], textarea[disabled] {
     cursor: not-allowed !important;
@@ -4329,6 +4389,12 @@ mark, .mark {
     font-weight: 400;
 }
 
+.page-title__title_smaller {
+    font-size: 15px;
+    font-weight: 100;
+}
+
+
 @media (min-width: 0) {
     .page-title__title {
         font-size: calc(3.16667vw + 30px);
@@ -4341,6 +4407,7 @@ mark, .mark {
     }
 }
 
+}
 
 /* 33. consult_sidebar
 --------------------------------------------------------------------------------*/
