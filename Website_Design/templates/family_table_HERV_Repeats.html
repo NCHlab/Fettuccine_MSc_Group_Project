@@ -23,10 +23,9 @@
 			<![endif]-->		<link rel="stylesheet" href="http://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">
 			<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 			<script src="http://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-			<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
 			<script>
 	        $(document).ready( function () {
-	            $('#Superfamilies').DataTable();FFF
+	            $('#Repeats').DataTable();FFF
 	        } );
 	    </script>
 			<link rel="stylesheet" type="text/css" href="static/index.css"/>
@@ -65,9 +64,9 @@
 
 <div style="text-align: center;">
 <h5 style="text-align: center;">Group HERVs by:</h5>
-<button  onclick="return false;" class="dropbtn_selected">SuperFamilies</button>
+<button onclick="window.location.href='{{ url_for('family_table_HERV_Superfamilies')}}'" class="dropbtn">SuperFamilies</button>
 <button onclick="window.location.href='{{ url_for('family_table_HERV_Families')}}'" class="dropbtn">Families</button>
-<button onclick="window.location.href='{{ url_for('family_table_HERV_Repeats')}}'" class="dropbtn">Repeat Names</button>
+<button onclick="return false;" class="dropbtn_selected">Repeat Names</button>
 </div>
 
 </body>
@@ -114,79 +113,17 @@ window.onclick = function(event) {
 }
 </script>
 
+</body>
 <body>
-	<p>&nbsp;</p>
-	<div class="pie_sf">
-    <canvas id="myChart"></canvas>
-  </div>
-<script>
-function jsconv(vars) {
-	return vars
-}
 
-let myChart = document.getElementById('myChart').getContext('2d');
 
-// Global Options
-Chart.defaults.global.defaultFontFamily = 'Lato';
-Chart.defaults.global.defaultFontSize = 15;
-Chart.defaults.global.defaultFontColor = '#777';
 
-let barChart = new Chart(myChart, {
-	type:'doughnut', // bar, horizontalBar, pie, line, doughnut, radar, polarArea
-	data:{
-		labels:['ERV1', 'ERV1?', 'ERVK', 'ERVL', 'ERV-MaLR', 'ERVL?'],
-		datasets:[{
-			label:'Population',
-			data:[
-				jsconv({{arr_sc[0]}}),
-				jsconv({{arr_sc[1]}}),
-				jsconv({{arr_sc[2]}}),
-				jsconv({{arr_sc[3]}}),
-				jsconv({{arr_sc[4]}}),
-				jsconv({{arr_sc[5]}})
-			],
-			//backgroundColor:'green',
-			backgroundColor:["#06D124", "#1E1A93", "#D87E08", "#C10B14", "#0CAFA7", "#F4F11F"],
-			borderWidth:1,
-			borderColor:'#777',
-			hoverBorderWidth:3,
-			hoverBorderColor:'#000'
-		}]
-	},
-	options:{
-		title:{
-			display:false,
-			text:'Superfamilies Genome Frequency',
-			fontSize:25
-		},
-		legend:{
-			display:true,
-			position:'top',
-			labels:{
-				fontColor:'#000',
-			usePointStyle: true
-			}
-		},
-		layout:{
-			padding:{
-				left:30,
-				right:0,
-				bottom:0,
-				top:0
-			}
-		},
-		tooltips:{
-			enabled:true
-		}
-	}
-});
-</script>
-
-	 <table id = "Superfamilies" class = "display">
+	 <table id = "Repeats" class = "display">
 		 <thead>
 			<tr>
-				<th>{{ firstcolumn }}</th>
-				<th>Description</th>
+				<th>Repeat Name</th>
+				<th>Superfamily</th>
+				<th>Family</th>
 				<th>Counts</th>
 			</tr>
 		</thead>

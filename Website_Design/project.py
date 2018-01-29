@@ -55,26 +55,31 @@ def family_table_LINE1():
 	HERV_LbR_rows = cur.fetchall()
 	return render_template("family_table_LINE1.html", data=HERV_LbR_rows)
 
-@app.route("/family_table_HERV")
-def family_table_HERV():
-	cur.execute("SELECT Family, Repeat_Name, Counts FROM `HERV_Groupby_Families`")
-	HERV_GbF_rows = cur.fetchall()
-	wisit="Family"
-	return render_template("family_table_HERV.html", data="", firstcolumn="")
-
 @app.route("/family_table_HERV_Families")
 def family_table_HERV_Families():
-	cur.execute("SELECT Family, Repeat_Name, Counts FROM `HERV_Groupby_Families`")
+	cur.execute("SELECT Family, SuperFamily, Repeat_Name, Counts FROM `HERV_Groupby_Families`")
 	HERV_GbF_rows = cur.fetchall()
 	wisit="Family"
-	return render_template("family_table_HERV.html", data=HERV_GbF_rows, firstcolumn=wisit)
+	return render_template("family_table_HERV_Families.html", data=HERV_GbF_rows, firstcolumn=wisit)
 
 @app.route("/family_table_HERV_Superfamilies")
 def family_table_HERV_Superfamilies():
-	cur.execute("SELECT Superfamily, Repeat_Name, Counts FROM `HERV_Groupby_Superfamilies`")
+	cur.execute("SELECT Superfamily, Description, Counts FROM `HERV_Groupby_Superfamilies`")
 	HERV_GbS_rows = cur.fetchall()
+	namelist = []
+	countlist = []
+	for ele in HERV_GbS_rows:
+    		namelist.append(str(ele[0].rstrip()))
+    		countlist.append(int(ele[2]))
 	wisit="Superfamily"
-	return render_template("family_table_HERV_Superfamilies.html", data=HERV_GbS_rows, firstcolumn=wisit)
+	return render_template("family_table_HERV_Superfamilies.html", data=HERV_GbS_rows, firstcolumn=wisit, arr_sc=countlist, arr_sc_names=namelist)
+
+@app.route("/family_table_HERV_Repeats")
+def family_table_HERV_Repeats():
+	cur.execute("SELECT Repeat_Name, SuperFamily, Family, Counts FROM `HERV_Groupby_Repeats`")
+	HERV_GbR_rows = cur.fetchall()
+	wisit="Repeat Name"
+	return render_template("family_table_HERV_Repeats.html", data=HERV_GbR_rows, firstcolumn=wisit)
 
 @app.route("/distribution")
 def distribution():
