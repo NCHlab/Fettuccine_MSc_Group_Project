@@ -866,7 +866,7 @@ input[type="search"], input[type="tel"], input[type="color"] {
     font-size: 14px;
     vertical-align: middle;
     height: 46px;
-    width: 50%;
+    width: 100%;
     margin-bottom: 20px;
     background-color: #f7f7f7;
 }
