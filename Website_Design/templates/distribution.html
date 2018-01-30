@@ -2,109 +2,146 @@
 
 <html>
 	<head>
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js">
-		<script src="JQuery.js">
-		</script>
-		<script>
-		$(document).ready(function(){
-		  $(".Chromosome1").click(function(){
-		    $(".Chr1").toggle();
-		  });
-		  $(".Chromosome2").click(function(){
-		    $(".Chr2").toggle();
-		  });
-		  $(".Chromosome3").click(function(){
-		    $(".Chr3").toggle();
-		  });
-			$(".Chromosome4").click(function(){
-		    $(".Chr4").toggle();
-		  });
-			$(".Chromosome5").click(function(){
-		    $(".Chr5").toggle();
-		  });
-			$(".Chromosome6").click(function(){
-		    $(".Chr6").toggle();
-		  });
-			$(".Chromosome7").click(function(){
-		    $(".Chr7").toggle();
-		  });
-			$(".Chromosome8").click(function(){
-		    $(".Chr8").toggle();
-		  });
-			$(".Chromosome9").click(function(){
-		    $(".Chr9").toggle();
-		  });
-			$(".Chromosome10").click(function(){
-		    $(".Chr10").toggle();
-		  });
-			$(".Chromosome11").click(function(){
-		    $(".Chr11").toggle();
-		  });
-			$(".Chromosome12").click(function(){
-		    $(".Chr12").toggle();
-		  });
-			$(".Chromosome13").click(function(){
-		    $(".Chr13").toggle();
-		  });
-			$(".Chromosome14").click(function(){
-		    $(".Chr14").toggle();
-		  });
-			$(".Chromosome15").click(function(){
-		    $(".Chr15").toggle();
-		  });
-			$(".Chromosome16").click(function(){
-		    $(".Chr16").toggle();
-		  });
-			$(".Chromosome17").click(function(){
-		    $(".Chr17").toggle();
-		  });
-			$(".Chromosome18").click(function(){
-		    $(".Chr18").toggle();
-		  });
-			$(".Chromosome19").click(function(){
-		    $(".Chr19").toggle();
-		  });
-			$(".Chromosome20").click(function(){
-		    $(".Chr20").toggle();
-		  });
-			$(".Chromosome21").click(function(){
-		    $(".Chr21").toggle();
-		  });
-			$(".Chromosome22").click(function(){
-		    $(".Chr22").toggle();
-		  });
-			$(".ChromosomeX").click(function(){
-		    $(".ChrX").toggle();
-		  });
-			$(".ChromosomeY").click(function(){
-		    $(".ChrY").toggle();
-		  });
-		});
-		</script>
 		<title>RT Distribution</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<!-- App & fonts-->
+		<link rel="stylesheet" type="text/css" href="static/distribution.css"/>
+		<!-- <link rel="stylesheet" type="text/css" href="static/assets/css/main.css"> -->
+		<link rel="stylesheet" type="text/css" href="static/assets/css/main_for_dist.css">
+		<link rel="stylesheet" href="/static/css/bootstrap.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<script>
+			$(document).ready(function(){
+			  $(".Chromosome1").click(function(){
+			    $(".Chr1").toggle();
+			  });
+			  $(".Chromosome2").click(function(){
+			    $(".Chr2").toggle();
+			  });
+			  $(".Chromosome3").click(function(){
+			    $(".Chr3").toggle();
+			  });
+				$(".Chromosome4").click(function(){
+			    $(".Chr4").toggle();
+			  });
+				$(".Chromosome5").click(function(){
+			    $(".Chr5").toggle();
+			  });
+				$(".Chromosome6").click(function(){
+			    $(".Chr6").toggle();
+			  });
+				$(".Chromosome7").click(function(){
+			    $(".Chr7").toggle();
+			  });
+				$(".Chromosome8").click(function(){
+			    $(".Chr8").toggle();
+			  });
+				$(".Chromosome9").click(function(){
+			    $(".Chr9").toggle();
+			  });
+				$(".Chromosome10").click(function(){
+			    $(".Chr10").toggle();
+			  });
+				$(".Chromosome11").click(function(){
+			    $(".Chr11").toggle();
+			  });
+				$(".Chromosome12").click(function(){
+			    $(".Chr12").toggle();
+			  });
+				$(".Chromosome13").click(function(){
+			    $(".Chr13").toggle();
+			  });
+				$(".Chromosome14").click(function(){
+			    $(".Chr14").toggle();
+			  });
+				$(".Chromosome15").click(function(){
+			    $(".Chr15").toggle();
+			  });
+				$(".Chromosome16").click(function(){
+			    $(".Chr16").toggle();
+			  });
+				$(".Chromosome17").click(function(){
+			    $(".Chr17").toggle();
+			  });
+				$(".Chromosome18").click(function(){
+			    $(".Chr18").toggle();
+			  });
+				$(".Chromosome19").click(function(){
+			    $(".Chr19").toggle();
+			  });
+				$(".Chromosome20").click(function(){
+			    $(".Chr20").toggle();
+			  });
+				$(".Chromosome21").click(function(){
+			    $(".Chr21").toggle();
+			  });
+				$(".Chromosome22").click(function(){
+			    $(".Chr22").toggle();
+			  });
+				$(".ChromosomeX").click(function(){
+			    $(".ChrX").toggle();
+			  });
+				$(".ChromosomeY").click(function(){
+			    $(".ChrY").toggle();
+			  });
+			});
+		</script>
+
 	</head>
 	<body>
-		<link rel="stylesheet" type="text/css" href="static/distribution.css"/>
-		<link rel="stylesheet" type="text/css" href="static/index.css"/>
-		<header>
-			<nav>
-				<ul>
-					<li><a href="{{ url_for('indexpage')}}">HomePage</a></li>
-					<li><a href="{{ url_for('family_table')}}">Family table </a></li>
-					<li><a href="{{ url_for('distribution')}}">Distribution of retroelements</a></li>
-					<li><a href="{{ url_for('AA_seq_list')}}">Translated products (list)</a></li>
-					<li><a href="{{ url_for('relationship_AA')}}">AA Relationship viewer </a></li>
-					<li><a href="{{ url_for('peptide_seq_ident')}}">Peptide sequence identifier</a></li>
-					<li><a href="{{ url_for('upload_peptide')}}">Upload a file </a></li>
-					<li><a href="{{ url_for('atlas')}}">Expression Atlas </a></li>
-					<li><a href="{{ url_for('documentation')}}">Documentation</a></li>
-					<li><a href="{{ url_for('about_us')}}">About us </a></li>
-					<li><input type="text" placeholder="Search.."></li>
-				</ul>
+		<div class="page-wrap">
 
+			<!-- header -->
+			<header class="header">
+				<div class="container">
 
-			</nav>
+					<!-- consult-nav -->
+					<nav class="consult-nav">
+
+						<!-- consult-menu -->
+						<ul class="consult-menu">
+							<li class="consult-menu"><a href="{{ url_for('indexpage')}}">Home</a>
+							</li>
+							<li><a href="{{ url_for('family_table')}}">Family Table</a>
+							</li>
+							<li class="current-menu-item"><a href="{{ url_for('distribution')}}">Distribution</a>
+							</li>
+							<li class="menu-item-has-children"><a href="#">Translated</a>
+								<ul class="sub-menu">
+									<li><a href="{{ url_for('AA_seq_list')}}">Translated products</a>
+									</li>
+									<li><a href="{{ url_for('relationship_AA')}}">AA Relationship Viewer</a>
+									</li>
+								</ul>
+							</li>
+							<li class="consult-menu"><a href="#">Upload Files</a>
+								<ul class="sub-menu">
+									<li><a href="{{ url_for('peptide_seq_ident')}}">Peptide Sequence identifier</a>
+									</li>
+									<li><a href="{{ url_for('upload_peptide')}}">MzIdent / MzTab</a>
+									</li>
+								</ul>
+							</li>
+							<li><a href="{{ url_for('atlas')}}">Atlas</a>
+							</li>
+							<li class="menu-item-has-children"><a href="#">project</a>
+								<ul class="sub-menu">
+									<li><a href="{{ url_for('documentation')}}">Documentation</a>
+									</li>
+									<li><a href="{{ url_for('about_us')}}">About Us</a>
+									</li>
+								</ul>
+						</ul><!-- consult-menu -->
+
+						<div class="navbar-toggle"><span></span><span></span><span></span></div>
+					</nav><!-- End / consult-nav -->
+
+				</div>
+
 		</header>
+
+	<div class="container">
 		<P><a>Select a chromosome to see the distribution of Retrotransposons</a></P>
 		<P><div class="Genome"></P>
 		  <div class="Chromosome1">Chr1
@@ -394,6 +431,8 @@
 		  <div class="ChrY">
 		  <img src="static/chrY.png">
 		  </div>
+		</div>
+
 
 	</body>
 

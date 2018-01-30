@@ -39,7 +39,7 @@ cur = connection.cursor() # May need to open it in each function instead of glob
 
 @app.route("/")
 def indexpage():
-	now = datetime.now(timezone('Europe/London'))
+	now = datetime.now().strftime('%H:%M:%S %d-%m-%Y')#datetime.now(timezone('Europe/London'))
 	return render_template("index.html", time = now)
 	#return "The time is {}".format(now)
 @app.route("/family_table")
