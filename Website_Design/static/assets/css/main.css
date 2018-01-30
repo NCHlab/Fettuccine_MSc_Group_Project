@@ -1109,13 +1109,13 @@ a, input, textarea, select {
     outline: none;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1, h2, h3, h4, h5, h6, h7 {
     font-weight: 700;
     line-height: 1.33333;
     color: #1f1c2f;
 }
 
-h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
+h1 a, h2 a, h3 a, h4 a, h5 a, h6 a, h7 a {
     color: inherit;
     text-decoration: none;
 }
@@ -1149,7 +1149,12 @@ h6 {
     font-size: 14px;
 }
 
-h3, h1, h2, h3 {
+h7 {
+    font-size: 35px;
+    color: #ffffff;
+}
+
+h3, h1, h2, h3, h7 {
     margin-top: 0;
     margin-bottom: 15px;
 }
@@ -3867,9 +3872,9 @@ mark, .mark {
 }
 
 .header__logo {
-    height: 100px;
-    max-width: 100px;
-    line-height: 100px;
+    height: 80px;
+    max-width: 80px;
+    line-height: 80px;
     float: left;
     transition: height .3s ease;
 }
