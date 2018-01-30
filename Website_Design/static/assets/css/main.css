@@ -1,5 +1,5 @@
 /*------------------------------------------------------------------------
-# Consult Free HTML5 Template 1.0 - Nov 16, 2017
+# fett Free HTML5 Template 1.0 - Nov 16, 2017
 # ------------------------------------------------------------------------
 # Designed & coded by Awe7
 # Websites:  http://awe7.com -  Email: info@awe7.com
@@ -7,38 +7,38 @@
 
 	1. base
 	2. form-item
-	3. consult_boxNumber
+	3. fett_boxNumber
 	4. brand_01
-	5. consult_breadcrumb
+	5. fett_breadcrumb
 	6. carousel-hash
 	7. carousel
 	8. Comments
 	9. countDown
 	10. dropdown
-	11. consult_form_01
-	12. consult_formSearch
-	13. consult_formSub
+	11. fett_form_01
+	12. fett_formSearch
+	13. fett_formSub
 	14. grid-css
-	15. consult_iconbox
-	16. consult_infobox
-	17. consult_pagination
-	18. consult_post_01
-	19. consult_post_02
-	20. consult_post_03
-	21. consult_pricing
+	15. fett_iconbox
+	16. fett_infobox
+	17. fett_pagination
+	18. fett_post_01
+	19. fett_post_02
+	20. fett_post_03
+	21. fett_pricing
 	22. social
-	23. consult_tagCloud
-	24. consult_testimonial
-	25. consult_textbox_01
-	26. consult_title-01
+	23. fett_tagCloud
+	24. fett_testimonial
+	25. fett_textbox_01
+	26. fett_title-01
 	27. video
-	28. consult_widget_text
-	29. consult_footer
-	30. consult_header
-	31. consult_layoutBlog
-	32. consult_pageTitle
-	33. consult_sidebar
-	34. consult_slider
+	28. fett_widget_text
+	29. fett_footer
+	30. fett_header
+	31. fett_layoutBlog
+	32. fett_pageTitle
+	33. fett_sidebar
+	34. fett_slider
 
 --------------------------------------------------------------------------*/
 /*Pie chart*/
@@ -1227,7 +1227,7 @@ mark, .mark {
 }
 
 
-/* 3. consult_boxNumber
+/* 3. fett_boxNumber
 --------------------------------------------------------------------------------*/
 
 .box-number {
@@ -1296,7 +1296,7 @@ mark, .mark {
 }
 
 
-/* 5. consult_breadcrumb
+/* 5. fett_breadcrumb
 --------------------------------------------------------------------------------*/
 
 .breadcrumb__item {
@@ -1404,24 +1404,24 @@ mark, .mark {
     }
 }
 
-.js-consult-slider .owl-item {
+.js-fett-slider .owl-item {
     opacity: .3;
 }
 
-.js-consult-slider .owl-item.active {
+.js-fett-slider .owl-item.active {
     opacity: 1;
 }
 
-.consult-slide {
+.fett-slide {
     margin: 0 -30px;
     overflow: hidden;
 }
 
-.consult-slide .carousel__element {
+.fett-slide .carousel__element {
     padding: 0 30px;
 }
 
-.consult-slide .owl-stage-outer {
+.fett-slide .owl-stage-outer {
     overflow: visible !important;
 }
 
@@ -1640,7 +1640,7 @@ mark, .mark {
 }
 
 
-/* 11. consult_form_01
+/* 11. fett_form_01
 --------------------------------------------------------------------------------*/
 
 .form-01 {
@@ -1699,7 +1699,7 @@ mark, .mark {
     margin-top: 20px;
 }
 
-.consult-form {
+.fett-form {
     text-align: center;
     padding: 40px 30px;
     background-color: white;
@@ -1707,45 +1707,45 @@ mark, .mark {
 }
 
 @media (min-width: 992px) {
-    .consult-form {
+    .fett-form {
         padding: 60px 75px;
     }
 }
 
-.js-consult-form {
+.js-fett-form {
     position: relative;
     z-index: 99;
     padding-bottom: 50px;
 }
 
 @media (min-width: 320px) {
-    .js-consult-form {
+    .js-fett-form {
         padding-bottom: calc(37.20238vw - 69.04762px);
     }
 }
 
 @media (min-width: 992px) {
-    .js-consult-form {
+    .js-fett-form {
         padding-bottom: 300px;
     }
 }
 
-.js-consult-form .title-01 {
+.js-fett-form .title-01 {
     margin-bottom: 30px;
 }
 
-.js-consult-form .consult-form {
+.js-fett-form .fett-form {
     position: relative;
 }
 
 @media (max-width: 767px) {
-    .js-consult-form .consult-form {
+    .js-fett-form .fett-form {
         bottom: 0 !important;
     }
 }
 
 @media (min-width: 768px) {
-    .js-consult-form .consult-form {
+    .js-fett-form .fett-form {
         position: absolute;
         left: 10%;
         right: 10%;
@@ -1753,19 +1753,19 @@ mark, .mark {
 }
 
 @media (min-width: 992px) {
-    .js-consult-form .consult-form {
+    .js-fett-form .fett-form {
         left: 20%;
         right: 20%;
     }
 }
 
 @media (max-width: 1199px) {
-    .js-consult-form .hidden-xl {
+    .js-fett-form .hidden-xl {
         display: none;
     }
 }
 
-.js-consult-form .consult-form--02 {
+.js-fett-form .fett-form--02 {
     padding: 0;
     overflow: hidden;
     background-position: left;
@@ -1773,7 +1773,7 @@ mark, .mark {
     background-size: cover;
 }
 
-.js-consult-form .consult-form--02:after {
+.js-fett-form .fett-form--02:after {
     content: "";
     top: 0;
     left: 0;
@@ -1783,46 +1783,46 @@ mark, .mark {
     background-color: white;
 }
 
-.js-consult-form .consult-form--02 > .form-01 {
+.js-fett-form .fett-form--02 > .form-01 {
     position: relative;
     z-index: 2;
 }
 
 @media (min-width: 1600px) {
-    .js-consult-form .consult-form--02 {
+    .js-fett-form .fett-form--02 {
         background-size: 40% 100%;
         left: 25%;
         right: 25%;
     }
 
-    .js-consult-form .consult-form--02:after {
+    .js-fett-form .fett-form--02:after {
         display: none;
     }
 
-    .js-consult-form .consult-form--02 .form-01 {
+    .js-fett-form .fett-form--02 .form-01 {
         width: 60%;
         float: right;
     }
 }
 
-.js-consult-form--02 {
+.js-fett-form--02 {
     padding-bottom: 50px;
 }
 
 @media (min-width: 320px) {
-    .js-consult-form--02 {
+    .js-fett-form--02 {
         padding-bottom: calc(52.08333vw - 116.66667px);
     }
 }
 
 @media (min-width: 992px) {
-    .js-consult-form--02 {
+    .js-fett-form--02 {
         padding-bottom: 400px;
     }
 }
 
 
-/* 12. consult_formSearch
+/* 12. fett_formSearch
 --------------------------------------------------------------------------------*/
 
 .form-search {
@@ -1830,7 +1830,7 @@ mark, .mark {
 }
 
 
-/* 13. consult_formSub
+/* 13. fett_formSub
 --------------------------------------------------------------------------------*/
 
 .form-sub {
@@ -2619,7 +2619,7 @@ mark, .mark {
 }
 
 
-/* 15. consult_iconbox
+/* 15. fett_iconbox
 --------------------------------------------------------------------------------*/
 
 .iconbox {
@@ -2752,7 +2752,7 @@ mark, .mark {
 }
 
 
-/* 16. consult_infobox
+/* 16. fett_infobox
 --------------------------------------------------------------------------------*/
 
 .infobox {
@@ -2780,7 +2780,7 @@ mark, .mark {
 }
 
 
-/* 17. consult_pagination
+/* 17. fett_pagination
 --------------------------------------------------------------------------------*/
 
 .pagination {
@@ -2805,7 +2805,7 @@ mark, .mark {
 }
 
 
-/* 18. consult_post_01
+/* 18. fett_post_01
 --------------------------------------------------------------------------------*/
 
 .post-01__media {
@@ -2885,7 +2885,7 @@ mark, .mark {
 }
 
 
-/* 19. consult_post_02
+/* 19. fett_post_02
 --------------------------------------------------------------------------------*/
 
 .post-02 {
@@ -3031,18 +3031,18 @@ mark, .mark {
     color: white;
 }
 
-.consult-project {
+.fett-project {
     padding: 0 30px;
 }
 
 @media (min-width: 576px) {
-    .consult-project {
+    .fett-project {
         padding: 0 75px;
     }
 }
 
 
-/* 20. consult_post_03
+/* 20. fett_post_03
 --------------------------------------------------------------------------------*/
 
 .post-03 {
@@ -3142,7 +3142,7 @@ mark, .mark {
 }
 
 
-/* 21. consult_pricing
+/* 21. fett_pricing
 --------------------------------------------------------------------------------*/
 
 .pricing {
@@ -3273,7 +3273,7 @@ mark, .mark {
 }
 
 
-/* 23. consult_tagCloud
+/* 23. fett_tagCloud
 --------------------------------------------------------------------------------*/
 
 .tagclould > a {
@@ -3301,7 +3301,7 @@ mark, .mark {
 }
 
 
-/* 24. consult_testimonial
+/* 24. fett_testimonial
 --------------------------------------------------------------------------------*/
 
 .testimonial {
@@ -3359,7 +3359,7 @@ mark, .mark {
 }
 
 
-/* 25. consult_textbox_01
+/* 25. fett_textbox_01
 --------------------------------------------------------------------------------*/
 
 .textbox {
@@ -3415,7 +3415,7 @@ mark, .mark {
 }
 
 
-/* 26. consult_title-01
+/* 26. fett_title-01
 --------------------------------------------------------------------------------*/
 
 .title-01 {
@@ -3599,7 +3599,7 @@ mark, .mark {
 }
 
 
-/* 28. consult_widget_text
+/* 28. fett_widget_text
 --------------------------------------------------------------------------------*/
 
 .widget-text__widget {
@@ -3686,7 +3686,7 @@ mark, .mark {
 }
 
 
-/* 29. consult_footer
+/* 29. fett_footer
 --------------------------------------------------------------------------------*/
 
 .footer {
@@ -3733,7 +3733,7 @@ mark, .mark {
     margin-bottom: 40px;
 }
 
-.footer__item .consult_logo {
+.footer__item .fett_logo {
     margin-bottom: 20px;
 }
 
@@ -3741,7 +3741,7 @@ mark, .mark {
     padding-right: 0;
 }
 
-.consult_backToTop {
+.fett_backToTop {
     top: 0;
     right: 30px;
     position: absolute;
@@ -3749,23 +3749,23 @@ mark, .mark {
     text-align: right;
 }
 
-.consult_backToTop a {
+.fett_backToTop a {
     color: #f39c12 !important;
     padding-right: 0;
 }
 
-.consult_backToTop i {
+.fett_backToTop i {
     margin-right: 10px;
 }
 
 @media (min-width: 768px) {
-    .consult_backToTop {
+    .fett_backToTop {
         padding-right: 0;
     }
 }
 
 @media (min-width: 992px) {
-    .consult_backToTop {
+    .fett_backToTop {
         position: static;
     }
 }
@@ -3773,7 +3773,7 @@ mark, .mark {
 
 
 
-/* 30. consult_header
+/* 30. fett_header
 --------------------------------------------------------------------------------*/
 
 .header {
@@ -3795,24 +3795,24 @@ mark, .mark {
     clear: both;
 }
 
-.header .consult-nav {
+.header .fett-nav {
     float: right;
     transition: padding .3s ease;
     padding: 35px 20px;
 }
 
-.header .consult-nav .consult-menu a {
+.header .fett-nav .fett-menu a {
     text-transform: capitalize;
 }
 
 @media (min-width: 992px) {
-    .header .consult-nav .consult-menu a {
+    .header .fett-nav .fett-menu a {
         text-transform: uppercase;
     }
 }
 
 @media (min-width: 992px) {
-    .header .consult-nav {
+    .header .fett-nav {
         text-align: center;
         padding: 0;
         float: none;
@@ -3846,18 +3846,18 @@ mark, .mark {
 }
 
 @media (min-width: 992px) {
-    .header.shrink .consult-nav .consult-menu > li > a {
+    .header.shrink .fett-nav .fett-menu > li > a {
         height: 70px;
         line-height: 70px;
     }
 }
 
-.header.shrink .consult-nav {
+.header.shrink .fett-nav {
     padding: 15px 20px;
 }
 
 @media (min-width: 992px) {
-    .header.shrink .consult-nav {
+    .header.shrink .fett-nav {
         padding: 0;
     }
 }
@@ -3949,11 +3949,11 @@ mark, .mark {
     box-shadow: none;
 }
 
-.header__style-02:not(.shrink) .consult-nav .consult-menu > li > a {
+.header__style-02:not(.shrink) .fett-nav .fett-menu > li > a {
     color: #fff;
 }
 
-.header__style-02:not(.shrink) .consult-nav .consult-menu .current-menu-item > a {
+.header__style-02:not(.shrink) .fett-nav .fett-menu .current-menu-item > a {
     color: #f39c12;
 }
 
@@ -4005,38 +4005,38 @@ mark, .mark {
             transform: translateX(-10px) rotate(45deg);
 }
 
-.consult-nav {
+.fett-nav {
     z-index: 999;
 }
 
-.consult-nav ul {
+.fett-nav ul {
     list-style: none;
     margin: 0;
     padding: 0;
     font-size: 0;
 }
 
-.consult-nav li {
+.fett-nav li {
     position: relative;
     z-index: 9;
 }
 
-.consult-nav li a {
+.fett-nav li a {
     display: block;
     position: relative;
     text-decoration: none;
 }
 
 @media (min-width: 993px) {
-    .consult-nav {
+    .fett-nav {
         text-align: center;
     }
 
-    .consult-nav li:hover > a {
+    .fett-nav li:hover > a {
         color: #f39c12;
     }
 
-    .consult-nav .consult-menu .sub-menu {
+    .fett-nav .fett-menu .sub-menu {
         opacity: 0;
         visibility: hidden;
         -webkit-transform: scaleY(0);
@@ -4045,50 +4045,50 @@ mark, .mark {
                  transform-origin: 50% 0;
     }
 
-    .consult-nav .consult-menu li:hover > .sub-menu {
+    .fett-nav .fett-menu li:hover > .sub-menu {
         opacity: 1;
         visibility: visible;
         -webkit-transform: scaleY(1);
                 transform: scaleY(1);
     }
 
-    .consult-nav .consult-menu a {
+    .fett-nav .fett-menu a {
         padding: 20px 30px;
     }
 
-    .consult-nav .consult-menu .sub-menu {
+    .fett-nav .fett-menu .sub-menu {
         background-color: #fff;
         text-align: left;
         border: 1px solid rgba(0, 0, 0, .1);
         border-top: 3px solid #f39c12;
     }
 
-    .consult-nav .consult-menu .sub-menu a {
+    .fett-nav .fett-menu .sub-menu a {
         padding: 10px 15px;
         border-top: 1px solid rgba(0, 0, 0, .1);
     }
 
-    .consult-nav .consult-menu .sub-menu a:after {
+    .fett-nav .fett-menu .sub-menu a:after {
         right: 15px;
     }
 
-    .consult-nav .consult-menu .sub-menu li .sub-menu {
+    .fett-nav .fett-menu .sub-menu li .sub-menu {
         top: -2px;
     }
 
-    .consult-nav .consult-menu .sub-menu li:first-child > a {
+    .fett-nav .fett-menu .sub-menu li:first-child > a {
         border-top: 0;
     }
 
-    .consult-nav .consult-menu .sub-menu li:first-child .sub-menu {
+    .fett-nav .fett-menu .sub-menu li:first-child .sub-menu {
         top: -3px;
     }
 
-    .consult-nav .consult-menu > li {
+    .fett-nav .fett-menu > li {
         display: inline-block;
     }
 
-    .consult-nav .consult-menu a {
+    .fett-nav .fett-menu a {
         font-size: 14px;
         color: #868686;
         transition: all 300ms ease;
@@ -4099,21 +4099,21 @@ mark, .mark {
         line-height: 100px;
     }
 
-    .consult-nav .consult-menu .sub-menu {
+    .fett-nav .fett-menu .sub-menu {
         display: block !important;
     }
 
-    .consult-nav .consult-menu .sub-menu .current-menu-parent > a,
-    .consult-nav .consult-menu .sub-menu .current-menu-item > a {
+    .fett-nav .fett-menu .sub-menu .current-menu-parent > a,
+    .fett-nav .fett-menu .sub-menu .current-menu-item > a {
         color: #f39c12;
     }
 
-    .consult-nav .consult-menu .current-menu-parent > a,
-    .consult-nav .consult-menu .current-menu-item > a {
+    .fett-nav .fett-menu .current-menu-parent > a,
+    .fett-nav .fett-menu .current-menu-item > a {
         color: #f39c12;
     }
 
-    .consult-nav .consult-menu .sub-menu {
+    .fett-nav .fett-menu .sub-menu {
         width: 250px;
         position: absolute;
         top: 100%;
@@ -4122,12 +4122,12 @@ mark, .mark {
         transition: all 300ms cubic-bezier(.175, .885, .32, 1.275);
     }
 
-    .consult-nav .consult-menu .sub-menu .sub-menu {
+    .fett-nav .fett-menu .sub-menu .sub-menu {
         top: 0;
         left: 100%;
     }
 
-    .consult-nav .consult-menu .sub-menu li.menu-item-has-children > a:after {
+    .fett-nav .fett-menu .sub-menu li.menu-item-has-children > a:after {
         font-family: "FontAwesome";
         content: "\F105";
         position: absolute;
@@ -4136,7 +4136,7 @@ mark, .mark {
                 transform: translate(0, -50%);
     }
 
-    .consult-nav .consult-menu .sub-menu li > a {
+    .fett-nav .fett-menu .sub-menu li > a {
         font-size: 14px;
         transition: all 300ms ease;
         font-weight: 300;
@@ -4148,55 +4148,55 @@ mark, .mark {
         box-shadow: none;
     }
 
-    .consult-nav .consult-menu .sub-menu li:hover > a {
+    .fett-nav .fett-menu .sub-menu li:hover > a {
         color: #f39c12;
     }
 
-    .consult-nav .consult-menu .sub-menu li .current-menu-parent > a,
-    .consult-nav .consult-menu .sub-menu li .current-menu-item > a {
+    .fett-nav .fett-menu .sub-menu li .current-menu-parent > a,
+    .fett-nav .fett-menu .sub-menu li .current-menu-item > a {
         color: #f39c12;
     }
 
-    .consult-nav .navbar-toggle {
+    .fett-nav .navbar-toggle {
         display: none;
     }
 }
 
 @media (max-width: 992px) {
-    .consult-nav .consult-menu {
+    .fett-nav .fett-menu {
         position: fixed;
         top: 0;
         will-change: transform;
     }
 
-    .consult-nav .consult-menu a {
+    .fett-nav .fett-menu a {
         font-size: 14px;
     }
 
-    .consult-nav .consult-menu a:after {
+    .fett-nav .fett-menu a:after {
         right: 0;
         width: 50px;
         text-align: center;
     }
 
-    .consult-nav .consult-menu .sub-menu {
+    .fett-nav .fett-menu .sub-menu {
         display: none;
     }
 
-    .consult-nav .consult-menu {
+    .fett-nav .fett-menu {
         background-color: #111;
     }
 
-    .consult-nav .consult-menu a {
+    .fett-nav .fett-menu a {
         border-bottom: 1px solid rgba(255, 255, 255, .1);
         color: #eee;
     }
 
-    .consult-nav .consult-menu a:after {
+    .fett-nav .fett-menu a:after {
         border-left: 1px solid rgba(255, 255, 255, .1);
     }
 
-    .consult-nav .consult-menu {
+    .fett-nav .fett-menu {
         left: 0;
         width: 280px;
         background-color: #111;
@@ -4204,12 +4204,12 @@ mark, .mark {
                 transform: translate(-100%, 0);
     }
 
-    .consult-nav .active.consult-menu {
+    .fett-nav .active.fett-menu {
         -webkit-transform: translate(0, 0);
                 transform: translate(0, 0);
     }
 
-    .consult-nav .consult-menu {
+    .fett-nav .fett-menu {
         z-index: 99999;
         height: 100%;
         overflow-x: hidden;
@@ -4219,11 +4219,11 @@ mark, .mark {
         transition: all 300ms ease;
     }
 
-    .consult-nav .consult-menu li {
+    .fett-nav .fett-menu li {
         position: relative;
     }
 
-    .consult-nav .consult-menu li.menu-item-has-children > a:after {
+    .fett-nav .fett-menu li.menu-item-has-children > a:after {
         font-family: "FontAwesome";
         content: "\F107";
         position: absolute;
@@ -4232,51 +4232,51 @@ mark, .mark {
                 transform: translate(0, -50%);
     }
 
-    .consult-nav .consult-menu a {
+    .fett-nav .fett-menu a {
         padding: 12px 15px;
         font-size: 14px;
     }
 
-    .consult-nav .consult-menu a:hover {
+    .fett-nav .fett-menu a:hover {
         color: #f39c12;
     }
 
-    .consult-nav .consult-menu .active > a {
+    .fett-nav .fett-menu .active > a {
         color: #f39c12;
     }
 
-    .consult-nav .consult-menu .current-menu-parent > a,
-    .consult-nav .consult-menu .current-menu-item > a {
+    .fett-nav .fett-menu .current-menu-parent > a,
+    .fett-nav .fett-menu .current-menu-item > a {
         color: #f39c12;
     }
 
-    .consult-nav .consult-menu .sub-menu a {
+    .fett-nav .fett-menu .sub-menu a {
         padding: 12px 15px;
     }
 
-    .consult-nav .consult-menu .sub-menu .menu-item-has-children > a:hover {
+    .fett-nav .fett-menu .sub-menu .menu-item-has-children > a:hover {
         color: #f39c12;
     }
 
-    .consult-nav .consult-menu .sub-menu .menu-item-has-children.active > a {
+    .fett-nav .fett-menu .sub-menu .menu-item-has-children.active > a {
         color: #f39c12;
     }
 
-    .consult-nav .consult-menu .sub-menu .menu-item-has-children.current-menu-parent > a {
+    .fett-nav .fett-menu .sub-menu .menu-item-has-children.current-menu-parent > a {
         color: #f39c12;
     }
 
-    .consult-nav .consult-menu .sub-menu .current-menu-item > a {
+    .fett-nav .fett-menu .sub-menu .current-menu-item > a {
         color: #f39c12;
     }
 
-    .consult-nav .navbar-toggle {
+    .fett-nav .navbar-toggle {
         display: block;
     }
 }
 
 
-/* 31. consult_layoutBlog
+/* 31. fett_layoutBlog
 --------------------------------------------------------------------------------*/
 
 .layout-blog {
@@ -4353,7 +4353,7 @@ mark, .mark {
 }
 
 
-/* 32. consult_pageTitle
+/* 32. fett_pageTitle
 --------------------------------------------------------------------------------*/
 
 .page-title {
@@ -4409,11 +4409,11 @@ mark, .mark {
 
 }
 
-/* 33. consult_sidebar
+/* 33. fett_sidebar
 --------------------------------------------------------------------------------*/
 
 
-/* 34. consult_slider
+/* 34. fett_slider
 --------------------------------------------------------------------------------*/
 
 .slider {
@@ -4496,17 +4496,17 @@ mark, .mark {
 .filter__list a:hover {
     color: #f39c12;
 }
-.consult_logo {
+.fett_logo {
     display: block;
 }
 
-.consult-background {
+.fett-background {
     background-image: url("../img/backgrounds/3.jpg");
     background-repeat: repeat;
     background-size: initial;
 }
 
-.consult-phone {
+.fett-phone {
     color: #f39c12;
     text-align: center;
     margin-bottom: 50px;
@@ -4514,18 +4514,18 @@ mark, .mark {
 }
 
 @media (min-width: 320px) {
-    .consult-phone {
+    .fett-phone {
         font-size: calc(2.95455vw + 20.54545px);
     }
 }
 
 @media (min-width: 1200px) {
-    .consult-phone {
+    .fett-phone {
         font-size: 56px;
     }
 }
 
-.consult-back {
+.fett-back {
     width: 60px;
     height: 60px;
     line-height: 60px;
@@ -4542,43 +4542,43 @@ mark, .mark {
     text-align: center;
 }
 
-.consult-back:hover {
+.fett-back:hover {
     border-color: #f39c12;
     background-color: #f39c12;
     color: white;
 }
 
-.consult-404 {
+.fett-404 {
     width: 100%;
     height: 100vh;
     text-align: center;
 }
 
-.consult-404__content {
+.fett-404__content {
     font-size: 16px;
     padding-top: 50px;
     padding-bottom: 50px;
 }
 
 @media (min-width: 320px) {
-    .consult-404__content {
+    .fett-404__content {
         padding-top: calc(22.32143vw - 21.42857px);
         padding-bottom: calc(22.32143vw - 21.42857px);
     }
 }
 
 @media (min-width: 992px) {
-    .consult-404__content {
+    .fett-404__content {
         padding-top: 200px;
         padding-bottom: 200px;
     }
 }
 
-.consult-404__content > img {
+.fett-404__content > img {
     margin-bottom: 55px;
 }
 
-.consult-404__content > h1 {
+.fett-404__content > h1 {
     font-size: 80px;
     font-weight: 400;
     color: #f39c12;
@@ -4587,40 +4587,40 @@ mark, .mark {
 }
 
 @media (min-width: 320px) {
-    .consult-404__content > h1 {
+    .fett-404__content > h1 {
         font-size: calc(5.95238vw + 60.95238px);
     }
 }
 
 @media (min-width: 992px) {
-    .consult-404__content > h1 {
+    .fett-404__content > h1 {
         font-size: 120px;
     }
 }
 
-.consult-404__content > h2 {
+.fett-404__content > h2 {
     font-weight: 400;
 }
 
-.consult-404__content a {
+.fett-404__content a {
     color: #f39c12;
     font-weight: 700;
     text-decoration: underline;
 }
 
-.consult-commingsoon {
+.fett-commingsoon {
     text-align: center;
 }
 
-.consult-commingsoon h4 {
+.fett-commingsoon h4 {
     font-weight: 400;
 }
 
-.consult-commingsoon h3 {
+.fett-commingsoon h3 {
     margin-bottom: 100px;
 }
 
-.consult-postDetail__main, .consult-projectDetail__main {
+.fett-postDetail__main, .fett-projectDetail__main {
     box-shadow: 0 10px 30px 0 rgba(0, 0, 0, .2);
     background-color: white;
     padding-left: 30px;
@@ -4633,104 +4633,104 @@ mark, .mark {
 }
 
 @media (min-width: 768px) {
-    .consult-postDetail__main, .consult-projectDetail__main {
+    .fett-postDetail__main, .fett-projectDetail__main {
         padding-top: calc(20.83333vw - 110px);
         padding-bottom: calc(20.83333vw - 110px);
     }
 }
 
 @media (min-width: 1200px) {
-    .consult-postDetail__main, .consult-projectDetail__main {
+    .fett-postDetail__main, .fett-projectDetail__main {
         padding-top: 140px;
         padding-bottom: 140px;
     }
 }
 
 @media (min-width: 992px) {
-    .consult-postDetail__main, .consult-projectDetail__main {
+    .fett-postDetail__main, .fett-projectDetail__main {
         margin-top: -100px;
         padding-left: 0;
         padding-right: 0;
     }
 
-    .consult-postDetail__main p.text, .consult-postDetail__main .image-full,
-    .consult-projectDetail__main p.text,
-    .consult-projectDetail__main .image-full {
+    .fett-postDetail__main p.text, .fett-postDetail__main .image-full,
+    .fett-projectDetail__main p.text,
+    .fett-projectDetail__main .image-full {
         margin-bottom: 70px;
     }
 }
 
-.consult-postDetail__main p.text, .consult-postDetail__main .image-full,
-.consult-projectDetail__main p.text, .consult-projectDetail__main .image-full {
+.fett-postDetail__main p.text, .fett-postDetail__main .image-full,
+.fett-projectDetail__main p.text, .fett-projectDetail__main .image-full {
     margin-bottom: 40px;
 }
 
-.consult-postDetail__main .social-01, .consult-projectDetail__main .social-01 {
+.fett-postDetail__main .social-01, .fett-projectDetail__main .social-01 {
     float: left;
     margin-bottom: 30px;
 }
 
-.consult-postDetail__main .social-01 + *,
-.consult-projectDetail__main .social-01 + * {
+.fett-postDetail__main .social-01 + *,
+.fett-projectDetail__main .social-01 + * {
     clear: both;
 }
 
 @media (min-width: 992px) {
-    .consult-postDetail__main .social-01,
-    .consult-projectDetail__main .social-01 {
+    .fett-postDetail__main .social-01,
+    .fett-projectDetail__main .social-01 {
         position: absolute;
         left: 0;
     }
 
-    .consult-postDetail__main .social-01 .social-01__item,
-    .consult-projectDetail__main .social-01 .social-01__item {
+    .fett-postDetail__main .social-01 .social-01__item,
+    .fett-projectDetail__main .social-01 .social-01__item {
         display: block;
         margin: 20px 10px;
     }
 }
 
 @media (min-width: 1200px) {
-    .consult-postDetail__main .social-01,
-    .consult-projectDetail__main .social-01 {
+    .fett-postDetail__main .social-01,
+    .fett-projectDetail__main .social-01 {
         left: 10%;
     }
 }
 
-.consult-postDetail__main h1, .consult-projectDetail__main h1 {
+.fett-postDetail__main h1, .fett-projectDetail__main h1 {
     font-size: 24px;
     margin-bottom: 20px;
 }
 
 @media (min-width: 576px) {
-    .consult-postDetail__main h1, .consult-projectDetail__main h1 {
+    .fett-postDetail__main h1, .fett-projectDetail__main h1 {
         font-size: calc(2.88462vw + 7.38462px);
     }
 }
 
 @media (min-width: 1200px) {
-    .consult-postDetail__main h1, .consult-projectDetail__main h1 {
+    .fett-postDetail__main h1, .fett-projectDetail__main h1 {
         font-size: 42px;
     }
 }
 
-.consult-postDetail__meta {
+.fett-postDetail__meta {
     list-style: none;
     padding: 0;
     margin: 0 0 70px;
 }
 
-.consult-postDetail__meta li {
+.fett-postDetail__meta li {
     display: inline-block;
     margin-right: 30px;
     color: #c2c2c2;
     font-size: 14px;
 }
 
-.consult-postDetail__meta li i {
+.fett-postDetail__meta li i {
     margin-right: 10px;
 }
 
-.consult-projectDetail__slider .owl-dots {
+.fett-projectDetail__slider .owl-dots {
     left: 0;
     right: 0;
     bottom: 50px;
