@@ -107,7 +107,9 @@ def peptide_seq_ident():
 	result_seq=""
 	rows_count = ""
 	error_empty2 = "This is an empty file! Please upload a populated FASTA file"
-	no_match= "No Match was found"
+	no_match= "No Match was found!"
+	error_fasta_1 = "Please Enter only 1 fasta sequence in the search bar, for multiple use upload function"
+	error_fasta_2 = "Please Remove the Headers and only Search using the peptide Sequences"
 
 
 	# If data has been submitted to the page i.e uploaded, then the POST method engages
@@ -115,17 +117,37 @@ def peptide_seq_ident():
 		# If the Textbox has been filled with peptide sequences, DB is searched for matching sequence and FAMILY + sequence returned
 		# Otherwise if no match found, displays no match
 		if request.form["fasta_content"] != "":
-			fastaseq = request.form["fasta_content"]
-			rows_count = cur.execute("SELECT Family, Sequence FROM herv_repeats WHERE Sequence = %s", fastaseq)
-			cur.execute("SELECT Family, Sequence FROM herv_repeats WHERE Sequence = %s", fastaseq)
-			result_seq =  cur.fetchall()
-			result_seq_one.append(result_seq)
-			DF_PD=pd.DataFrame(result_seq_one)
-			result_seq_df=DF_PD.to_html()
-			if not cur.rowcount:
-			  return render_template("peptide_seq_ident.html", result_family=no_match)
+			fasta_check = request.form["fasta_content"]
+			fasta_check = fasta_check.count(">")
+			#sum(x in exclude_sign for x in fasta_check) > 1
+			#[exclude_sign for i in fasta_check if exclude_sign in fasta_check]
+			if fasta_check > 1:
+				return render_template("peptide_seq_ident.html", empty = error_fasta_1)
+			elif fasta_check == 1:
+				fastaseq = request.form["fasta_content"]
+				return render_template("peptide_seq_ident.html", empty = error_fasta_2)
+
+
+				#rows_count = cur.execute("SELECT Family, Sequence FROM herv_repeats WHERE Sequence = %s", fastaseq)
+				#cur.execute("SELECT Family, Sequence FROM herv_repeats WHERE Sequence = %s", fastaseq)
+				#result_seq =  cur.fetchall()
+				#if not cur.rowcount:
+				#  return render_template("peptide_seq_ident.html", result_family=no_match)
+				#else:
+				#  return render_template("peptide_seq_ident.html", data1=result_seq)
 			else:
-			  return render_template("peptide_seq_ident.html", data1=result_seq)
+				fastaseq = request.form["fasta_content"]
+				fastaseq = fastaseq.replace("\n","").replace("\r","").replace(" ","")
+				rows_count = cur.execute("SELECT Family, Sequence FROM herv_repeats WHERE Sequence = %s", fastaseq)
+				cur.execute("SELECT Family, Sequence FROM herv_repeats WHERE Sequence = %s", fastaseq)
+				result_seq =  cur.fetchall()
+				result_seq_one.append(result_seq)
+				DF_PD=pd.DataFrame(result_seq_one)
+				result_seq_df=DF_PD.to_html()
+				if not cur.rowcount:
+				  return render_template("peptide_seq_ident.html", result_family=no_match)
+				else:
+				  return render_template("peptide_seq_ident.html", data1=result_seq)
 		# If a file has been uploaded (file2 - name of upload form), this if statement occurs
 		elif 'file2' in request.files:
 			# Creates a path to the specified folder
