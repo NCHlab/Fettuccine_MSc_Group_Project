@@ -3836,8 +3836,8 @@ mark, .mark {
 }
 
 .header.shrink .header__logo {
-    height: 60px;
-    line-height: 60px;
+    height: 50px;
+    line-height: 50px;
 }
 
 .header.shrink .header__chooseLanguage, .header.shrink .search-form__toggle {
