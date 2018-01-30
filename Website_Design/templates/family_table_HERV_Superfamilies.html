@@ -99,24 +99,23 @@
 
 				</div>
 		</header>
-</body>
-<div class=container>
-<p>&nbsp;</p>
-<h4 style="text-align: center;">Family Tables of Retrotransposonal Repeats</h4>
-<div/>
-<div style="text-align: center;">
-<h5 style="text-align: center;">Please select a retrotransposon class:</h5>
-<button onclick="return false;" class="dropbtn_selected">HERV</button>
-<button onclick="window.location.href='{{ url_for('family_table_LINE1')}}'" class="dropbtn">LINE-1</button>
-<p>&nbsp;</p>
-</div>
-
-<div style="text-align: center;">
-<h5 style="text-align: center;">Group HERVs by:</h5>
-<button  onclick="return false;" class="dropbtn_selected">SuperFamilies</button>
-<button onclick="window.location.href='{{ url_for('family_table_HERV_Families')}}'" class="dropbtn">Families</button>
-<button onclick="window.location.href='{{ url_for('family_table_HERV_Repeats')}}'" class="dropbtn">Repeat Names</button>
-</div>
+		<body>
+		<div class=container>
+		 <p>&nbsp;</p>
+		 <h4 style="text-align: center;">Family Tables of Retrotransposonal Repeats</h4>
+			 <div style="text-align: center;">
+				 <h5 style="text-align: center;">Please select a retrotransposon class:</h5>
+				 <button onclick="return false;" class="dropbtn_selected">HERV</button>
+				 <button onclick="window.location.href='{{ url_for('family_table_LINE1')}}'" class="dropbtn">LINE-1</button>
+				 <p>&nbsp;</p>
+			 </div>
+		</div>
+		<div class="container" style="text-align: center">
+			<h5>Group HERVs by:</h5>
+			<button  onclick="return false;" class="dropbtn_selected">SuperFamilies</button>
+			<button onclick="window.location.href='{{ url_for('family_table_HERV_Families')}}'" class="dropbtn">Families</button>
+			<button onclick="window.location.href='{{ url_for('family_table_HERV_Repeats')}}'" class="dropbtn">Repeat Names</button>
+		</div>
 
 </body>
 <script>
@@ -164,9 +163,12 @@ window.onclick = function(event) {
 
 <body>
 	<p>&nbsp;</p>
-	<div class="pie_sf">
-    <canvas id="myChart"></canvas>
-  </div>
+
+<div class = "container">
+		<div class="pie_sf">
+	    <canvas id="myChart"></canvas>
+	  </div>
+
 <script>
 function jsconv(vars) {
 	return vars
@@ -175,7 +177,6 @@ function jsconv(vars) {
 let myChart = document.getElementById('myChart').getContext('2d');
 
 // Global Options
-Chart.defaults.global.defaultFontFamily = 'Lato';
 Chart.defaults.global.defaultFontSize = 15;
 Chart.defaults.global.defaultFontColor = '#777';
 
@@ -194,7 +195,7 @@ let barChart = new Chart(myChart, {
 				jsconv({{arr_sc[5]}})
 			],
 			//backgroundColor:'green',
-			backgroundColor:["#06D124", "#1E1A93", "#D87E08", "#C10B14", "#0CAFA7", "#F4F11F"],
+			backgroundColor:["#FAA43A", "#F15854", "#F17CB0", "#60BD68", "#5DA5DA", "#F4F11F"],
 			borderWidth:1,
 			borderColor:'#777',
 			hoverBorderWidth:3,
@@ -203,16 +204,18 @@ let barChart = new Chart(myChart, {
 	},
 	options:{
 		title:{
-			display:false,
+			display:true,
 			text:'Superfamilies Genome Frequency',
-			fontSize:25
+			fontSize:20
 		},
 		legend:{
 			display:true,
-			position:'top',
+			position:'bottom',
 			labels:{
 				fontColor:'#000',
-			usePointStyle: true
+			usePointStyle: true,
+			horizontalAlign: "center",
+			verticalAlign: "center"
 			}
 		},
 		layout:{
@@ -248,7 +251,7 @@ let barChart = new Chart(myChart, {
 	     {% endfor %}
 		</tbody>
 	 </table>
-
+</div>
 </body>
 
 </html>

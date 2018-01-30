@@ -97,24 +97,25 @@
 
 				</div>
 		</header>
-</body>
-<div class=container>
-<p>&nbsp;</p>
-<h4 style="text-align: center;">Family Tables of Retrotransposonal Repeats</h4>
-<div/>
-<div style="text-align: center;">
-<h5 style="text-align: center;">Please select a retrotransposon class:</h5>
-<button onclick="return false;" class="dropbtn_selected">HERV</button>
-<button onclick="window.location.href='{{ url_for('family_table_LINE1')}}'" class="dropbtn">LINE-1</button>
-<p>&nbsp;</p>
-</div>
+		<body>
+		<div class=container>
+		 <p>&nbsp;</p>
+		 <h4 style="text-align: center;">Family Tables of Retrotransposonal Repeats</h4>
+			 <div style="text-align: center;">
+				 <h5 style="text-align: center;">Please select a retrotransposon class:</h5>
+				 <button onclick="return false;" class="dropbtn_selected">HERV</button>
+				 <button onclick="window.location.href='{{ url_for('family_table_LINE1')}}'" class="dropbtn">LINE-1</button>
+				 <p>&nbsp;</p>
+			 </div>
+		</div>
 
-<div style="text-align: center;">
-<h5 style="text-align: center;">Group HERVs by:</h5>
-<button onclick="window.location.href='{{ url_for('family_table_HERV_Superfamilies')}}'" class="dropbtn">SuperFamilies</button>
-<button onclick="return false;" class="dropbtn_selected">Families</button>
-<button onclick="window.location.href='{{ url_for('family_table_HERV_Repeats')}}'" class="dropbtn">Repeat Names</button>
-</div>
+
+		<div class="container" style="text-align: center">
+			<h5 style="text-align: center;">Group HERVs by:</h5>
+			<button onclick="window.location.href='{{ url_for('family_table_HERV_Superfamilies')}}'" class="dropbtn">SuperFamilies</button>
+			<button onclick="return false;" class="dropbtn_selected">Families</button>
+			<button onclick="window.location.href='{{ url_for('family_table_HERV_Repeats')}}'" class="dropbtn">Repeat Names</button>
+		</div>
 
 </body>
 <script>
@@ -163,7 +164,7 @@ window.onclick = function(event) {
 </body>
 <P> &nbsp; </P>
 <body>
-
+<div class="container">
 
 
 	 <table id = "Families" class = "display">
@@ -185,7 +186,7 @@ window.onclick = function(event) {
 	     {% endfor %}
 		</tbody>
 	 </table>
-
+</div>
 </body>
 
 </html>

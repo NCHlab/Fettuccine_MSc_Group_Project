@@ -98,18 +98,16 @@
 
 			</div>
 	</header>
-<body>
-		<div class="container">
-		<p>&nbsp;</p>
-		<h4 style="text-align: center;">Family Tables of Retrotransposonal Repeats</h4>
-		<div/>
-		<div style="text-align: center;">
-		<h5 style="text-align: center;">Please select a retrotransposon class:</h5>
-		<button onclick="window.location.href='{{ url_for('family_table_HERV_Superfamilies')}}'">HERV</button>
-		<button onclick="window.location.href='{{ url_for('family_table_LINE1')}}'">LINE-1</button>
-		</div>
-
-</body>
+	<div class="md-content">
+		<!-- page-title -->
+		<div class="page-title">
+						<h2 class="page-title__title_Smaller">Family Tables of Retrotransposonal Repeats</h2>
+						<div class="container" style="text-align: center">
+						<button onclick="window.location.href='{{ url_for('family_table_HERV_Superfamilies')}}'" class="dropbtn">HERV</button>
+						<button onclick="window.location.href='{{ url_for('family_table_LINE1')}}'" class="dropbtn">LINE-1</button>
+						</div>
+	 </div>
+	</div>
 <script>
 /* When the user clicks on the button,
 toggle between hiding and showing the dropdown content */
