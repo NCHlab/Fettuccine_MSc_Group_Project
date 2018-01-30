@@ -18,15 +18,6 @@ visualisation of distribution: */
 
 }
 
-.dropbtn {
-    background-color: #e2e2e2;
-    color: black;
-    padding: 16px;
-    font-size: 16px;
-    border: none;
-    cursor: pointer;
-}
-
 /* Dropdown button */
 .Chromosome1 .Chr1_drop {
  font-size: 16px;
@@ -1450,7 +1441,7 @@ visualisation of distribution: */
  right:110px;
 }
 
-/* container for the images and embeded url*
+/* container for the images and embeded url*/
 .ChrY {
   display: none;
   width: 100px;
