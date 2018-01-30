@@ -2,20 +2,29 @@
 visualisation of distribution: */
 
 .Genome {
-  width: 1275px;
+  width: 1315px;
   height: 50px;
   position: relative;
   background: black;
 }
 
 .Chromosome1 {
-    width: 50px;
-    height: 50px;
-    background: gray;
-    position: relative;
-    left:0px;
-    top:0px;
-    color: white;
+    background-color: #e2e2e2;
+    color: black;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+
+}
+
+.dropbtn {
+    background-color: #e2e2e2;
+    color: black;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
 }
 
 /* Dropdown button */
@@ -25,7 +34,7 @@ visualisation of distribution: */
  outline: none;
  color: white;
  padding: 14px 16px;
- background-color: inherit;
+ background-color: #e2e2e2;
 }
 /* Dropdown content (hidden by default) */
 .Chr1_drop_info {
@@ -70,7 +79,7 @@ visualisation of distribution: */
 
 .Chromosome2 {
     width: 50px;
-    height: 50px;
+    height: 60px;
     background: gray;
     position: relative;
     left:55px;
@@ -130,11 +139,11 @@ visualisation of distribution: */
 
 .Chromosome3 {
     width: 50px;
-    height: 50px;
+    height: 60px;
     background: gray;
     position: relative;
     left:110px;
-    top:-100px;
+    top:-110px;
     color: white;
 }
 
@@ -190,11 +199,11 @@ visualisation of distribution: */
 
 .Chromosome4 {
     width: 50px;
-    height: 50px;
+    height: 60px;
     background: gray;
     position: relative;
     left:165px;
-    top:-150px;
+    top:-170px;
     color: white;
 }
 
@@ -250,11 +259,11 @@ visualisation of distribution: */
 
 .Chromosome5 {
     width: 50px;
-    height: 50px;
+    height: 60px;
     background: gray;
     position: relative;
     left:220px;
-    top:-200px;
+    top:-230px;
     color: white;
 }
 
@@ -310,11 +319,11 @@ visualisation of distribution: */
 
 .Chromosome6 {
     width: 50px;
-    height: 50px;
+    height: 60px;
     background: gray;
     position: relative;
     left:275px;
-    top:-250px;
+    top:-290px;
     color: white;
 }
 
@@ -370,11 +379,11 @@ visualisation of distribution: */
 
 .Chromosome7 {
     width: 50px;
-    height: 50px;
+    height: 60px;
     background: gray;
     position: relative;
     left:330px;
-    top:-300px;
+    top:-350px;
     color: white;
 }
 
@@ -430,11 +439,11 @@ visualisation of distribution: */
 
 .Chromosome8 {
     width: 50px;
-    height: 50px;
+    height: 60px;
     background: gray;
     position: relative;
     left:385px;
-    top:-350px;
+    top:-410px;
     color: white;
 }
 
@@ -490,11 +499,11 @@ visualisation of distribution: */
 
 .Chromosome9 {
     width: 50px;
-    height: 50px;
+    height: 60px;
     background: gray;
     position: relative;
     left:440px;
-    top:-400px;
+    top:-470px;
     color: white;
 }
 
@@ -550,11 +559,11 @@ visualisation of distribution: */
 
 .Chromosome10 {
     width: 50px;
-    height: 50px;
+    height: 60px;
     background: gray;
     position: relative;
     left:495px;
-    top:-450px;
+    top:-530px;
     color: white;
 }
 
@@ -610,11 +619,11 @@ visualisation of distribution: */
 
 .Chromosome11 {
     width: 50px;
-    height: 50px;
+    height: 60px;
     background: gray;
     position: relative;
     left:550px;
-    top:-500px;
+    top:-590px;
     color: white;
 }
 
@@ -670,11 +679,11 @@ visualisation of distribution: */
 
 .Chromosome12 {
     width: 50px;
-    height: 50px;
+    height: 60px;
     background: gray;
     position: relative;
     left:605px;
-    top:-550px;
+    top:-650px;
     color: white;
 }
 
@@ -730,11 +739,11 @@ visualisation of distribution: */
 
 .Chromosome13 {
     width: 50px;
-    height: 50px;
+    height: 60px;
     background: gray;
     position: relative;
     left:660px;
-    top:-600px;
+    top:-710px;
     color: white;
 }
 
@@ -790,11 +799,11 @@ visualisation of distribution: */
 
 .Chromosome14 {
     width: 50px;
-    height: 50px;
+    height: 60px;
     background: gray;
     position: relative;
     left:715px;
-    top:-650px;
+    top:-770px;
     color: white;
 }
 
@@ -850,11 +859,11 @@ visualisation of distribution: */
 
 .Chromosome15 {
     width: 50px;
-    height: 50px;
+    height: 60px;
     background: gray;
     position: relative;
     left:770px;
-    top:-700px;
+    top:-830px;
     color: white;
 }
 
@@ -910,11 +919,11 @@ visualisation of distribution: */
 
 .Chromosome16 {
     width: 50px;
-    height: 50px;
+    height: 60px;
     background: gray;
     position: relative;
     left:825px;
-    top:-750px;
+    top:-890px;
     color: white;
 }
 
@@ -970,11 +979,11 @@ visualisation of distribution: */
 
 .Chromosome17 {
     width: 50px;
-    height: 50px;
+    height: 60px;
     background: gray;
     position: relative;
     left:880px;
-    top:-800px;
+    top:-950px;
     color: white;
 }
 
@@ -1030,11 +1039,11 @@ visualisation of distribution: */
 
 .Chromosome18 {
     width: 50px;
-    height: 50px;
+    height: 60px;
     background: gray;
     position: relative;
     left:935px;
-    top:-850px;
+    top:-1010px;
     color: white;
 }
 
@@ -1090,11 +1099,11 @@ visualisation of distribution: */
 
 .Chromosome19 {
     width: 50px;
-    height: 50px;
+    height: 60px;
     background: gray;
     position: relative;
     left:990px;
-    top:-900px;
+    top:-1070px;
     color: white;
 }
 
@@ -1150,11 +1159,11 @@ visualisation of distribution: */
 
 .Chromosome20 {
     width: 50px;
-    height: 50px;
+    height: 60px;
     background: gray;
     position: relative;
     left:1045px;
-    top:-950px;
+    top:-1130px;
     color: white;
 }
 
@@ -1210,11 +1219,11 @@ visualisation of distribution: */
 
 .Chromosome21 {
     width: 50px;
-    height: 50px;
+    height: 60px;
     background: gray;
     position: relative;
     left:1100px;
-    top:-1000px;
+    top:-1190px;
     color: white;
 }
 
@@ -1270,11 +1279,11 @@ visualisation of distribution: */
 
 .Chromosome22 {
     width: 50px;
-    height: 50px;
+    height: 60px;
     background: gray;
     position: relative;
     left:1155px;
-    top:-1050px;
+    top:-1250px;
     color: white;
 }
 
@@ -1330,11 +1339,11 @@ visualisation of distribution: */
 
 .ChromosomeX {
     width: 50px;
-    height: 50px;
+    height: 60px;
     background: gray;
     position: relative;
     left:1210px;
-    top:-1100px;
+    top:-1310px;
     color: white;
 }
 
@@ -1392,11 +1401,11 @@ visualisation of distribution: */
 
 .ChromosomeY {
     width: 50px;
-    height: 50px;
+    height: 60px;
     background: gray;
     position: relative;
     left:1265px;
-    top:-1150px;
+    top:-1370px;
     color: white;
 }
 
@@ -1441,7 +1450,7 @@ visualisation of distribution: */
  right:110px;
 }
 
-/* container for the images and embeded url*/
+/* container for the images and embeded url*
 .ChrY {
   display: none;
   width: 100px;
