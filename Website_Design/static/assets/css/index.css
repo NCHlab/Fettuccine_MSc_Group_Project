@@ -1,0 +1,96 @@
+
+header {
+	color: white;
+	background: #000;
+
+}
+
+nav ul{
+	margin: -40px;
+	display: inline;
+}
+
+nav ul li {
+	background:#666;
+	color: white;
+	display: inline-block;
+	list-style-type: none;
+	padding: 5px 15px;
+}
+
+nav ul li a{
+	color:white;
+}
+
+nav ul li a:hover{
+  color: #DDD;
+}
+
+
+.dropbtn {
+    background-color: #696969;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+
+.dropbtn_selected {
+    background-color: #2980B9;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+
+.dropbtn:hover, .dropbtn:focus {
+    background-color: #2980B9;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    overflow: auto;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.pie_sf {
+    width:400px;
+    height:400px;
+    position: relative;
+    left: 5%;
+}
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+
+.dropdown a:hover {background-color: #2980B9}
+
+@import url('//cdn.datatables.net/1.10.2/css/jquery.dataTables.css');
+ td.details-control {
+    background: url('http://www.datatables.net/examples/resources/details_open.png') no-repeat center center;
+    cursor: pointer;
+}
+tr.shown td.details-control {
+    background: url('http://www.datatables.net/examples/resources/details_close.png') no-repeat center center;
+}
+.show {display:block;}
+
+#fasta_search {
+    width: 22cm;  height: 2cm;
+}
+tr:hover {background: #A9A9A9}

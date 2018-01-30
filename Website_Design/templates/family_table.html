@@ -36,7 +36,7 @@
 			<!-- header -->
 			<header class="header">
 				<div class="container">
-					<div class="header__logo"><a href="index.html"><img src="static/img/logo.png" alt=""/></a></div>
+					<div class="header__logo"><a href="{{ url_for('indexpage')}}"><img src="static/assets/img/fetbase_logo.png" alt=""/></a></div>
 					<div class="header__toogleGroup">
 						<div class="header__chooseLanguage">
 						<div class="search-form">
@@ -55,16 +55,16 @@
 					</div>
 				</div>
 
-					<!-- consult-nav -->
-					<nav class="consult-nav">
+					<!-- fett-nav -->
+					<nav class="fett-nav">
 
-						<!-- consult-menu -->
-						<ul class="consult-menu">
-							<li class="consult-menu"><a href="{{ url_for('indexpage')}}">Home</a>
+						<!-- fett-menu -->
+						<ul class="fett-menu">
+							<li class="fett-menu"><a href="{{ url_for('indexpage')}}">Home</a>
 							</li>
 							<li class="current-menu-item"><a href="{{ url_for('family_table')}}">Family Table</a>
 							</li>
-							<li class="consult-menu"><a href="{{ url_for('distribution')}}">Distribution</a>
+							<li class="fett-menu"><a href="{{ url_for('distribution')}}">Distribution</a>
 							</li>
 							<li class="menu-item-has-children"><a href="#">Translated</a>
 								<ul class="sub-menu">
@@ -74,7 +74,7 @@
 									</li>
 								</ul>
 							</li>
-							<li class="consult-menu"><a href="#">Upload Files</a>
+							<li class="fett-menu"><a href="#">Upload Files</a>
 								<ul class="sub-menu">
 									<li><a href="{{ url_for('peptide_seq_ident')}}">Peptide Sequence identifier</a>
 									</li>
@@ -91,10 +91,10 @@
 									<li><a href="{{ url_for('about_us')}}">About Us</a>
 									</li>
 								</ul>
-						</ul><!-- consult-menu -->
+						</ul><!-- fett-menu -->
 
 						<div class="navbar-toggle"><span></span><span></span><span></span></div>
-					</nav><!-- End / consult-nav -->
+					</nav><!-- End / fett-nav -->
 
 			</div>
 	</header>
