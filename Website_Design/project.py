@@ -83,7 +83,13 @@ def family_table_HERV_Repeats():
 
 @app.route("/distribution")
 def distribution():
-    return render_template("distribution.html")
+	cur.execute("SELECT Count FROM `herv_count`")
+	Herv_count=cur.fetchall()
+	H=[element for h in Herv_count for element in h] #removes tuple
+	cur.execute("SELECT Count FROM `l1_count`")
+	L1_count=cur.fetchall()
+	L=[element for l in L1_count for element in l] #removes tuple
+	return render_template("distribution.html", H=H, L=L)
 
 @app.route("/AA_seq_list")
 def AA_seq_list():
