@@ -95,13 +95,13 @@ def relationship_AA():
 
 @app.route("/peptide_seq_ident", methods=["GET","POST"])
 def peptide_seq_ident():
-	global empty_error
-	global rows_count
-	global result_seq
-	global no_match
-	global recordID
-	global result_seq_one
-	global data11
+	# global empty_error
+	# global rows_count
+	# global result_seq
+	# global no_match
+	# global recordID
+	# global result_seq_one
+	# global data11
 	result_seq_one=[]
 	result_seq_multi=[]
 	result_seq=""
@@ -212,7 +212,7 @@ def peptide_seq_ident():
 					if not cur.rowcount:
 					  return render_template("peptide_seq_ident.html", empty=no_match)
 					else:
-					  return render_template("peptide_seq_ident.html", result_family=result_seq_df, data=result_seq_multi)#result_seq_multi)
+					  return render_template("peptide_seq_ident.html", data=result_seq_multi)#result_seq_multi) result_family=result_seq_df,
 		elif request.form["fasta_content"] == "":
 			return render_template("peptide_seq_ident.html", empty = error_empty2)
 	else:
@@ -224,15 +224,15 @@ def peptide_seq_ident():
 
 @app.route("/upload_peptide", methods=["GET","POST"])
 def upload_peptide():
-	global filename2
-	global pepseq
-	global list_of_matches
-	global list_of_pep_seqs
-	global empty_error
-	global rows_count
-	global result_seq
-	global no_match
-	global recordID
+	# global filename2
+	# global pepseq
+	# global list_of_matches
+	# global list_of_pep_seqs
+	# global empty_error
+	# global rows_count
+	# global result_seq
+	# global no_match
+	# global recordID
 	global result_seq_multi
 	result_seq_multi=[]
 	result_seq=""
