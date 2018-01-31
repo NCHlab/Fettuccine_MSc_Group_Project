@@ -95,19 +95,21 @@ def relationship_AA():
 
 @app.route("/peptide_seq_ident", methods=["GET","POST"])
 def peptide_seq_ident():
-	global empty_error
-	global rows_count
-	global result_seq
-	global no_match
-	global recordID
-	global result_seq_one
-	global data11
+	# global empty_error
+	# global rows_count
+	# global result_seq
+	# global no_match
+	# global recordID
+	# global result_seq_one
+	# global data11
 	result_seq_one=[]
 	result_seq_multi=[]
 	result_seq=""
 	rows_count = ""
 	error_empty2 = "This is an empty file! Please upload a populated FASTA file"
-	no_match= "No Match was found"
+	no_match= "No Match was found!"
+	error_fasta_1 = "Please Enter only 1 fasta sequence in the search bar, for multiple use upload function"
+	error_fasta_2 = "Please Remove the Headers and only Search using the peptide Sequences"
 
 
 	# If data has been submitted to the page i.e uploaded, then the POST method engages
@@ -115,17 +117,37 @@ def peptide_seq_ident():
 		# If the Textbox has been filled with peptide sequences, DB is searched for matching sequence and FAMILY + sequence returned
 		# Otherwise if no match found, displays no match
 		if request.form["fasta_content"] != "":
-			fastaseq = request.form["fasta_content"]
-			rows_count = cur.execute("SELECT Family, Sequence FROM herv_repeats WHERE Sequence = %s", fastaseq)
-			cur.execute("SELECT Family, Sequence FROM herv_repeats WHERE Sequence = %s", fastaseq)
-			result_seq =  cur.fetchall()
-			result_seq_one.append(result_seq)
-			DF_PD=pd.DataFrame(result_seq_one)
-			result_seq_df=DF_PD.to_html()
-			if not cur.rowcount:
-			  return render_template("peptide_seq_ident.html", result_family=no_match)
+			fasta_check = request.form["fasta_content"]
+			fasta_check = fasta_check.count(">")
+			#sum(x in exclude_sign for x in fasta_check) > 1
+			#[exclude_sign for i in fasta_check if exclude_sign in fasta_check]
+			if fasta_check > 1:
+				return render_template("peptide_seq_ident.html", empty = error_fasta_1)
+			elif fasta_check == 1:
+				fastaseq = request.form["fasta_content"]
+				return render_template("peptide_seq_ident.html", empty = error_fasta_2)
+
+
+				#rows_count = cur.execute("SELECT Family, Sequence FROM herv_repeats WHERE Sequence = %s", fastaseq)
+				#cur.execute("SELECT Family, Sequence FROM herv_repeats WHERE Sequence = %s", fastaseq)
+				#result_seq =  cur.fetchall()
+				#if not cur.rowcount:
+				#  return render_template("peptide_seq_ident.html", result_family=no_match)
+				#else:
+				#  return render_template("peptide_seq_ident.html", data1=result_seq)
 			else:
-			  return render_template("peptide_seq_ident.html", data1=result_seq)
+				fastaseq = request.form["fasta_content"]
+				fastaseq = fastaseq.replace("\n","").replace("\r","").replace(" ","")
+				rows_count = cur.execute("SELECT Family, Sequence FROM herv_repeats WHERE Sequence = %s", fastaseq)
+				cur.execute("SELECT Family, Sequence FROM herv_repeats WHERE Sequence = %s", fastaseq)
+				result_seq =  cur.fetchall()
+				result_seq_one.append(result_seq)
+				DF_PD=pd.DataFrame(result_seq_one)
+				result_seq_df=DF_PD.to_html()
+				if not cur.rowcount:
+				  return render_template("peptide_seq_ident.html", result_family=no_match)
+				else:
+				  return render_template("peptide_seq_ident.html", data1=result_seq)
 		# If a file has been uploaded (file2 - name of upload form), this if statement occurs
 		elif 'file2' in request.files:
 			# Creates a path to the specified folder
@@ -152,6 +174,11 @@ def peptide_seq_ident():
 			seqfile = SeqIO.parse(filename, "fasta")
 			if os.stat(filename).st_size == 0:
 				return render_template("peptide_seq_ident.html", empty = error_empty2)
+			elif filename.rsplit('.', 1)[1].lower() not in ALLOWED_EX_FASTA:
+				result_seq_multi = "Incorrect filetype uploaded! Please Upload a Fasta formatted file"
+				return render_template("peptide_seq_ident.html", empty=result_seq_multi)
+
+
 			else:
 				# if file contains information, retrieve data from the DB,
 				# if request from DB does not have data returned (rowcount=0), show no match,
@@ -185,7 +212,7 @@ def peptide_seq_ident():
 					if not cur.rowcount:
 					  return render_template("peptide_seq_ident.html", empty=no_match)
 					else:
-					  return render_template("peptide_seq_ident.html", result_family=result_seq_df, data=result_seq_multi)#result_seq_multi)
+					  return render_template("peptide_seq_ident.html", data=result_seq_multi)#result_seq_multi) result_family=result_seq_df,
 		elif request.form["fasta_content"] == "":
 			return render_template("peptide_seq_ident.html", empty = error_empty2)
 	else:
@@ -197,20 +224,20 @@ def peptide_seq_ident():
 
 @app.route("/upload_peptide", methods=["GET","POST"])
 def upload_peptide():
-	global filename2
-	global pepseq
-	global list_of_matches
-	global list_of_pep_seqs
-	global empty_error
-	global rows_count
-	global result_seq
-	global no_match
-	global recordID
+	# global filename2
+	# global pepseq
+	# global list_of_matches
+	# global list_of_pep_seqs
+	# global empty_error
+	# global rows_count
+	# global result_seq
+	# global no_match
+	# global recordID
 	global result_seq_multi
 	result_seq_multi=[]
 	result_seq=""
 	rows_count = ""
-	error_empty2 = "This is an empty file! Please upload a populated FASTA file"
+
 	no_match= "No Match was found"
 	list_of_matches = []
 	list_of_pep_seqs = []
@@ -232,6 +259,11 @@ def upload_peptide():
 			pass
 		elif os.getcwd() == APP_ROOT+"\sequence_ident":
 			os.chdir("..\uploaded")
+
+		if 'file' not in request.files:
+			result_seq_multi = "No File uploaded! Please Upload a MzIdent or mzTab formatted file"
+			return render_template("upload_peptide.html", result_family=result_seq_multi)
+
 
 		if filename2.rsplit('.', 1)[1].lower() in ALLOWED_EX_XML:
 			file_mz_seq = open(filename2, "r")
@@ -286,11 +318,6 @@ def upload_peptide():
 	else:
 		return render_template("upload_peptide.html")
 
-
-@app.route("/uploaded")
-def uploaded():
-
-	return render_template("uploaded.html", matches1 = pepseq)
 
 @app.route("/expression_atlas")
 def atlas():
