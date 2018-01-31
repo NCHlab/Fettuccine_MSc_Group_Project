@@ -103,7 +103,7 @@
 										<p>
 										Please Select tissue Type:
 										<select class=>
-											<option value="">...</option>
+											<option value="tis_type">Unknown</option>
 										  <option value="tis_type">Adrenal Gland</option>
 										  <option value="tis_type">Anus and Anal Canal</option>
 										  <option value="tis_type">Bile duct</option>
@@ -141,7 +141,6 @@
 										  <option value="tis_type">Thymus</option>
 										  <option value="tis_type">Thyroid</option>
 										  <option value="tis_type">Trachea</option>
-										  <option value="tis_type">Unknown</option>
 										  <option value="tis_type">Ureter</option>
 										  <option value="tis_type">Uterus</option>
 										  <option value="tis_type">Vagina</option>
@@ -158,12 +157,14 @@
 
 										<hr>
 										</p>
+										{{ result_seq1 }}
+										{{ empty }}
+										{{ result_family }}
 									</div>
 								</div>
 							</div>
 	<div class="container">
-		{{ result_seq1 }}
-		{{ empty }}
+
 		</body>
 		<body>
 		 <table id = "mz_seq" class = "display">

@@ -174,6 +174,11 @@ def peptide_seq_ident():
 			seqfile = SeqIO.parse(filename, "fasta")
 			if os.stat(filename).st_size == 0:
 				return render_template("peptide_seq_ident.html", empty = error_empty2)
+			elif filename.rsplit('.', 1)[1].lower() not in ALLOWED_EX_FASTA:
+				result_seq_multi = "Incorrect filetype uploaded! Please Upload a Fasta formatted file"
+				return render_template("peptide_seq_ident.html", empty=result_seq_multi)
+
+
 			else:
 				# if file contains information, retrieve data from the DB,
 				# if request from DB does not have data returned (rowcount=0), show no match,
@@ -232,7 +237,7 @@ def upload_peptide():
 	result_seq_multi=[]
 	result_seq=""
 	rows_count = ""
-	error_empty2 = "This is an empty file! Please upload a populated FASTA file"
+
 	no_match= "No Match was found"
 	list_of_matches = []
 	list_of_pep_seqs = []
@@ -254,6 +259,11 @@ def upload_peptide():
 			pass
 		elif os.getcwd() == APP_ROOT+"\sequence_ident":
 			os.chdir("..\uploaded")
+
+		if 'file' not in request.files:
+			result_seq_multi = "No File uploaded! Please Upload a MzIdent or mzTab formatted file"
+			return render_template("upload_peptide.html", result_family=result_seq_multi)
+
 
 		if filename2.rsplit('.', 1)[1].lower() in ALLOWED_EX_XML:
 			file_mz_seq = open(filename2, "r")
@@ -308,11 +318,6 @@ def upload_peptide():
 	else:
 		return render_template("upload_peptide.html")
 
-
-@app.route("/uploaded")
-def uploaded():
-
-	return render_template("uploaded.html", matches1 = pepseq)
 
 @app.route("/expression_atlas")
 def atlas():
