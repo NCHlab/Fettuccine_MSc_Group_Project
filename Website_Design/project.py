@@ -7,6 +7,7 @@ import pandas as pd
 import numpy as py
 from Bio import SeqIO
 import re
+import csv
 #import xml.etree.ElementTree as ET
 #from pyfastaq import sequences
 #import fasta
@@ -115,7 +116,7 @@ def peptide_seq_ident():
 	error_empty2 = "This is an empty file! Please upload a populated FASTA file"
 	no_match= "No Match was found!"
 	error_fasta_1 = "Please Enter only 1 fasta sequence in the search bar, for multiple use upload function"
-	error_fasta_2 = "Please Remove the Headers and only Search using the peptide Sequences"
+	error_fasta_2 = "Please Remove the Headers and only Search using the peptide Sequences or use the upload function"
 
 
 	# If data has been submitted to the page i.e uploaded, then the POST method engages
@@ -320,6 +321,10 @@ def upload_peptide():
 					result_seq_multi.append(result_seq)
 			DF_PD=pd.DataFrame(result_seq_multi)
 			result_seq_df=DF_PD.to_html()
+			if result_seq_multi != "":
+				with open("atlas_seqs.csv", "a") as csvfile:
+					writer = csv.writer(csvfile)
+					writer.writerow(result_seq_multi)
 			return render_template("upload_peptide.html", data=result_seq_multi)#result_seq_multi)
 	else:
 		return render_template("upload_peptide.html")
@@ -327,6 +332,7 @@ def upload_peptide():
 
 @app.route("/expression_atlas")
 def atlas():
+	atlas_seqs = result_seq_multi
 	return render_template("expression_atlas.html")
 
 @app.route("/documentation")
