@@ -99,20 +99,72 @@
 							<div class="col-lg-8 offset-0 offset-sm-0 offset-md-0 offset-lg-2 ">
 								<h2 class="page-title__title">Peptide File Upload</h2>
 									<div class="container">
+										<hr>
 										<p>
-												Please Upload a mzid or mztab formatted file
-												<form id="upload-form" action="{{ url_for("upload_peptide")}}" method="POST" enctype="multipart/form-data">
-										 		<input type="file" name="file" accept=".xml, .mzid, .mzTab">
-										 		<input type="submit" value="Upload">
+										Please Select tissue Type:
+										<select class=>
+											<option value="tis_type">Unknown</option>
+										  <option value="tis_type">Adrenal Gland</option>
+										  <option value="tis_type">Anus and Anal Canal</option>
+										  <option value="tis_type">Bile duct</option>
+										  <option value="tis_type">Bladder</option>
+										  <option value="tis_type">Blood</option>
+										  <option value="tis_type">Bone</option>
+										  <option value="tis_type">Bone Marrow</option>
+										  <option value="tis_type">Brain</option>
+										  <option value="tis_type">Breast</option>
+										  <option value="tis_type">Bronchus and Lung</option>
+										  <option value="tis_type">Cervix</option>
+										  <option value="tis_type">Colon</option>
+										  <option value="tis_type">Colorectal</option>
+										  <option value="tis_type">Esophagus</option>
+										  <option value="tis_type">Eye</option>
+										  <option value="tis_type">Head and Neck</option>
+										  <option value="tis_type">Heart</option>
+										  <option value="tis_type">Kidney</option>
+										  <option value="tis_type">Liver and bile ducts</option>
+										  <option value="tis_type">Lung</option>
+										  <option value="tis_type">Lymph Nodes</option>
+										  <option value="tis_type">Nervous System</option>
+										  <option value="tis_type">Ovary</option>
+										  <option value="tis_type">Pancreas</option>
+										  <option value="tis_type">Penis</option>
+										  <option value="tis_type">Peripheral nerves and ANS</option>
+										  <option value="tis_type">Prostate</option>
+										  <option value="tis_type">Rectum</option>
+										  <option value="tis_type">Skin</option>
+										  <option value="tis_type">Small Intestine</option>
+										  <option value="tis_type">Soft Tissue</option>
+										  <option value="tis_type">Spinal Cord / other CNS</option>
+										  <option value="tis_type">Stomach</option>
+										  <option value="tis_type">Testes</option>
+										  <option value="tis_type">Thymus</option>
+										  <option value="tis_type">Thyroid</option>
+										  <option value="tis_type">Trachea</option>
+										  <option value="tis_type">Ureter</option>
+										  <option value="tis_type">Uterus</option>
+										  <option value="tis_type">Vagina</option>
+										  <option value="tis_type">Vulva</option>
+											<option value="">...</option>
+										</select>
+										<hr>
+										Please Upload a mzid or mztab formatted file
+										<form id="upload-form" action="{{ url_for("upload_peptide")}}" method="POST" enctype="multipart/form-data">
+										<input type="file" name="file" accept=".xml, .mzid, .mzTab">
+										<input type="submit" value="Upload">
+
+
 
 										<hr>
 										</p>
+										{{ result_seq1 }}
+										{{ empty }}
+										{{ result_family }}
 									</div>
 								</div>
 							</div>
 	<div class="container">
-		{{ result_seq1 }}
-		{{ empty }}
+
 		</body>
 		<body>
 		 <table id = "mz_seq" class = "display">

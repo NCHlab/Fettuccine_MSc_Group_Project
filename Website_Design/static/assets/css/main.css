@@ -850,7 +850,7 @@ input[type="button"].btn-block {
 /* 2. form-item
 --------------------------------------------------------------------------------*/
 
-.form-control, select, textarea, input[type="text"], input[type="password"],
+.form-control, textarea, input[type="text"], input[type="password"],
 input[type="datetime"], input[type="datetime-local"], input[type="date"],
 input[type="month"], input[type="time"], input[type="week"],
 input[type="number"], input[type="email"], input[type="url"],
@@ -867,6 +867,23 @@ input[type="search"], input[type="tel"], input[type="color"] {
     vertical-align: middle;
     height: 46px;
     width: 100%;
+    margin-bottom: 20px;
+    background-color: #f7f7f7;
+}
+
+.form-control, select {
+    box-shadow: none;
+    outline: none;
+    margin: 0;
+    border-radius: 0;
+    padding: 0 15px;
+    line-height: 44px;
+    border: 1px solid #ebebeb;
+    color: #000;
+    font-size: 14px;
+    vertical-align: middle;
+    height: 46px;
+    width: 40%;
     margin-bottom: 20px;
     background-color: #f7f7f7;
 }

@@ -119,13 +119,19 @@
 									  <input type="submit" value="Search" id="fasta_search">
 									</form>
 								</p>
+								<hr>
+								{{ result_family }}
+								<!-- <div class="alert alert-danger">
+								  <strong>{{ empty }}</strong>
+								</div> -->
+								{{ result_seq1 }}
+								{{ empty }}
 							</div>
 						</div>
 					</div>
 	</body>
 		<div class="container">
-		{{ result_seq1 }}
-		{{ empty }}
+
 		<hr>
 		<body>
 		 <table id = "Fam_seq" class = "display">
