@@ -8,6 +8,7 @@ import numpy as py
 from Bio import SeqIO
 import re
 import csv
+import hashlib
 #import xml.etree.ElementTree as ET
 #from pyfastaq import sequences
 #import fasta
@@ -321,10 +322,24 @@ def upload_peptide():
 					result_seq_multi.append(result_seq)
 			DF_PD=pd.DataFrame(result_seq_multi)
 			result_seq_df=DF_PD.to_html()
-			if result_seq_multi != "":
-				with open("atlas_seqs.csv", "a") as csvfile:
-					writer = csv.writer(csvfile)
-					writer.writerow(result_seq_multi)
+			# if result_seq_multi != "":
+			# 	#for file in request.files.getlist("file"):
+			# 	hashed = hashlib.sha224("test").hexdigest()
+            #
+			# 	with open("hash_checker.csv", "r+b") as f:
+			# 		reader = csv.reader(f)
+			# 		reader.next()
+			# 		for row in reader:
+			# 			if row == hashed:
+			# 			    pass
+			# 			elif row != hashed:
+			# 				writer = csv.writer(f)
+			# 				writer.writerow(hashed)
+			# 				with open("atlas_seqs.csv", "a") as csvfile:
+			# 					writer = csv.writer(csvfile)
+			# 					writer.writerow(result_seq_multi)
+
+
 			return render_template("upload_peptide.html", data=result_seq_multi)#result_seq_multi)
 	else:
 		return render_template("upload_peptide.html")
