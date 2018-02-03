@@ -340,7 +340,7 @@ def upload_peptide():
 							writer = csv.writer(f)
 							writer.writerow(hashed)
 				if ishashed == False:
-					with open("atlas_seqs.csv", "r+b", newline='') as csvfile:
+					with open("atlas_seqs.csv", "r+b") as csvfile:
 						writer = csv.writer(csvfile)
 						writer.writerow(result_seq_multi)
 						for letter in hashed:
