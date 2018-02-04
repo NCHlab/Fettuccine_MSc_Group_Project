@@ -20,7 +20,7 @@ APP_ROOT = os.path.dirname(os.path.abspath(__file__))
 ALLOWED_EXTENSIONS = set(["xml", "mzid", "mzTab", "mztab" ,"fasta"])
 ALLOWED_EX_XML = set(["xml", "mzid"])
 ALLOWED_EX_MZTAB = set(["mzTab", "mztab"])
-ALLOWED_EX_FASTA = set(["fasta"])
+ALLOWED_EX_FASTA = set(["fasta","fa", "faa"])
 
 # Connect to the database
 try:
@@ -127,23 +127,16 @@ def peptide_seq_ident():
 		if request.form["fasta_content"] != "":
 			fasta_check = request.form["fasta_content"]
 			fasta_check = fasta_check.count(">")
-			#sum(x in exclude_sign for x in fasta_check) > 1
-			#[exclude_sign for i in fasta_check if exclude_sign in fasta_check]
+			# Checks to see if a header exists and rejects the data if it does
 			if fasta_check > 1:
 				return render_template("peptide_seq_ident.html", empty = error_fasta_1)
 			elif fasta_check == 1:
 				fastaseq = request.form["fasta_content"]
 				return render_template("peptide_seq_ident.html", empty = error_fasta_2)
 
-
-				#rows_count = cur.execute("SELECT Family, Sequence FROM herv_repeats WHERE Sequence = %s", fastaseq)
-				#cur.execute("SELECT Family, Sequence FROM herv_repeats WHERE Sequence = %s", fastaseq)
-				#result_seq =  cur.fetchall()
-				#if not cur.rowcount:
-				#  return render_template("peptide_seq_ident.html", result_family=no_match)
-				#else:
-				#  return render_template("peptide_seq_ident.html", data1=result_seq)
 			else:
+				# Saves the peptide sequences and removes all spaces, tabs and new lines
+				# Does a MYSQL query for the correctly formatted peptide sequence
 				fastaseq = request.form["fasta_content"]
 				fastaseq = fastaseq.replace("\n","").replace("\r","").replace(" ","")
 				rows_count = cur.execute("SELECT Family, Sequence FROM herv_repeats WHERE Sequence = %s", fastaseq)
@@ -156,6 +149,7 @@ def peptide_seq_ident():
 				  return render_template("peptide_seq_ident.html", result_family=no_match)
 				else:
 				  return render_template("peptide_seq_ident.html", data1=result_seq)
+
 		# If a file has been uploaded (file2 - name of upload form), this if statement occurs
 		elif 'file2' in request.files:
 			# Creates a path to the specified folder
@@ -170,6 +164,7 @@ def peptide_seq_ident():
 				destination = "/".join([target, filename])
 				file.save(destination)
 
+				# Checks the current directory and moves to the correct folder
 			if os.getcwd() == APP_ROOT:
 				os.chdir("sequence_ident")
 			elif os.getcwd() == APP_ROOT+"\sequence_ident":
@@ -177,11 +172,13 @@ def peptide_seq_ident():
 			elif os.getcwd() == APP_ROOT+"\uploaded":
 				os.chdir("..\sequence_ident")
 
-			#fpath = os.path.join(direct, filename)
+
 			# Goes through fasta file and checks whether if its empty
 			seqfile = SeqIO.parse(filename, "fasta")
 			if os.stat(filename).st_size == 0:
 				return render_template("peptide_seq_ident.html", empty = error_empty2)
+
+			# Checks the file extension, if it is not in the allowed fasta format, it is rejected
 			elif filename.rsplit('.', 1)[1].lower() not in ALLOWED_EX_FASTA:
 				result_seq_multi = "Incorrect filetype uploaded! Please Upload a Fasta formatted file"
 				return render_template("peptide_seq_ident.html", empty=result_seq_multi)
@@ -205,7 +202,7 @@ def peptide_seq_ident():
 					if not cur.rowcount:
 					  return render_template("peptide_seq_ident.html", empty=no_match)
 					else:
-						return render_template("peptide_seq_ident.html", data=result_seq_one)#, result_seq1=result_seq_df)#result_seq[0][1])
+						return render_template("peptide_seq_ident.html", data=result_seq_one)
 				else:
 					for record in SeqIO.parse(filename, "fasta"):
 						# Loop which iterates through ever fasta sequence and appends the results
@@ -220,10 +217,11 @@ def peptide_seq_ident():
 					if not cur.rowcount:
 					  return render_template("peptide_seq_ident.html", empty=no_match)
 					else:
-					  return render_template("peptide_seq_ident.html", data=result_seq_multi)#result_seq_multi) result_family=result_seq_df,
+					  return render_template("peptide_seq_ident.html", data=result_seq_multi)
 		elif request.form["fasta_content"] == "":
 			return render_template("peptide_seq_ident.html", empty = error_empty2)
 	else:
+		# By default, this GET method is returned and displays 1000 sequences and families from the database
 		cur.execute("SELECT Family, Sequence FROM herv_repeats LIMIT 0, 1000")
 		result_seq =  cur.fetchall()
 		return render_template("peptide_seq_ident.html", data1=result_seq)
@@ -251,17 +249,21 @@ def upload_peptide():
 	list_of_matches = []
 	list_of_pep_seqs = []
 
+	# Checks for post method (data submitted)
 	if request.method == "POST":
 		target = os.path.join(APP_ROOT, "uploaded/")
 
+		#Creates the folder if it doesnt exist
 		if not os.path.isdir(target):
 			os.mkdir(target)
 
+		#Saves the file into the specified location above
 		for file in request.files.getlist("file"):
 			filename2 = file.filename
 			destination = "/".join([target, filename2])
 			file.save(destination)
 
+		#Checks current folder and opens the correct location
 		if os.getcwd() == APP_ROOT:
 			os.chdir("uploaded")
 		elif os.getcwd() == APP_ROOT+"\uploaded":
@@ -269,11 +271,12 @@ def upload_peptide():
 		elif os.getcwd() == APP_ROOT+"\sequence_ident":
 			os.chdir("..\uploaded")
 
+		#Checks to see if any file has been uploaded, if it has not then error returned
 		if 'file' not in request.files:
 			result_seq_multi = "No File uploaded! Please Upload a MzIdent or mzTab formatted file"
 			return render_template("upload_peptide.html", result_family=result_seq_multi)
 
-
+		# If the filetype is allowed, the file is read in and then regex match used to locate the peptide
 		if filename2.rsplit('.', 1)[1].lower() in ALLOWED_EX_XML:
 			file_mz_seq = open(filename2, "r")
 			whole_file = file_mz_seq.read()
@@ -286,6 +289,7 @@ def upload_peptide():
 
 			list_of_pep_seqs = [character.replace('>', '') for character in list_of_matches]
 
+		# Checks to see filetype for MZTAB format
 		elif filename2.rsplit('.', 1)[1].lower() in ALLOWED_EX_MZTAB:
 
 			file_mztab_seq = open(filename2, "r")
@@ -301,6 +305,7 @@ def upload_peptide():
 			list_of_pep_seqs = [sequence for sequence in mztab_seq_mixed if len(sequence) > 5]
 
 		else:
+			#If the file extension does not match mztab or mzident, an error stating wrong filetype uploaded relayed back
 			result_seq_multi = "Incorrect filetype uploaded! Please Upload a MzIdent or mzTab formatted file"
 			return render_template("upload_peptide.html", result_family=result_seq_multi)
 
@@ -324,8 +329,9 @@ def upload_peptide():
 			DF_PD=pd.DataFrame(result_seq_multi)
 			result_seq_df=DF_PD.to_html()
 			if result_seq_multi != "":
-				#for file in request.files.getlist("file"):
-				#hashed = str(hashlib.sha224(("file")).hexdigest())
+				#If data has been saved into memory, a hash check is conducted on the original file that was read in
+				#If the unique hash check is not duplicate, the data is saved for the atlas expression
+				#otherwise the data is not saved (due to it already existing from the same source file)
 				hashed = str(hashlib.sha224(whole_file).hexdigest())
 
 
