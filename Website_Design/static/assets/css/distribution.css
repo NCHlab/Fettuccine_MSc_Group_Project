@@ -1,32 +1,32 @@
 /* #####################################
 visualisation of distribution: */
 
-.Genome {
-  width: 1315px;
-  height: 50px;
-  position: relative;
-  background: black;
-}
 
-.Chromosome1 {
+.dropbtn {
     background-color: #e2e2e2;
     color: black;
-    padding: 16px;
     font-size: 16px;
     border: none;
     cursor: pointer;
-
+    text-align: center;
+    width: 50px;
+    height: 50px;
 }
 
-/* Dropdown button */
-.Chromosome1 .Chr1_drop {
- font-size: 16px;
- border: none;
- outline: none;
- color: white;
- padding: 14px 16px;
- background-color: #e2e2e2;
+.dropbtn:hover, .dropbtn:focus {
+    background-color: #f39c12;
 }
+
+.Genome {
+width: 50px;
+}
+
+.Chromosome1 {
+    position: relative;
+    left:20px;
+    top:0px;
+}
+
 /* Dropdown content (hidden by default) */
 .Chr1_drop_info {
  display: none;
@@ -47,11 +47,6 @@ visualisation of distribution: */
  text-align: center;
 }
 
-/* Add a grey background color to dropdown links on hover */
-.Chr1_drop_info a:hover {
- background-color: #ddd;
-}
-
 /* Show the dropdown menu on hover */
 .Chromosome1:hover .Chr1_drop_info {
  display: block;
@@ -60,33 +55,19 @@ visualisation of distribution: */
 /* container for the images and embeded url*/
 .Chr1 {
   display: none;
-  width: 100px;
+  width: 10px;
   height: 50px;
-  background: deepskyblue;
   position: relative;
   left:0px;
   top:50px;
 }
 
 .Chromosome2 {
-    width: 50px;
-    height: 60px;
-    background: gray;
     position: relative;
-    left:55px;
+    left:75px;
     top:-50px;
-    color: white;
 }
 
-/* Dropdown button */
-.Chromosome2 .Chr2_drop {
- font-size: 16px;
- border: none;
- outline: none;
- color: white;
- padding: 14px 16px;
- background-color: inherit;
-}
 /* Dropdown content (hidden by default) */
 .Chr2_drop_info {
  display: none;
@@ -107,11 +88,6 @@ visualisation of distribution: */
  text-align: center;
 }
 
-/* Add a grey background color to dropdown links on hover */
-.Chr2_drop_info a:hover {
- background-color: #ddd;
-}
-
 /* Show the dropdown menu on hover */
 .Chromosome2:hover .Chr2_drop_info {
  display: block;
@@ -120,33 +96,19 @@ visualisation of distribution: */
 /* container for the images and embeded url*/
 .Chr2 {
   display: none;
-  width: 100px;
+  width: 10px;
   height: 50px;
-  background: deepskyblue;
   position: relative;
   left:0px;
   top:0px;
 }
 
 .Chromosome3 {
-    width: 50px;
-    height: 60px;
-    background: gray;
     position: relative;
-    left:110px;
-    top:-110px;
-    color: white;
+    left:130px;
+    top:-100px;
 }
 
-/* Dropdown button */
-.Chromosome3 .Chr3_drop {
- font-size: 16px;
- border: none;
- outline: none;
- color: white;
- padding: 14px 16px;
- background-color: inherit;
-}
 /* Dropdown content (hidden by default) */
 .Chr3_drop_info {
  display: none;
@@ -167,11 +129,6 @@ visualisation of distribution: */
  text-align: center;
 }
 
-/* Add a grey background color to dropdown links on hover */
-.Chr3_drop_info a:hover {
- background-color: #ddd;
-}
-
 /* Show the dropdown menu on hover */
 .Chromosome3:hover .Chr3_drop_info {
  display: block;
@@ -180,33 +137,19 @@ visualisation of distribution: */
 /* container for the images and embeded url*/
 .Chr3 {
   display: none;
-  width: 100px;
+  width: 10px;
   height: 50px;
-  background: deepskyblue;
   position: relative;
   left:0px;
   top:-50px;
 }
 
 .Chromosome4 {
-    width: 50px;
-    height: 60px;
-    background: gray;
     position: relative;
-    left:165px;
-    top:-170px;
-    color: white;
+    left:185px;
+    top:-150px;
 }
 
-/* Dropdown button */
-.Chromosome4 .Chr4_drop {
- font-size: 16px;
- border: none;
- outline: none;
- color: white;
- padding: 14px 16px;
- background-color: inherit;
-}
 /* Dropdown content (hidden by default) */
 .Chr4_drop_info {
  display: none;
@@ -227,11 +170,6 @@ visualisation of distribution: */
  text-align: center;
 }
 
-/* Add a grey background color to dropdown links on hover */
-.Chr4_drop_info a:hover {
- background-color: #ddd;
-}
-
 /* Show the dropdown menu on hover */
 .Chromosome4:hover .Chr4_drop_info {
  display: block;
@@ -240,33 +178,19 @@ visualisation of distribution: */
 /* container for the images and embeded url*/
 .Chr4 {
   display: none;
-  width: 100px;
+  width: 10px;
   height: 50px;
-  background: deepskyblue;
   position: relative;
   left:0px;
   top:-100px;
 }
 
 .Chromosome5 {
-    width: 50px;
-    height: 60px;
-    background: gray;
     position: relative;
-    left:220px;
-    top:-230px;
-    color: white;
+    left:240px;
+    top:-200px;
 }
 
-/* Dropdown button */
-.Chromosome5 .Chr5_drop {
- font-size: 16px;
- border: none;
- outline: none;
- color: white;
- padding: 14px 16px;
- background-color: inherit;
-}
 /* Dropdown content (hidden by default) */
 .Chr5_drop_info {
  display: none;
@@ -287,10 +211,6 @@ visualisation of distribution: */
  text-align: center;
 }
 
-/* Add a grey background color to dropdown links on hover */
-.Chr5_drop_info a:hover {
- background-color: #ddd;
-}
 
 /* Show the dropdown menu on hover */
 .Chromosome5:hover .Chr5_drop_info {
@@ -300,33 +220,19 @@ visualisation of distribution: */
 /* container for the images and embeded url*/
 .Chr5 {
   display: none;
-  width: 100px;
+  width: 10px;
   height: 50px;
-  background: deepskyblue;
   position: relative;
   left:0px;
   top:-150px;
 }
 
 .Chromosome6 {
-    width: 50px;
-    height: 60px;
-    background: gray;
     position: relative;
-    left:275px;
-    top:-290px;
-    color: white;
+    left:295px;
+    top:-250px;
 }
 
-/* Dropdown button */
-.Chromosome6 .Chr6_drop {
- font-size: 16px;
- border: none;
- outline: none;
- color: white;
- padding: 14px 16px;
- background-color: inherit;
-}
 /* Dropdown content (hidden by default) */
 .Chr6_drop_info {
  display: none;
@@ -347,11 +253,6 @@ visualisation of distribution: */
  text-align: center;
 }
 
-/* Add a grey background color to dropdown links on hover */
-.Chr6_drop_info a:hover {
- background-color: #ddd;
-}
-
 /* Show the dropdown menu on hover */
 .Chromosome6:hover .Chr6_drop_info {
  display: block;
@@ -360,33 +261,19 @@ visualisation of distribution: */
 /* container for the images and embeded url*/
 .Chr6 {
   display: none;
-  width: 100px;
+  width: 10px;
   height: 50px;
-  background: deepskyblue;
   position: relative;
   left:0px;
   top:-200px;
 }
 
 .Chromosome7 {
-    width: 50px;
-    height: 60px;
-    background: gray;
     position: relative;
-    left:330px;
-    top:-350px;
-    color: white;
+    left:350px;
+    top:-300px;
 }
 
-/* Dropdown button */
-.Chromosome7 .Chr7_drop {
- font-size: 16px;
- border: none;
- outline: none;
- color: white;
- padding: 14px 16px;
- background-color: inherit;
-}
 /* Dropdown content (hidden by default) */
 .Chr7_drop_info {
  display: none;
@@ -407,10 +294,6 @@ visualisation of distribution: */
  text-align: center;
 }
 
-/* Add a grey background color to dropdown links on hover */
-.Chr7_drop_info a:hover {
- background-color: #ddd;
-}
 
 /* Show the dropdown menu on hover */
 .Chromosome7:hover .Chr7_drop_info {
@@ -420,33 +303,19 @@ visualisation of distribution: */
 /* container for the images and embeded url*/
 .Chr7 {
   display: none;
-  width: 100px;
+  width: 10px;
   height: 50px;
-  background: deepskyblue;
   position: relative;
   left:0px;
   top:-250px;
 }
 
 .Chromosome8 {
-    width: 50px;
-    height: 60px;
-    background: gray;
     position: relative;
-    left:385px;
-    top:-410px;
-    color: white;
+    left:405px;
+    top:-350px;
 }
 
-/* Dropdown button */
-.Chromosome8 .Chr8_drop {
- font-size: 16px;
- border: none;
- outline: none;
- color: white;
- padding: 14px 16px;
- background-color: inherit;
-}
 /* Dropdown content (hidden by default) */
 .Chr8_drop_info {
  display: none;
@@ -467,10 +336,6 @@ visualisation of distribution: */
  text-align: center;
 }
 
-/* Add a grey background color to dropdown links on hover */
-.Chr8_drop_info a:hover {
- background-color: #ddd;
-}
 
 /* Show the dropdown menu on hover */
 .Chromosome8:hover .Chr8_drop_info {
@@ -480,33 +345,19 @@ visualisation of distribution: */
 /* container for the images and embeded url*/
 .Chr8 {
   display: none;
-  width: 100px;
+  width: 10px;
   height: 50px;
-  background: deepskyblue;
   position: relative;
   left:0px;
   top:-300px;
 }
 
 .Chromosome9 {
-    width: 50px;
-    height: 60px;
-    background: gray;
     position: relative;
-    left:440px;
-    top:-470px;
-    color: white;
+    left:460px;
+    top:-400px;
 }
 
-/* Dropdown button */
-.Chromosome9 .Chr9_drop {
- font-size: 16px;
- border: none;
- outline: none;
- color: white;
- padding: 14px 16px;
- background-color: inherit;
-}
 /* Dropdown content (hidden by default) */
 .Chr9_drop_info {
  display: none;
@@ -527,10 +378,6 @@ visualisation of distribution: */
  text-align: center;
 }
 
-/* Add a grey background color to dropdown links on hover */
-.Chr9_drop_info a:hover {
- background-color: #ddd;
-}
 
 /* Show the dropdown menu on hover */
 .Chromosome9:hover .Chr9_drop_info {
@@ -540,33 +387,19 @@ visualisation of distribution: */
 /* container for the images and embeded url*/
 .Chr9 {
   display: none;
-  width: 100px;
+  width: 10px;
   height: 50px;
-  background: deepskyblue;
   position: relative;
   left:0px;
   top:-350px;
 }
 
 .Chromosome10 {
-    width: 50px;
-    height: 60px;
-    background: gray;
     position: relative;
-    left:495px;
-    top:-530px;
-    color: white;
+    left:515px;
+    top:-450px;
 }
 
-/* Dropdown button */
-.Chromosome10 .Chr10_drop {
- font-size: 16px;
- border: none;
- outline: none;
- color: white;
- padding: 14px 16px;
- background-color: inherit;
-}
 /* Dropdown content (hidden by default) */
 .Chr10_drop_info {
  display: none;
@@ -587,10 +420,6 @@ visualisation of distribution: */
  text-align: center;
 }
 
-/* Add a grey background color to dropdown links on hover */
-.Chr10_drop_info a:hover {
- background-color: #ddd;
-}
 
 /* Show the dropdown menu on hover */
 .Chromosome10:hover .Chr10_drop_info {
@@ -600,33 +429,19 @@ visualisation of distribution: */
 /* container for the images and embeded url*/
 .Chr10 {
   display: none;
-  width: 100px;
+  width: 10px;
   height: 50px;
-  background: deepskyblue;
   position: relative;
   left:0px;
   top:-400px;
 }
 
 .Chromosome11 {
-    width: 50px;
-    height: 60px;
-    background: gray;
     position: relative;
-    left:550px;
-    top:-590px;
-    color: white;
+    left:570px;
+    top:-500px;
 }
 
-/* Dropdown button */
-.Chromosome11 .Chr11_drop {
- font-size: 16px;
- border: none;
- outline: none;
- color: white;
- padding: 14px 16px;
- background-color: inherit;
-}
 /* Dropdown content (hidden by default) */
 .Chr11_drop_info {
  display: none;
@@ -647,11 +462,6 @@ visualisation of distribution: */
  text-align: center;
 }
 
-/* Add a grey background color to dropdown links on hover */
-.Chr11_drop_info a:hover {
- background-color: #ddd;
-}
-
 /* Show the dropdown menu on hover */
 .Chromosome11:hover .Chr11_drop_info {
  display: block;
@@ -660,33 +470,20 @@ visualisation of distribution: */
 /* container for the images and embeded url*/
 .Chr11 {
   display: none;
-  width: 100px;
+  width: 10px;
   height: 50px;
-  background: deepskyblue;
   position: relative;
   left:0px;
   top:-450px;
 }
 
 .Chromosome12 {
-    width: 50px;
-    height: 60px;
-    background: gray;
+
     position: relative;
-    left:605px;
-    top:-650px;
-    color: white;
+    left:625px;
+    top:-550px;
 }
 
-/* Dropdown button */
-.Chromosome12 .Chr12_drop {
- font-size: 16px;
- border: none;
- outline: none;
- color: white;
- padding: 14px 16px;
- background-color: inherit;
-}
 /* Dropdown content (hidden by default) */
 .Chr12_drop_info {
  display: none;
@@ -707,10 +504,6 @@ visualisation of distribution: */
  text-align: center;
 }
 
-/* Add a grey background color to dropdown links on hover */
-.Chr12_drop_info a:hover {
- background-color: #ddd;
-}
 
 /* Show the dropdown menu on hover */
 .Chromosome12:hover .Chr12_drop_info {
@@ -720,33 +513,19 @@ visualisation of distribution: */
 /* container for the images and embeded url*/
 .Chr12 {
   display: none;
-  width: 100px;
+  width: 10px;
   height: 50px;
-  background: deepskyblue;
   position: relative;
   left:0px;
   top:-500px;
 }
 
 .Chromosome13 {
-    width: 50px;
-    height: 60px;
-    background: gray;
     position: relative;
-    left:660px;
-    top:-710px;
-    color: white;
+    left:680px;
+    top:-600px;
 }
 
-/* Dropdown button */
-.Chromosome13 .Chr13_drop {
- font-size: 16px;
- border: none;
- outline: none;
- color: white;
- padding: 14px 16px;
- background-color: inherit;
-}
 /* Dropdown content (hidden by default) */
 .Chr13_drop_info {
  display: none;
@@ -767,46 +546,29 @@ visualisation of distribution: */
  text-align: center;
 }
 
-/* Add a grey background color to dropdown links on hover */
-.Chr13_drop_info a:hover {
- background-color: #ddd;
-}
 
 /* Show the dropdown menu on hover */
 .Chromosome13:hover .Chr13_drop_info {
  display: block;
+ right: 0px;
 }
 
 /* container for the images and embeded url*/
 .Chr13 {
   display: none;
-  width: 100px;
+  width: 10px;
   height: 50px;
-  background: deepskyblue;
   position: relative;
   left:0px;
   top:-550px;
 }
 
 .Chromosome14 {
-    width: 50px;
-    height: 60px;
-    background: gray;
     position: relative;
-    left:715px;
-    top:-770px;
-    color: white;
+    left:735px;
+    top:-650px;
 }
 
-/* Dropdown button */
-.Chromosome14 .Chr14_drop {
- font-size: 16px;
- border: none;
- outline: none;
- color: white;
- padding: 14px 16px;
- background-color: inherit;
-}
 /* Dropdown content (hidden by default) */
 .Chr14_drop_info {
  display: none;
@@ -827,46 +589,28 @@ visualisation of distribution: */
  text-align: center;
 }
 
-/* Add a grey background color to dropdown links on hover */
-.Chr14_drop_info a:hover {
- background-color: #ddd;
-}
-
 /* Show the dropdown menu on hover */
 .Chromosome14:hover .Chr14_drop_info {
  display: block;
+ right: 0px;
 }
 
 /* container for the images and embeded url*/
 .Chr14 {
   display: none;
-  width: 100px;
+  width: 10px;
   height: 50px;
-  background: deepskyblue;
   position: relative;
   left:0px;
   top:-600px;
 }
 
 .Chromosome15 {
-    width: 50px;
-    height: 60px;
-    background: gray;
     position: relative;
-    left:770px;
-    top:-830px;
-    color: white;
+    left:790px;
+    top:-700px;
 }
 
-/* Dropdown button */
-.Chromosome15 .Chr15_drop {
- font-size: 16px;
- border: none;
- outline: none;
- color: white;
- padding: 14px 16px;
- background-color: inherit;
-}
 /* Dropdown content (hidden by default) */
 .Chr15_drop_info {
  display: none;
@@ -887,46 +631,28 @@ visualisation of distribution: */
  text-align: center;
 }
 
-/* Add a grey background color to dropdown links on hover */
-.Chr15_drop_info a:hover {
- background-color: #ddd;
-}
-
 /* Show the dropdown menu on hover */
 .Chromosome15:hover .Chr15_drop_info {
  display: block;
+ right: 0px;
 }
 
 /* container for the images and embeded url*/
 .Chr15 {
   display: none;
-  width: 100px;
+  width: 10px;
   height: 50px;
-  background: deepskyblue;
   position: relative;
   left:0px;
   top:-650px;
 }
 
 .Chromosome16 {
-    width: 50px;
-    height: 60px;
-    background: gray;
     position: relative;
-    left:825px;
-    top:-890px;
-    color: white;
+    left:845px;
+    top:-750px;
 }
 
-/* Dropdown button */
-.Chromosome16 .Chr16_drop {
- font-size: 16px;
- border: none;
- outline: none;
- color: white;
- padding: 14px 16px;
- background-color: inherit;
-}
 /* Dropdown content (hidden by default) */
 .Chr16_drop_info {
  display: none;
@@ -947,35 +673,26 @@ visualisation of distribution: */
  text-align: center;
 }
 
-/* Add a grey background color to dropdown links on hover */
-.Chr16_drop_info a:hover {
- background-color: #ddd;
-}
-
 /* Show the dropdown menu on hover */
 .Chromosome16:hover .Chr16_drop_info {
  display: block;
+ right: 0px;
 }
 
 /* container for the images and embeded url*/
 .Chr16 {
   display: none;
-  width: 100px;
+  width: 10px;
   height: 50px;
-  background: deepskyblue;
   position: relative;
   left:0px;
   top:-700px;
 }
 
 .Chromosome17 {
-    width: 50px;
-    height: 60px;
-    background: gray;
     position: relative;
-    left:880px;
-    top:-950px;
-    color: white;
+    left:900px;
+    top:-800px;
 }
 
 /* Dropdown button */
@@ -1007,46 +724,28 @@ visualisation of distribution: */
  text-align: center;
 }
 
-/* Add a grey background color to dropdown links on hover */
-.Chr17_drop_info a:hover {
- background-color: #ddd;
-}
-
 /* Show the dropdown menu on hover */
 .Chromosome17:hover .Chr17_drop_info {
  display: block;
+ right: 0px;
 }
 
 /* container for the images and embeded url*/
 .Chr17 {
   display: none;
-  width: 100px;
+  width: 10px;
   height: 50px;
-  background: deepskyblue;
   position: relative;
   left:0px;
   top:-750px;
 }
 
 .Chromosome18 {
-    width: 50px;
-    height: 60px;
-    background: gray;
     position: relative;
-    left:935px;
-    top:-1010px;
-    color: white;
+    left:955px;
+    top:-850px;
 }
 
-/* Dropdown button */
-.Chromosome18 .Chr18_drop {
- font-size: 16px;
- border: none;
- outline: none;
- color: white;
- padding: 14px 16px;
- background-color: inherit;
-}
 /* Dropdown content (hidden by default) */
 .Chr18_drop_info {
  display: none;
@@ -1067,46 +766,28 @@ visualisation of distribution: */
  text-align: center;
 }
 
-/* Add a grey background color to dropdown links on hover */
-.Chr18_drop_info a:hover {
- background-color: #ddd;
-}
-
 /* Show the dropdown menu on hover */
 .Chromosome18:hover .Chr18_drop_info {
  display: block;
+ right: 0px;
 }
 
 /* container for the images and embeded url*/
 .Chr18 {
   display: none;
-  width: 100px;
+  width: 10px;
   height: 50px;
-  background: deepskyblue;
   position: relative;
   left:0px;
   top:-800px;
 }
 
 .Chromosome19 {
-    width: 50px;
-    height: 60px;
-    background: gray;
     position: relative;
-    left:990px;
-    top:-1070px;
-    color: white;
+    left:1010px;
+    top:-900px;
 }
 
-/* Dropdown button */
-.Chromosome19 .Chr19_drop {
- font-size: 16px;
- border: none;
- outline: none;
- color: white;
- padding: 14px 16px;
- background-color: inherit;
-}
 /* Dropdown content (hidden by default) */
 .Chr19_drop_info {
  display: none;
@@ -1127,46 +808,28 @@ visualisation of distribution: */
  text-align: center;
 }
 
-/* Add a grey background color to dropdown links on hover */
-.Chr19_drop_info a:hover {
- background-color: #ddd;
-}
-
 /* Show the dropdown menu on hover */
 .Chromosome19:hover .Chr19_drop_info {
  display: block;
+ right: 0px;
 }
 
 /* container for the images and embeded url*/
 .Chr19 {
   display: none;
-  width: 100px;
+  width: 10px;
   height: 50px;
-  background: deepskyblue;
   position: relative;
   left:0px;
   top:-850px;
 }
 
 .Chromosome20 {
-    width: 50px;
-    height: 60px;
-    background: gray;
     position: relative;
-    left:1045px;
-    top:-1130px;
-    color: white;
+    left:1065px;
+    top:-950px;
 }
 
-/* Dropdown button */
-.Chromosome20 .Chr20_drop {
- font-size: 16px;
- border: none;
- outline: none;
- color: white;
- padding: 14px 16px;
- background-color: inherit;
-}
 /* Dropdown content (hidden by default) */
 .Chr20_drop_info {
  display: none;
@@ -1187,46 +850,28 @@ visualisation of distribution: */
  text-align: center;
 }
 
-/* Add a grey background color to dropdown links on hover */
-.Chr20_drop_info a:hover {
- background-color: #ddd;
-}
-
 /* Show the dropdown menu on hover */
 .Chromosome20:hover .Chr20_drop_info {
  display: block;
+ right: 0px;
 }
 
 /* container for the images and embeded url*/
 .Chr20 {
   display: none;
-  width: 100px;
+  width: 10px;
   height: 50px;
-  background: deepskyblue;
   position: relative;
   left:0px;
   top:-900px;
 }
 
 .Chromosome21 {
-    width: 50px;
-    height: 60px;
-    background: gray;
     position: relative;
-    left:1100px;
-    top:-1190px;
-    color: white;
+    left:1120px;
+    top:-1000px;
 }
 
-/* Dropdown button */
-.Chromosome21 .Chr21_drop {
- font-size: 16px;
- border: none;
- outline: none;
- color: white;
- padding: 14px 16px;
- background-color: inherit;
-}
 /* Dropdown content (hidden by default) */
 .Chr21_drop_info {
  display: none;
@@ -1247,46 +892,28 @@ visualisation of distribution: */
  text-align: center;
 }
 
-/* Add a grey background color to dropdown links on hover */
-.Chr21_drop_info a:hover {
- background-color: #ddd;
-}
-
 /* Show the dropdown menu on hover */
 .Chromosome21:hover .Chr21_drop_info {
  display: block;
+ right: 0px;
 }
 
 /* container for the images and embeded url*/
 .Chr21 {
   display: none;
-  width: 100px;
+  width: 10px;
   height: 50px;
-  background: deepskyblue;
   position: relative;
   left:0px;
   top:-950px;
 }
 
 .Chromosome22 {
-    width: 50px;
-    height: 60px;
-    background: gray;
     position: relative;
-    left:1155px;
-    top:-1250px;
-    color: white;
+    left:1175px;
+    top:-1050px;
 }
 
-/* Dropdown button */
-.Chromosome22 .Chr22_drop {
- font-size: 16px;
- border: none;
- outline: none;
- color: white;
- padding: 14px 16px;
- background-color: inherit;
-}
 /* Dropdown content (hidden by default) */
 .Chr22_drop_info {
  display: none;
@@ -1307,46 +934,28 @@ visualisation of distribution: */
  text-align: center;
 }
 
-/* Add a grey background color to dropdown links on hover */
-.Chr22_drop_info a:hover {
- background-color: #ddd;
-}
-
 /* Show the dropdown menu on hover */
 .Chromosome22:hover .Chr22_drop_info {
  display: block;
+ right: 0px;
 }
 
 /* container for the images and embeded url*/
 .Chr22 {
   display: none;
-  width: 100px;
+  width: 10px;
   height: 50px;
-  background: deepskyblue;
   position: relative;
   left:0px;
   top:-1000px;
 }
 
 .ChromosomeX {
-    width: 50px;
-    height: 60px;
-    background: gray;
     position: relative;
-    left:1210px;
-    top:-1310px;
-    color: white;
+    left:1230px;
+    top:-1100px;
 }
 
-/* Dropdown button */
-.ChromosomeX .ChrX_drop {
- font-size: 16px;
- border: none;
- outline: none;
- color: white;
- padding: 14px 16px;
- background-color: inherit;
-}
 /* Dropdown content (hidden by default) */
 .ChrX_drop_info {
  display: none;
@@ -1367,48 +976,28 @@ visualisation of distribution: */
  text-align: center;
 }
 
-/* Add a grey background color to dropdown links on hover */
-.ChrX_drop_info a:hover {
- background-color: #ddd;
-}
-
 /* Show the dropdown menu on hover */
 .ChromosomeX:hover .ChrX_drop_info {
  display: block;
- position: relative;
- right:110px;
+ right: 0px;
 }
 
 /* container for the images and embeded url*/
 .ChrX {
   display: none;
-  width: 100px;
+  width: 10px;
   height: 50px;
-  background: deepskyblue;
   position: relative;
   left:0px;
   top:-1050px;
 }
 
 .ChromosomeY {
-    width: 50px;
-    height: 60px;
-    background: gray;
     position: relative;
-    left:1265px;
-    top:-1370px;
-    color: white;
+    left:1285px;
+    top:-1150px;
 }
 
-/* Dropdown button */
-.ChromosomeY .ChrY_drop {
- font-size: 16px;
- border: none;
- outline: none;
- color: white;
- padding: 14px 16px;
- background-color: inherit;
-}
 /* Dropdown content (hidden by default) */
 .ChrY_drop_info {
  display: none;
@@ -1429,24 +1018,17 @@ visualisation of distribution: */
  text-align: center;
 }
 
-/* Add a grey background color to dropdown links on hover */
-.ChrY_drop_info a:hover {
- background-color: #ddd;
-}
-
 /* Show the dropdown menu on hover */
 .ChromosomeY:hover .ChrY_drop_info {
  display: block;
- position: relative;
- right:110px;
+ right: 0px;
 }
 
 /* container for the images and embeded url*/
 .ChrY {
   display: none;
-  width: 100px;
+  width: 10px;
   height: 50px;
-  background: deepskyblue;
   position: relative;
   left:0px;
   top:-1100px;
