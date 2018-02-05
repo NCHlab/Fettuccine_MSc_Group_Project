@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg
+PUBLIC "-//W3C//DTD SVG 1.1//EN"
+       "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="1000px" height="1000px" xmlns="http://www.w3.org/2000/svg" version="1.1">
+   <line x1="721" y1="125" x2="711" y2="125" style="fill:    orange;stroke:black;stroke-width:2;"/>
+   <line x1="517" y1="128" x2="507" y2="128" style="fill:    orange;stroke:black;stroke-width:2;"/>
+   <line x1="711" y1="125" x2="517" y2="128" style="fill:    orange;stroke:    orange;stroke-width:1;"/>
+   <line x1="713.5" y1="125" x2="717.03553390593" y2="128.53553390593" style="fill:    orange;stroke:black;stroke-width:2;"/>
+   <line x1="713.5" y1="125" x2="717.03553390593" y2="121.46446609407" style="fill:    orange;stroke:black;stroke-width:2;"/>
+   <line x1="512" y1="128" x2="515.53553390593" y2="131.53553390593" style="fill:    orange;stroke:black;stroke-width:2;"/>
+   <line x1="512" y1="128" x2="515.53553390593" y2="124.46446609407" style="fill:    orange;stroke:black;stroke-width:2;"/>
+   <line x1="191" y1="271" x2="201" y2="271" style="fill:    orange;stroke:black;stroke-width:2;"/>
+   <line x1="317" y1="276" x2="327" y2="276" style="fill:    orange;stroke:black;stroke-width:2;"/>
+   <line x1="201" y1="271" x2="317" y2="276" style="fill:    orange;stroke:    orange;stroke-width:1;"/>
+   <line x1="198.5" y1="271" x2="194.96446609407" y2="274.53553390593" style="fill:    orange;stroke:black;stroke-width:2;"/>
+   <line x1="198.5" y1="271" x2="194.96446609407" y2="267.46446609407" style="fill:    orange;stroke:black;stroke-width:2;"/>
+   <line x1="322" y1="276" x2="318.46446609407" y2="279.53553390593" style="fill:    orange;stroke:black;stroke-width:2;"/>
+   <line x1="322" y1="276" x2="318.46446609407" y2="272.46446609407" style="fill:    orange;stroke:black;stroke-width:2;"/>
+   <line x1="191" y1="291" x2="201" y2="291" style="fill:green;stroke:black;stroke-width:2;"/>
+   <line x1="304" y1="412" x2="314" y2="412" style="fill:green;stroke:black;stroke-width:2;"/>
+   <line x1="201" y1="291" x2="304" y2="412" style="fill:green;stroke:green;stroke-width:1;"/>
+   <line x1="198.5" y1="291" x2="194.96446609407" y2="294.53553390593" style="fill:green;stroke:black;stroke-width:2;"/>
+   <line x1="198.5" y1="291" x2="194.96446609407" y2="287.46446609407" style="fill:green;stroke:black;stroke-width:2;"/>
+   <line x1="309" y1="412" x2="305.46446609407" y2="415.53553390593" style="fill:green;stroke:black;stroke-width:2;"/>
+   <line x1="309" y1="412" x2="305.46446609407" y2="408.46446609407" style="fill:green;stroke:black;stroke-width:2;"/>
+   <line x1="191" y1="251" x2="201" y2="251" style="fill:yellow;stroke:black;stroke-width:2;"/>
+   <line x1="311" y1="128" x2="321" y2="128" style="fill:yellow;stroke:black;stroke-width:2;"/>
+   <line x1="201" y1="251" x2="311" y2="128" style="fill:yellow;stroke:yellow;stroke-width:1;"/>
+   <line x1="198.5" y1="251" x2="194.96446609407" y2="254.53553390593" style="fill:yellow;stroke:black;stroke-width:2;"/>
+   <line x1="198.5" y1="251" x2="194.96446609407" y2="247.46446609407" style="fill:yellow;stroke:black;stroke-width:2;"/>
+   <line x1="316" y1="128" x2="312.46446609407" y2="131.53553390593" style="fill:yellow;stroke:black;stroke-width:2;"/>
+   <line x1="316" y1="128" x2="312.46446609407" y2="124.46446609407" style="fill:yellow;stroke:black;stroke-width:2;"/>
+   <rect width="128" height="20" x="721" y="55" style="fill:red;stroke:black;"/>
+   <text width="128" height="20" x="726" y="69" style="fill:none;stroke:black;" font-family="Arial" font-size="16px"> expression_atlas</text>
+   <rect width="128" height="20" x="721" y="75" style="fill:#0c0;stroke:black;"/>
+   <text width="128" height="20" x="726" y="89" style="fill:none;stroke:black;" font-family="Arial" font-size="16px">peptide_id</text>
+   <rect width="128" height="20" x="721" y="95" style="fill:none;stroke:black;"/>
+   <text width="128" height="20" x="726" y="109" style="fill:none;stroke:black;" font-family="Arial" font-size="16px">sample_id</text>
+   <rect width="128" height="20" x="721" y="115" style="fill:none;stroke:black;"/>
+   <text width="128" height="20" x="726" y="129" style="fill:none;stroke:black;" font-family="Arial" font-size="16px">identified_family</text>
+   <rect width="128" height="20" x="721" y="135" style="fill:none;stroke:black;"/>
+   <text width="128" height="20" x="726" y="149" style="fill:none;stroke:black;" font-family="Arial" font-size="16px">sample_type</text>
+   <rect width="186" height="20" x="327" y="246" style="fill:red;stroke:black;"/>
+   <text width="186" height="20" x="332" y="260" style="fill:none;stroke:black;" font-family="Arial" font-size="16px"> HERV_Groupby_Families</text>
+   <rect width="186" height="20" x="327" y="266" style="fill:#0c0;stroke:black;"/>
+   <text width="186" height="20" x="332" y="280" style="fill:none;stroke:black;" font-family="Arial" font-size="16px">Family</text>
+   <rect width="186" height="20" x="327" y="286" style="fill:none;stroke:black;"/>
+   <text width="186" height="20" x="332" y="300" style="fill:none;stroke:black;" font-family="Arial" font-size="16px">SuperFamily</text>
+   <rect width="186" height="20" x="327" y="306" style="fill:none;stroke:black;"/>
+   <text width="186" height="20" x="332" y="320" style="fill:none;stroke:black;" font-family="Arial" font-size="16px">Repeat_Name</text>
+   <rect width="186" height="20" x="327" y="326" style="fill:none;stroke:black;"/>
+   <text width="186" height="20" x="332" y="340" style="fill:none;stroke:black;" font-family="Arial" font-size="16px">Counts</text>
+   <rect width="186" height="20" x="321" y="98" style="fill:red;stroke:black;"/>
+   <text width="186" height="20" x="326" y="112" style="fill:none;stroke:black;" font-family="Arial" font-size="16px"> HERV_Groupby_Repeats</text>
+   <rect width="186" height="20" x="321" y="118" style="fill:#0c0;stroke:black;"/>
+   <text width="186" height="20" x="326" y="132" style="fill:none;stroke:black;" font-family="Arial" font-size="16px">Repeat_Name</text>
+   <rect width="186" height="20" x="321" y="138" style="fill:none;stroke:black;"/>
+   <text width="186" height="20" x="326" y="152" style="fill:none;stroke:black;" font-family="Arial" font-size="16px">SuperFamily</text>
+   <rect width="186" height="20" x="321" y="158" style="fill:none;stroke:black;"/>
+   <text width="186" height="20" x="326" y="172" style="fill:none;stroke:black;" font-family="Arial" font-size="16px">Family</text>
+   <rect width="186" height="20" x="321" y="178" style="fill:none;stroke:black;"/>
+   <text width="186" height="20" x="326" y="192" style="fill:none;stroke:black;" font-family="Arial" font-size="16px">Counts</text>
+   <rect width="221" height="20" x="314" y="382" style="fill:red;stroke:black;"/>
+   <text width="221" height="20" x="319" y="396" style="fill:none;stroke:black;" font-family="Arial" font-size="16px"> HERV_Groupby_Superfamilies</text>
+   <rect width="221" height="20" x="314" y="402" style="fill:#0c0;stroke:black;"/>
+   <text width="221" height="20" x="319" y="416" style="fill:none;stroke:black;" font-family="Arial" font-size="16px">Superfamily</text>
+   <rect width="221" height="20" x="314" y="422" style="fill:none;stroke:black;"/>
+   <text width="221" height="20" x="319" y="436" style="fill:none;stroke:black;" font-family="Arial" font-size="16px">Description</text>
+   <rect width="221" height="20" x="314" y="442" style="fill:none;stroke:black;"/>
+   <text width="221" height="20" x="319" y="456" style="fill:none;stroke:black;" font-family="Arial" font-size="16px">Repeat_Name</text>
+   <rect width="221" height="20" x="314" y="462" style="fill:none;stroke:black;"/>
+   <text width="221" height="20" x="319" y="476" style="fill:none;stroke:black;" font-family="Arial" font-size="16px">Counts</text>
+   <rect width="116" height="20" x="75" y="201" style="fill:red;stroke:black;"/>
+   <text width="116" height="20" x="80" y="215" style="fill:none;stroke:black;" font-family="Arial" font-size="16px"> HERV_Repeats</text>
+   <rect width="116" height="20" x="75" y="221" style="fill:#0c0;stroke:black;"/>
+   <text width="116" height="20" x="80" y="235" style="fill:none;stroke:black;" font-family="Arial" font-size="16px">ID</text>
+   <rect width="116" height="20" x="75" y="241" style="fill:none;stroke:black;"/>
+   <text width="116" height="20" x="80" y="255" style="fill:none;stroke:black;" font-family="Arial" font-size="16px">Repeat_Name</text>
+   <rect width="116" height="20" x="75" y="261" style="fill:none;stroke:black;"/>
+   <text width="116" height="20" x="80" y="275" style="fill:none;stroke:black;" font-family="Arial" font-size="16px">Family</text>
+   <rect width="116" height="20" x="75" y="281" style="fill:none;stroke:black;"/>
+   <text width="116" height="20" x="80" y="295" style="fill:none;stroke:black;" font-family="Arial" font-size="16px">SuperFamily</text>
+   <rect width="116" height="20" x="75" y="301" style="fill:none;stroke:black;"/>
+   <text width="116" height="20" x="80" y="315" style="fill:none;stroke:black;" font-family="Arial" font-size="16px">Chromosome</text>
+   <rect width="116" height="20" x="75" y="321" style="fill:none;stroke:black;"/>
+   <text width="116" height="20" x="80" y="335" style="fill:none;stroke:black;" font-family="Arial" font-size="16px">genoStart</text>
+   <rect width="116" height="20" x="75" y="341" style="fill:none;stroke:black;"/>
+   <text width="116" height="20" x="80" y="355" style="fill:none;stroke:black;" font-family="Arial" font-size="16px">genoEnd</text>
+   <rect width="158" height="20" x="340" y="589" style="fill:red;stroke:black;"/>
+   <text width="158" height="20" x="345" y="603" style="fill:none;stroke:black;" font-family="Arial" font-size="16px"> L1_Groupby_Repeats</text>
+   <rect width="158" height="20" x="340" y="609" style="fill:none;stroke:black;"/>
+   <text width="158" height="20" x="345" y="623" style="fill:none;stroke:black;" font-family="Arial" font-size="16px">Repeat_Name</text>
+   <rect width="158" height="20" x="340" y="629" style="fill:none;stroke:black;"/>
+   <text width="158" height="20" x="345" y="643" style="fill:none;stroke:black;" font-family="Arial" font-size="16px">Counts</text>
+   <rect width="109" height="20" x="77" y="547" style="fill:red;stroke:black;"/>
+   <text width="109" height="20" x="82" y="561" style="fill:none;stroke:black;" font-family="Arial" font-size="16px"> L1_Repeats</text>
+   <rect width="109" height="20" x="77" y="567" style="fill:#0c0;stroke:black;"/>
+   <text width="109" height="20" x="82" y="581" style="fill:none;stroke:black;" font-family="Arial" font-size="16px">ID</text>
+   <rect width="109" height="20" x="77" y="587" style="fill:none;stroke:black;"/>
+   <text width="109" height="20" x="82" y="601" style="fill:none;stroke:black;" font-family="Arial" font-size="16px">Chromosome</text>
+   <rect width="109" height="20" x="77" y="607" style="fill:none;stroke:black;"/>
+   <text width="109" height="20" x="82" y="621" style="fill:none;stroke:black;" font-family="Arial" font-size="16px">Repeat_Name</text>
+   <rect width="109" height="20" x="77" y="627" style="fill:none;stroke:black;"/>
+   <text width="109" height="20" x="82" y="641" style="fill:none;stroke:black;" font-family="Arial" font-size="16px">SuperFamily</text>
+   <rect width="109" height="20" x="77" y="647" style="fill:none;stroke:black;"/>
+   <text width="109" height="20" x="82" y="661" style="fill:none;stroke:black;" font-family="Arial" font-size="16px">genoStart</text>
+   <rect width="109" height="20" x="77" y="667" style="fill:none;stroke:black;"/>
+   <text width="109" height="20" x="82" y="681" style="fill:none;stroke:black;" font-family="Arial" font-size="16px">genoEnd</text>
+</svg>
