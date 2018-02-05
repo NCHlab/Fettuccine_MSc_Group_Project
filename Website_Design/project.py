@@ -6,6 +6,7 @@ import MySQLdb
 import pandas as pd
 import numpy as py
 from Bio import SeqIO
+from Bio import Phylo
 import re
 import csv
 import hashlib
@@ -97,9 +98,27 @@ def distribution():
 def AA_seq_list():
 	return render_template("AA_seq_list.html")
 
-@app.route("/relationship_AA")
+@app.route("/relationship_AA", methods=["GET", "POST"])
 def relationship_AA():
-	return render_template("relationship_AA.html")
+	if request.method == "POST":
+		if request.form["rv_button"] == "HERV":
+			return render_template("herv_rv.html")
+		elif request.form["rv_button"] == "LINE1":
+			return render_template("line1_rv.html")
+	else:
+		return render_template("relationship_AA.html")
+
+@app.route("/herv_rv")
+def herv_rv():
+	return render_template("herv_rv.html")
+
+@app.route("/herv_rv1")
+def herv_rv1():
+	return render_template("herv_rv1.html")
+
+@app.route("/line1_rv")
+def line1_rv():
+	return render_template("line1_rv.html")
 
 @app.route("/peptide_seq_ident", methods=["GET","POST"])
 def peptide_seq_ident():
