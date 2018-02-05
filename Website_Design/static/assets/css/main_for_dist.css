@@ -4297,8 +4297,8 @@ mark, .mark {
 --------------------------------------------------------------------------------*/
 
 .page-title {
-    padding-top: 50px;
-    padding-bottom: 50px;
+    padding-top: 10px;
+    padding-bottom: 10px;
     background-color: #f7f7f7;
     text-align: center;
 }
@@ -4319,8 +4319,8 @@ mark, .mark {
 
 @media (min-width: 1200px) {
     .page-title {
-        padding-top: 150px;
-        padding-bottom: 150px;
+        padding-top: 100px;
+        padding-bottom: 50px;
     }
 }
 
