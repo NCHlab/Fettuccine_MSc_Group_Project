@@ -241,13 +241,14 @@ def upload_peptide():
 	# global recordID
 	global result_seq_multi
 	result_seq_multi=[]
+	result_seq_multi2=[]
 	result_seq=""
 	rows_count = ""
-	ishashed=False
-
 	no_match= "No Match was found"
 	list_of_matches = []
 	list_of_pep_seqs = []
+	rowlist=[]
+	rowlist2=[]
 
 	# Checks for post method (data submitted)
 	if request.method == "POST":
@@ -334,24 +335,18 @@ def upload_peptide():
 				#otherwise the data is not saved (due to it already existing from the same source file)
 				hashed = str(hashlib.sha224(whole_file).hexdigest())
 
-
 				with open("hash_checker.csv", "r+b") as f:
 					reader = csv.reader(f)
-					reader.next()
+					writer = csv.writer(f)
 					for row in reader:
-						if row[0] == hashed:
-						    ishashed = True
-						elif row[0] != hashed:
-							ishashed = False
-							writer = csv.writer(f)
-							writer.writerow(hashed)
-				if ishashed == False:
-					with open("atlas_seqs.csv", "r+b") as csvfile:
-						writer = csv.writer(csvfile)
-						writer.writerow(result_seq_multi)
-						for letter in hashed:
-        					 writer.writerow(letter)
-
+						rowlist2.append(row[0])
+					if hashed not in rowlist2:
+						rowlist.append(hashed)
+						writer.writerow(rowlist)
+						result_seq_multi2 = result_seq_multi
+						with open("atlas_seqs.csv", "a") as csvfile:
+							writer = csv.writer(csvfile)
+							writer.writerow(result_seq_multi)
 
 			return render_template("upload_peptide.html", data=result_seq_multi, empty = hashed)#result_seq_multi)
 	else:
@@ -360,7 +355,10 @@ def upload_peptide():
 
 @app.route("/expression_atlas")
 def atlas():
-	atlas_seqs = result_seq_multi
+	try:
+		atlas_seqs = result_seq_multi2
+	except:
+		pass
 	return render_template("expression_atlas.html")
 
 @app.route("/documentation")
