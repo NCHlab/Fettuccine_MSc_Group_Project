@@ -53,13 +53,13 @@
 						<ul class="fett-menu">
 							<li class="current-menu-item"><a href="{{ url_for('indexpage')}}">Home</a>
 							</li>
-							<li><a href="{{ url_for('family_table')}}">Family Table</a>
+							<li><a href="{{ url_for('family_table_HERV_Superfamilies')}}">Family Table</a>
 							</li>
 							<li><a href="{{ url_for('distribution')}}">Distribution</a>
 							</li>
 							<li class="menu-item-has-children"><a href="#">Translated</a>
 								<ul class="sub-menu">
-									<li><a href="{{ url_for('AA_seq_list')}}">Translated products</a>
+									<li><a href="{{ url_for('serverside_table')}}">Translated products</a>
 									</li>
 									<li><a href="{{ url_for('relationship_AA')}}">AA Relationship Viewer</a>
 									</li>
@@ -156,7 +156,7 @@
 								<div class="iconbox iconbox__style-02">
 									<div class="iconbox__icon"><i class="ti-search"></i></div>
 									<div>
-										<h2 class="iconbox__title"><a href="{{ url_for('family_table')}}">Family Table</a></h2>
+										<h2 class="iconbox__title"><a href="{{ url_for('family_table_HERV_Superfamilies')}}">Family Table</a></h2>
 										<div class="iconbox__description">Search through the current family table database to locate transposons</div>
 									</div>
 								</div><!-- End / iconbox -->

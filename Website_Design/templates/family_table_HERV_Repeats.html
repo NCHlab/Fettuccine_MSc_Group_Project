@@ -25,7 +25,11 @@
 			<script src="http://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 			<script>
 	        $(document).ready( function () {
-	            $('#Repeats').DataTable();FFF
+	            $('#Repeats').DataTable({
+								"order": [[ 4, "desc" ]],
+								"lengthChange": false,
+								"pageLength":50
+							});FFF
 	        } );
 	    </script>
 		</head>
@@ -61,13 +65,13 @@
 							<ul class="fett-menu">
 								<li class="fett-menu"><a href="{{ url_for('indexpage')}}">Home</a>
 								</li>
-								<li class="current-menu-item"><a href="{{ url_for('family_table')}}">Family Table</a>
+								<li class="current-menu-item"><a href="{{ url_for('family_table_HERV_Superfamilies')}}">Family Table</a>
 								</li>
 								<li class="fett-menu"><a href="{{ url_for('distribution')}}">Distribution</a>
 								</li>
 								<li class="menu-item-has-children"><a href="#">Translated</a>
 									<ul class="sub-menu">
-										<li><a href="{{ url_for('AA_seq_list')}}">Translated products</a>
+										<li><a href="{{ url_for('serverside_table')}}">Translated products</a>
 										</li>
 										<li><a href="{{ url_for('relationship_AA')}}">AA Relationship Viewer</a>
 										</li>
@@ -117,48 +121,6 @@
 		 </div>
 
 </body>
-<script>
-/* When the user clicks on the button,
-toggle between hiding and showing the dropdown content */
-function myFunction() {
-    document.getElementById("myDropdown").classList.toggle("show");
-}
-
-// Close the dropdown if the user clicks outside of it
-window.onclick = function(event) {
-  if (!event.target.matches('.dropbtn')) {
-
-    var dropdowns = document.getElementsByClassName("dropdown-content");
-    var i;
-    for (i = 0; i < dropdowns.length; i++) {
-      var openDropdown = dropdowns[i];
-      if (openDropdown.classList.contains('show')) {
-        openDropdown.classList.remove('show');
-      }
-    }
-  }
-}
-/* When the user clicks on the button,
-toggle between hiding and showing the dropdown content */
-function myFunction2() {
-    document.getElementById("myDropdown2").classList.toggle("show");
-}
-
-// Close the dropdown if the user clicks outside of it
-window.onclick = function(event) {
-  if (!event.target.matches('.dropbtn')) {
-
-    var dropdowns = document.getElementsByClassName("dropdown-content");
-    var i;
-    for (i = 0; i < dropdowns.length; i++) {
-      var openDropdown = dropdowns[i];
-      if (openDropdown.classList.contains('show')) {
-        openDropdown.classList.remove('show');
-      }
-    }
-  }
-}
-</script>
 
 </body>
 <P> &nbsp; </P>
@@ -169,10 +131,12 @@ window.onclick = function(event) {
 	 <table id = "Repeats" class = "display">
 		 <thead>
 			<tr>
-				<th>Repeat Name</th>
-				<th>Superfamily</th>
+				<th>Repeat_Name</th>
 				<th>Family</th>
-				<th>Counts</th>
+				<th>Superfamily</th>
+				<th>No. of Repeats</th>
+				<th>No. of Proteins</th>
+				<th>Proteins</th>
 			</tr>
 		</thead>
 		<tbody>
