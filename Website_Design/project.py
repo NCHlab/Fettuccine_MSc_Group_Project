@@ -10,11 +10,12 @@ from Bio import Phylo
 import re
 import csv
 import hashlib
+
 try:
-	import pygraphviz
 	import pylab
 	import matplotlib
 	import matplotlib.pyplot as plt
+	import pygraphviz
 except:
 	print "PLEASE INSTALL GRAPHVIZ PROGRAM FROM THE WEBSITE, NOT PIP !!!!!!!!!!!!!!!!!!!!!"
 	print "PLEASE INSTALL pip install pygraphviz !!!!!!!!!!!!!!!!!!!!!!"
