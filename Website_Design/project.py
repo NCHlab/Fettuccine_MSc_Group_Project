@@ -6,9 +6,22 @@ import MySQLdb
 import pandas as pd
 import numpy as py
 from Bio import SeqIO
+from Bio import Phylo
 import re
 import csv
 import hashlib
+
+try:
+	import pylab
+	import matplotlib
+	import matplotlib.pyplot as plt
+	import pygraphviz
+except:
+	print "PLEASE INSTALL GRAPHVIZ PROGRAM FROM THE WEBSITE, NOT PIP !!!!!!!!!!!!!!!!!!!!!"
+	print "PLEASE INSTALL pip install pygraphviz !!!!!!!!!!!!!!!!!!!!!!"
+	print "PLEASE INSTALL pip install matplotlib !!!!!!!!!!!!!!!!!"
+
+
 #import xml.etree.ElementTree as ET
 #from pyfastaq import sequences
 #import fasta
@@ -97,9 +110,84 @@ def distribution():
 def AA_seq_list():
 	return render_template("AA_seq_list.html")
 
-@app.route("/relationship_AA")
+@app.route("/relationship_AA", methods=["GET", "POST"])
 def relationship_AA():
-	return render_template("relationship_AA.html")
+	if request.method == "POST":
+		if request.form["rv_button"] == "HERV":
+			return render_template("herv_rv.html")
+		elif request.form["rv_button"] == "LINE1":
+			return render_template("line1_rv.html")
+	else:
+		return render_template("relationship_AA.html")
+
+@app.route("/herv_rv")
+def herv_rv():
+	return render_template("herv_rv.html")
+
+@app.route("/herv_rv1")
+def herv_rv1():
+	return render_template("herv_rv1.html")
+
+@app.route("/custom_tree", methods=["GET", "POST"])
+def custom_tree():
+	if request.method == "POST":
+		if 'file_rv' in request.files:
+			# Creates a path to the specified folder
+			target = os.path.join(APP_ROOT, "static/assets/img/customtree/")
+			# Creates directory if it doesnt already exist
+			if not os.path.isdir(target):
+				os.mkdir(target)
+
+			  # Saves the file to the target folder explicitly mentioned earlier
+			for file in request.files.getlist("file_rv"):
+				filename = file.filename
+				destination = "/".join([target, filename])
+				file.save(destination)
+
+			dpi_type = int(request.form.get('dpi_type'))
+
+				# Checks the current directory and moves to the correct folder
+			if os.getcwd() == APP_ROOT:
+				os.chdir("static/assets/img/customtree/")
+			elif os.getcwd() == APP_ROOT+"/static/assets/img/customtree/":
+				pass
+			elif os.getcwd() == APP_ROOT+"\uploaded":
+				os.chdir("../static/assets/img/customtree/")
+			elif os.getcwd() == APP_ROOT+"\sequence_ident":
+				os.chdir("../static/assets/img/customtree/")
+
+
+			tree = Phylo.read(filename, 'newick')
+			tree.ladderize()   # Flip branches so deeper clades are displayed at top
+			Phylo.draw(tree)
+			try:
+				Phylo.draw_graphviz(tree)
+			except:
+				pass
+			#pylab.show()
+			pylab.savefig("customtree.png", dpi=dpi_type)
+
+			#\static\assets\img\customtree\customtree.png
+
+			# #ptree = Phylo.draw(tree)
+			# matplotlib.rc('font', size=6)
+		    # # set the size of the figure
+			# fig = plt.figure(figsize=(10, 20), dpi=100)
+		    # # alternatively
+		    # # fig.set_size_inches(10, 20)
+			# axes = fig.add_subplot(1, 1, 1)
+			# Phylo.draw(tree, axes=axes)
+			# plt.savefig("output_file.png", dpi=100)
+
+			return render_template("custom_tree.html")
+
+
+	else:
+		return render_template("relationship_AA.html")
+
+@app.route("/line1_rv")
+def line1_rv():
+	return render_template("line1_rv.html")
 
 @app.route("/peptide_seq_ident", methods=["GET","POST"])
 def peptide_seq_ident():
@@ -139,8 +227,8 @@ def peptide_seq_ident():
 				# Does a MYSQL query for the correctly formatted peptide sequence
 				fastaseq = request.form["fasta_content"]
 				fastaseq = fastaseq.replace("\n","").replace("\r","").replace(" ","")
-				rows_count = cur.execute("SELECT Family, Sequence FROM herv_repeats WHERE Sequence = %s", fastaseq)
-				cur.execute("SELECT Family, Sequence FROM herv_repeats WHERE Sequence = %s", fastaseq)
+				rows_count = cur.execute("SELECT family, sequence FROM all_prot_seqs WHERE sequence = %s", fastaseq)
+				cur.execute("SELECT family, sequence FROM all_prot_seqs WHERE sequence = %s", fastaseq)
 				result_seq =  cur.fetchall()
 				result_seq_one.append(result_seq)
 				DF_PD=pd.DataFrame(result_seq_one)
@@ -193,8 +281,8 @@ def peptide_seq_ident():
 					#If only 1 fasta sequence in file
 					for record in SeqIO.parse(filename, "fasta"):
 						recordID = record.seq
-						rows_count = cur.execute("SELECT Family, Sequence FROM herv_repeats WHERE Sequence = %s", recordID)
-						cur.execute("SELECT Family, Sequence FROM herv_repeats WHERE Sequence = %s", recordID)
+						rows_count = cur.execute("SELECT family, sequence FROM all_prot_seqs WHERE sequence = %s", recordID)
+						cur.execute("SELECT family, sequence FROM all_prot_seqs WHERE sequence = %s", recordID)
 						result_seq =  cur.fetchall()
 						result_seq_one.append(result_seq)
 						DF_PD=pd.DataFrame(result_seq_one)
@@ -207,8 +295,8 @@ def peptide_seq_ident():
 					for record in SeqIO.parse(filename, "fasta"):
 						# Loop which iterates through ever fasta sequence and appends the results
 						recordID = record.seq
-						rows_count = cur.execute("SELECT Family, Sequence FROM herv_repeats WHERE Sequence = %s", recordID)
-						cur.execute("SELECT Family, Sequence FROM herv_repeats WHERE Sequence = %s", recordID)
+						rows_count = cur.execute("SELECT family, sequence FROM all_prot_seqs WHERE sequence = %s", recordID)
+						cur.execute("SELECT family, sequence FROM all_prot_seqs WHERE sequence = %s", recordID)
 						result_seq =  cur.fetchall()
 						if cur.rowcount > 0:
 							result_seq_multi.append(result_seq)
@@ -222,7 +310,7 @@ def peptide_seq_ident():
 			return render_template("peptide_seq_ident.html", empty = error_empty2)
 	else:
 		# By default, this GET method is returned and displays 1000 sequences and families from the database
-		cur.execute("SELECT Family, Sequence FROM herv_repeats LIMIT 0, 1000")
+		cur.execute("SELECT family, sequence FROM all_prot_seqs LIMIT 0, 1000")
 		result_seq =  cur.fetchall()
 		return render_template("peptide_seq_ident.html", data1=result_seq)
 
