@@ -226,8 +226,8 @@ def peptide_seq_ident():
 				# Does a MYSQL query for the correctly formatted peptide sequence
 				fastaseq = request.form["fasta_content"]
 				fastaseq = fastaseq.replace("\n","").replace("\r","").replace(" ","")
-				rows_count = cur.execute("SELECT Family, Sequence FROM herv_repeats WHERE Sequence = %s", fastaseq)
-				cur.execute("SELECT Family, Sequence FROM herv_repeats WHERE Sequence = %s", fastaseq)
+				rows_count = cur.execute("SELECT family, sequence FROM herv_prot_seqs, l1_prot_seqs WHERE sequence = %s", fastaseq)
+				cur.execute("SELECT family, sequence FROM herv_prot_seqs, l1_prot_seqs WHERE sequence = %s", fastaseq)
 				result_seq =  cur.fetchall()
 				result_seq_one.append(result_seq)
 				DF_PD=pd.DataFrame(result_seq_one)
@@ -280,8 +280,8 @@ def peptide_seq_ident():
 					#If only 1 fasta sequence in file
 					for record in SeqIO.parse(filename, "fasta"):
 						recordID = record.seq
-						rows_count = cur.execute("SELECT Family, Sequence FROM herv_repeats WHERE Sequence = %s", recordID)
-						cur.execute("SELECT Family, Sequence FROM herv_repeats WHERE Sequence = %s", recordID)
+						rows_count = cur.execute("SELECT family, sequence FROM all_prot_seqs WHERE sequence = %s", recordID)
+						cur.execute("SELECT family, sequence FROM all_prot_seqs WHERE sequence = %s", recordID)
 						result_seq =  cur.fetchall()
 						result_seq_one.append(result_seq)
 						DF_PD=pd.DataFrame(result_seq_one)
@@ -294,8 +294,8 @@ def peptide_seq_ident():
 					for record in SeqIO.parse(filename, "fasta"):
 						# Loop which iterates through ever fasta sequence and appends the results
 						recordID = record.seq
-						rows_count = cur.execute("SELECT Family, Sequence FROM herv_repeats WHERE Sequence = %s", recordID)
-						cur.execute("SELECT Family, Sequence FROM herv_repeats WHERE Sequence = %s", recordID)
+						rows_count = cur.execute("SELECT family, sequence FROM all_prot_seqs WHERE sequence = %s", recordID)
+						cur.execute("SELECT family, sequence FROM all_prot_seqs WHERE sequence = %s", recordID)
 						result_seq =  cur.fetchall()
 						if cur.rowcount > 0:
 							result_seq_multi.append(result_seq)
@@ -309,7 +309,7 @@ def peptide_seq_ident():
 			return render_template("peptide_seq_ident.html", empty = error_empty2)
 	else:
 		# By default, this GET method is returned and displays 1000 sequences and families from the database
-		cur.execute("SELECT Family, Sequence FROM herv_repeats LIMIT 0, 1000")
+		cur.execute("SELECT family, sequence FROM all_prot_seqs LIMIT 0, 1000")
 		result_seq =  cur.fetchall()
 		return render_template("peptide_seq_ident.html", data1=result_seq)
 
