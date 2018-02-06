@@ -226,8 +226,8 @@ def peptide_seq_ident():
 				# Does a MYSQL query for the correctly formatted peptide sequence
 				fastaseq = request.form["fasta_content"]
 				fastaseq = fastaseq.replace("\n","").replace("\r","").replace(" ","")
-				rows_count = cur.execute("SELECT family, sequence FROM herv_prot_seqs, l1_prot_seqs WHERE sequence = %s", fastaseq)
-				cur.execute("SELECT family, sequence FROM herv_prot_seqs, l1_prot_seqs WHERE sequence = %s", fastaseq)
+				rows_count = cur.execute("SELECT family, sequence FROM all_prot_seqs WHERE sequence = %s", fastaseq)
+				cur.execute("SELECT family, sequence FROM all_prot_seqs WHERE sequence = %s", fastaseq)
 				result_seq =  cur.fetchall()
 				result_seq_one.append(result_seq)
 				DF_PD=pd.DataFrame(result_seq_one)
