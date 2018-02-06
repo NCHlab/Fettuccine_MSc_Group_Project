@@ -16,13 +16,13 @@ from mod_tables.models import TableBuilder
 import pylab
 import matplotlib
 import matplotlib.pyplot as plt
-##
-# try:
-#
-# except:
-# 	print "PLEASE INSTALL GRAPHVIZ PROGRAM FROM THE WEBSITE, NOT PIP !!!!!!!!!!!!!!!!!!!!!"
-# 	print "PLEASE INSTALL pip install pygraphviz !!!!!!!!!!!!!!!!!!!!!!"
-# 	print "PLEASE INSTALL pip install matplotlib !!!!!!!!!!!!!!!!!"
+
+try:
+	import pygraphviz
+except:
+	print "PLEASE INSTALL GRAPHVIZ PROGRAM FROM THE WEBSITE, NOT PIP !!!!!!!!!!!!!!!!!!!!!"
+	print "PLEASE INSTALL pip install pygraphviz !!!!!!!!!!!!!!!!!!!!!!"
+	print "PLEASE INSTALL pip install matplotlib !!!!!!!!!!!!!!!!!"
 
 table_builder = TableBuilder()
 #import xml.etree.ElementTree as ET
