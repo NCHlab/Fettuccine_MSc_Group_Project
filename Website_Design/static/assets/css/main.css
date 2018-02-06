@@ -87,11 +87,18 @@
     z-index: 1;
 }
 
-.pie_sf {
-    width:350px;
-    height:350px;
-    position: relative;
-    left: 33%;
+.pie_sf1 {
+    width:290px;
+    height:290px;
+    position: absolute;
+    left: 22%;
+}
+
+.pie_sf2 {
+    width:290px;
+    height:290px;
+    position: absolute;
+    left: 55%;
 }
 .dropdown-content a {
     color: black;

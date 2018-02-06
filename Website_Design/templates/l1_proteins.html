@@ -23,15 +23,7 @@
 			<![endif]-->		<link rel="stylesheet" href="http://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">
 			<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 			<script src="http://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-			<script>
-	        $(document).ready( function () {
-	            $('#Repeats_L1').DataTable({
-								"order": [[ 2, "desc" ]],
-								"lengthChange": false,
-								"pageLength":50
-							});FFF
-	        } );
-	    </script>
+			<script src="https://cdn.datatables.net/scroller/1.4.4/js/dataTables.scroller.min.js"></script>
 		</head>
 		<body>
 			<div class="page-wrap">
@@ -65,11 +57,11 @@
 							<ul class="fett-menu">
 								<li class="fett-menu"><a href="{{ url_for('indexpage')}}">Home</a>
 								</li>
-								<li class="current-menu-item"><a href="{{ url_for('family_table_HERV_Superfamilies')}}">Family Table</a>
+								<li class="fett-menu"><a href="{{ url_for('family_table_HERV_Superfamilies')}}">Family Table</a>
 								</li>
 								<li class="fett-menu"><a href="{{ url_for('distribution')}}">Distribution</a>
 								</li>
-								<li class="menu-item-has-children"><a href="#">Translated</a>
+								<li class="current-menu-item"><a href="#">Translated</a>
 									<ul class="sub-menu">
 										<li><a href="{{ url_for('serverside_table')}}">Translated products</a>
 										</li>
@@ -101,16 +93,17 @@
 
 				</div>
 		</header>
-</body>
-<div class=container>
-<p>&nbsp;</p>
-<h4 style="text-align: center;">Family Tables of Retrotransposonal Repeats</h4>
-<div/>
-<div style="text-align: center;">
-<h5 style="text-align: center;">Please select a retrotransposon class:</h5>
-<button onclick="window.location.href='{{ url_for('family_table_HERV_Superfamilies')}}'" class="dropbtn">HERV</button>
-<button onclick="return false;" class="dropbtn_selected">LINE-1</button>
-
+		<body>
+		<div class=container>
+		 <p>&nbsp;</p>
+		 <h4 style="text-align: center;">Tables of retrotransposonal Proteins</h4>
+			 <div style="text-align: center;">
+				 <h5 style="text-align: center;">Please select a retrotransposon class:</h5>
+				 <button onclick="window.location.href='{{ url_for('serverside_table')}}'" class="dropbtn">HERV</button>
+				 <button onclick="return false;" class="dropbtn_selected">LINE-1</button>
+				 <p>&nbsp;</p>
+			 </div>
+		</div>
 </body>
 <script>
 /* When the user clicks on the button,
@@ -133,7 +126,7 @@ window.onclick = function(event) {
     }
   }
 }
-/* When the user clicks on the button,
+/* When the <th>{{ firstcolumn }}user clicks on the button,
 toggle between hiding and showing the dropdown content */
 function myFunction2() {
     document.getElementById("myDropdown2").classList.toggle("show");
@@ -157,30 +150,24 @@ window.onclick = function(event) {
 
 </body>
 <P> &nbsp; </P>
-<body>
 
 
+	<script type="text/javascript" src="/static/assets/js/l1_serverside_table.js"></script>
+	<div class="container">
+		<body>
+	  <table id="serverside_table" cellspacing="0", class = "display">
+	    <thead>
+	      <tr>
+	        <th>ID</th>
+					<th>Family</th>
+					<th>Protein</th>
+	        <th>Sequence</th>
+	      </tr>
+	    </thead>
 
-	<table id = "Repeats_L1" class = "display">
-		<thead>
-		 <tr>
-			 <th>Family</th>
-			 <th>No. of Repeats</th>
-			 <th>No. of Proteins</th>
-			 <th>Proteins</th>
-		 </tr>
-	 </thead>
-	 <tbody>
-			{% for row in data %}
-					<tr>
-					{% for d in row %}
-							<td>{{ d }}</td>
-					{% endfor %}
-					</tr>
-			{% endfor %}
-	 </tbody>
-	</table>
+	  </table>
+		</body>
+	</div>
 
-</body>
 
 </html>

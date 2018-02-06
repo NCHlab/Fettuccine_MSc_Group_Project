@@ -10,23 +10,30 @@ from Bio import Phylo
 import re
 import csv
 import hashlib
+import json
+import cgi
+from mod_tables.models import TableBuilder
+import pylab
+import matplotlib
+import matplotlib.pyplot as plt
+##
+# try:
+#
+# except:
+# 	print "PLEASE INSTALL GRAPHVIZ PROGRAM FROM THE WEBSITE, NOT PIP !!!!!!!!!!!!!!!!!!!!!"
+# 	print "PLEASE INSTALL pip install pygraphviz !!!!!!!!!!!!!!!!!!!!!!"
+# 	print "PLEASE INSTALL pip install matplotlib !!!!!!!!!!!!!!!!!"
 
-try:
-	import pylab
-	import matplotlib
-	import matplotlib.pyplot as plt
-	import pygraphviz
-except:
-	print "PLEASE INSTALL GRAPHVIZ PROGRAM FROM THE WEBSITE, NOT PIP !!!!!!!!!!!!!!!!!!!!!"
-	print "PLEASE INSTALL pip install pygraphviz !!!!!!!!!!!!!!!!!!!!!!"
-	print "PLEASE INSTALL pip install matplotlib !!!!!!!!!!!!!!!!!"
-
-
+table_builder = TableBuilder()
 #import xml.etree.ElementTree as ET
 #from pyfastaq import sequences
 #import fasta
 
 app = Flask(__name__)
+from common.routes import main
+from mod_tables.controllers import tables
+app.register_blueprint(main)
+app.register_blueprint(tables)
 APP_ROOT = os.path.dirname(os.path.abspath(__file__))
 #app.secret_key = 'SUPER_SECRET_KEY_BIO_PROJECT'
 
@@ -57,44 +64,46 @@ def indexpage():
 	now = datetime.now().strftime('%H:%M:%S %d-%m-%Y')#datetime.now(timezone('Europe/London'))
 	return render_template("index.html", time = now)
 	#return "The time is {}".format(now)
-@app.route("/family_table")
-
-def family_table():
-	cur.execute("SELECT Family, Repeat_Name, Counts FROM `HERV_Groupby_Families`")
-	HERV_GbF_rows = cur.fetchall()
-	return render_template("family_table.html", data=HERV_GbF_rows)
 
 @app.route('/family_table_LINE1')
 def family_table_LINE1():
-	cur.execute("SELECT Repeat_Name, Counts FROM `L1_Groupby_Repeats`")
+	cur.execute("SELECT repeat_name, no_repeats, no_proteins_found, proteins_found FROM `l1_groupby_repeat_names` ORDER BY `l1_groupby_repeat_names`.`no_proteins_found` DESC")
 	HERV_LbR_rows = cur.fetchall()
 	return render_template("family_table_LINE1.html", data=HERV_LbR_rows)
 
-@app.route("/family_table_HERV_Families")
-def family_table_HERV_Families():
-	cur.execute("SELECT Family, SuperFamily, Repeat_Name, Counts FROM `HERV_Groupby_Families`")
-	HERV_GbF_rows = cur.fetchall()
-	wisit="Family"
-	return render_template("family_table_HERV_Families.html", data=HERV_GbF_rows, firstcolumn=wisit)
+@app.route("/protein_table_HERV")
+def serverside_table():
+    return render_template("erv_proteins.html")
+
+@app.route("/protein_table_L1")
+def serverside_table2():
+    return render_template("l1_proteins.html")
 
 @app.route("/family_table_HERV_Superfamilies")
 def family_table_HERV_Superfamilies():
-	cur.execute("SELECT Superfamily, Description, Counts FROM `HERV_Groupby_Superfamilies`")
+	cur.execute("SELECT superfamily, description, no_repeats, no_proteins_found, proteins_found FROM `herv_groupby_superfamilies`")
 	HERV_GbS_rows = cur.fetchall()
-	namelist = []
+	protlist = []
 	countlist = []
 	for ele in HERV_GbS_rows:
-    		namelist.append(str(ele[0].rstrip()))
-    		countlist.append(int(ele[2]))
-	wisit="Superfamily"
-	return render_template("family_table_HERV_Superfamilies.html", data=HERV_GbS_rows, firstcolumn=wisit, arr_sc=countlist, arr_sc_names=namelist)
+		countlist.append(int(ele[2]))
+		protlist.append(int(ele[3]))
+	return render_template("family_table_HERV_Superfamilies.html", data=HERV_GbS_rows, arr_sc=countlist, arr_sc_2=protlist)
+
+@app.route("/family_table_HERV_Families")
+def family_table_HERV_Families():
+	cur.execute("SELECT * FROM `herv_groupby_families`")
+	HERV_GbF_rows = cur.fetchall()
+	return render_template("family_table_HERV_Families.html", data=HERV_GbF_rows)
+
 
 @app.route("/family_table_HERV_Repeats")
 def family_table_HERV_Repeats():
-	cur.execute("SELECT Repeat_Name, SuperFamily, Family, Counts FROM `HERV_Groupby_Repeats`")
+	cur.execute("SELECT * FROM `herv_groupby_repeat_names`")
 	HERV_GbR_rows = cur.fetchall()
 	wisit="Repeat Name"
-	return render_template("family_table_HERV_Repeats.html", data=HERV_GbR_rows, firstcolumn=wisit)
+	return render_template("family_table_HERV_Repeats.html", data=HERV_GbR_rows)
+
 
 @app.route("/distribution")
 def distribution():
@@ -227,8 +236,8 @@ def peptide_seq_ident():
 				# Does a MYSQL query for the correctly formatted peptide sequence
 				fastaseq = request.form["fasta_content"]
 				fastaseq = fastaseq.replace("\n","").replace("\r","").replace(" ","")
-				rows_count = cur.execute("SELECT family, sequence FROM all_prot_seqs WHERE sequence = %s", fastaseq)
-				cur.execute("SELECT family, sequence FROM all_prot_seqs WHERE sequence = %s", fastaseq)
+				rows_count = cur.execute("SELECT family, sequence FROM all_prot_seqs WHERE sequence = %s", [fastaseq])
+				cur.execute("SELECT family, sequence FROM all_prot_seqs WHERE sequence = %s", [fastaseq])
 				result_seq =  cur.fetchall()
 				result_seq_one.append(result_seq)
 				DF_PD=pd.DataFrame(result_seq_one)
@@ -281,8 +290,8 @@ def peptide_seq_ident():
 					#If only 1 fasta sequence in file
 					for record in SeqIO.parse(filename, "fasta"):
 						recordID = record.seq
-						rows_count = cur.execute("SELECT family, sequence FROM all_prot_seqs WHERE sequence = %s", recordID)
-						cur.execute("SELECT family, sequence FROM all_prot_seqs WHERE sequence = %s", recordID)
+						rows_count = cur.execute("SELECT family, sequence FROM all_prot_seqs WHERE sequence = %s", [recordID])
+						cur.execute("SELECT family, sequence FROM all_prot_seqs WHERE sequence = %s", [recordID])
 						result_seq =  cur.fetchall()
 						result_seq_one.append(result_seq)
 						DF_PD=pd.DataFrame(result_seq_one)
@@ -295,8 +304,8 @@ def peptide_seq_ident():
 					for record in SeqIO.parse(filename, "fasta"):
 						# Loop which iterates through ever fasta sequence and appends the results
 						recordID = record.seq
-						rows_count = cur.execute("SELECT family, sequence FROM all_prot_seqs WHERE sequence = %s", recordID)
-						cur.execute("SELECT family, sequence FROM all_prot_seqs WHERE sequence = %s", recordID)
+						rows_count = cur.execute("SELECT family, sequence FROM all_prot_seqs WHERE sequence = %s", [recordID])
+						cur.execute("SELECT family, sequence FROM all_prot_seqs WHERE sequence = %s", [recordID])
 						result_seq =  cur.fetchall()
 						if cur.rowcount > 0:
 							result_seq_multi.append(result_seq)
@@ -401,8 +410,8 @@ def upload_peptide():
 		if len(list_of_pep_seqs) == 1:
 			#If only 1 fasta sequence in file
 			for seqs in list_of_pep_seqs:
-				rows_count = cur.execute("SELECT Family, Sequence FROM prelim2 WHERE Sequence = %s", seqs)
-				cur.execute("SELECT Family, Sequence FROM prelim2 WHERE Sequence = %s", seqs)
+				rows_count = cur.execute("SELECT Family, Sequence FROM prelim2 WHERE Sequence = %s", [seqs])
+				cur.execute("SELECT Family, Sequence FROM prelim2 WHERE Sequence = %s", [seqs])
 				result_seq =  cur.fetchall()
 			if not cur.rowcount:
 			  return render_template("upload_peptide.html", result_family=no_match)
@@ -410,8 +419,8 @@ def upload_peptide():
 				return render_template("upload_peptide.html", data=result_seq)#, result_seq1=result_seq[0][1])
 		else:
 			for seqs in list_of_pep_seqs:
-				rows_count = cur.execute("SELECT Family, Sequence FROM prelim2 WHERE Sequence = %s", seqs)
-				cur.execute("SELECT Family, Sequence FROM prelim2 WHERE Sequence = %s", seqs)
+				rows_count = cur.execute("SELECT Family, Sequence FROM prelim2 WHERE Sequence = %s", [seqs])
+				cur.execute("SELECT Family, Sequence FROM prelim2 WHERE Sequence = %s", [seqs])
 				result_seq =  cur.fetchall()
 				if cur.rowcount > 0:
 					result_seq_multi.append(result_seq)
