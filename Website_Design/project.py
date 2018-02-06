@@ -16,7 +16,9 @@ try:
 	import matplotlib
 	import matplotlib.pyplot as plt
 except:
-	pass
+	print "PLEASE INSTALL GRAPHVIZ PROGRAM FROM THE WEBSITE, NOT PIP !!!!!!!!!!!!!!!!!!!!!"
+	print "PLEASE INSTALL pip install pygraphviz !!!!!!!!!!!!!!!!!!!!!!"
+	print "PLEASE INSTALL pip install matplotlib !!!!!!!!!!!!!!!!!"
 
 
 #import xml.etree.ElementTree as ET
