@@ -10,6 +10,15 @@ from Bio import Phylo
 import re
 import csv
 import hashlib
+try:
+	import pygraphviz
+	import pylab
+	import matplotlib
+	import matplotlib.pyplot as plt
+except:
+	pass
+
+
 #import xml.etree.ElementTree as ET
 #from pyfastaq import sequences
 #import fasta
@@ -115,6 +124,59 @@ def herv_rv():
 @app.route("/herv_rv1")
 def herv_rv1():
 	return render_template("herv_rv1.html")
+
+@app.route("/custom_tree", methods=["GET", "POST"])
+def custom_tree():
+	if request.method == "POST":
+		if 'file_rv' in request.files:
+			# Creates a path to the specified folder
+			target = os.path.join(APP_ROOT, "sequence_ident/")
+			# Creates directory if it doesnt already exist
+			if not os.path.isdir(target):
+				os.mkdir(target)
+
+			  # Saves the file to the target folder explicitly mentioned earlier
+			for file in request.files.getlist("file_rv"):
+				filename = file.filename
+				destination = "/".join([target, filename])
+				file.save(destination)
+
+				# Checks the current directory and moves to the correct folder
+			if os.getcwd() == APP_ROOT:
+				os.chdir("sequence_ident")
+			elif os.getcwd() == APP_ROOT+"\sequence_ident":
+				pass
+			elif os.getcwd() == APP_ROOT+"\uploaded":
+				os.chdir("..\sequence_ident")
+
+
+			tree = Phylo.read(filename, 'newick')
+			tree.ladderize()   # Flip branches so deeper clades are displayed at top
+			Phylo.draw(tree)
+			try:
+				Phylo.draw_graphviz(tree)
+			except:
+				pass
+			#pylab.show()
+			pylab.savefig('apaf2.png')
+
+
+
+			# #ptree = Phylo.draw(tree)
+			# matplotlib.rc('font', size=6)
+		    # # set the size of the figure
+			# fig = plt.figure(figsize=(10, 20), dpi=100)
+		    # # alternatively
+		    # # fig.set_size_inches(10, 20)
+			# axes = fig.add_subplot(1, 1, 1)
+			# Phylo.draw(tree, axes=axes)
+			# plt.savefig("output_file.png", dpi=100)
+
+			return render_template("custom_tree.html")
+
+
+	else:
+		return render_template("relationship_AA.html")
 
 @app.route("/line1_rv")
 def line1_rv():
