@@ -132,7 +132,7 @@ def custom_tree():
 	if request.method == "POST":
 		if 'file_rv' in request.files:
 			# Creates a path to the specified folder
-			target = os.path.join(APP_ROOT, "sequence_ident/")
+			target = os.path.join(APP_ROOT, "static/assets/img/customtree/")
 			# Creates directory if it doesnt already exist
 			if not os.path.isdir(target):
 				os.mkdir(target)
@@ -143,13 +143,17 @@ def custom_tree():
 				destination = "/".join([target, filename])
 				file.save(destination)
 
+			dpi_type = int(request.form.get('dpi_type'))
+
 				# Checks the current directory and moves to the correct folder
 			if os.getcwd() == APP_ROOT:
-				os.chdir("sequence_ident")
-			elif os.getcwd() == APP_ROOT+"\sequence_ident":
+				os.chdir("static/assets/img/customtree/")
+			elif os.getcwd() == APP_ROOT+"/static/assets/img/customtree/":
 				pass
 			elif os.getcwd() == APP_ROOT+"\uploaded":
-				os.chdir("..\sequence_ident")
+				os.chdir("../static/assets/img/customtree/")
+			elif os.getcwd() == APP_ROOT+"\sequence_ident":
+				os.chdir("../static/assets/img/customtree/")
 
 
 			tree = Phylo.read(filename, 'newick')
@@ -160,9 +164,9 @@ def custom_tree():
 			except:
 				pass
 			#pylab.show()
-			pylab.savefig('apaf2.png')
+			pylab.savefig("customtree.png", dpi=dpi_type)
 
-
+			#\static\assets\img\customtree\customtree.png
 
 			# #ptree = Phylo.draw(tree)
 			# matplotlib.rc('font', size=6)

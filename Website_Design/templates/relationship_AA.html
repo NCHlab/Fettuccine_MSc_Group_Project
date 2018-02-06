@@ -105,8 +105,25 @@
 							<form id="upload-form" action="{{ url_for("custom_tree")}}" method="POST" enctype="multipart/form-data">
 								<input type="file" name="file_rv" accept=".nwk, .newick, .ph">
 								<input type="submit" value="Upload">
+								<hr>
+								<div class="container">
+								<p>
+								Image DPI:
+								<select class="form-control" id="dpi_type" name="dpi_type">
+									<option value="100">100</option>
+									<option value="200">200</option>
+									<option value="300">300</option>
+									<option value="400">400</option>
+									<option value="500">500</option>
+									<option value="1000">1000</option>
+									<option value="1500">1500</option>
+									<option value="2000">2000</option>
+								</select>
+
+							</div>
 							</form>
-							<hr>
+
+
 			 </div>
 
 
