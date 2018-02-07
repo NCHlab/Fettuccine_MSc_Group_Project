@@ -13,16 +13,17 @@ import hashlib
 import json
 import cgi
 from mod_tables.models import TableBuilder
-import pylab
-import matplotlib
-import matplotlib.pyplot as plt
-##
-# try:
-#
-# except:
-# 	print "PLEASE INSTALL GRAPHVIZ PROGRAM FROM THE WEBSITE, NOT PIP !!!!!!!!!!!!!!!!!!!!!"
-# 	print "PLEASE INSTALL pip install pygraphviz !!!!!!!!!!!!!!!!!!!!!!"
-# 	print "PLEASE INSTALL pip install matplotlib !!!!!!!!!!!!!!!!!"
+
+
+try:
+	import pylab
+	import matplotlib
+	import matplotlib.pyplot as plt
+	import pygraphviz
+except:
+	print "PLEASE INSTALL GRAPHVIZ PROGRAM FROM THE WEBSITE, NOT PIP !!!!!!!!!!!!!!!!!!!!!"
+	print "PLEASE INSTALL pip install pygraphviz !!!!!!!!!!!!!!!!!!!!!!"
+	print "PLEASE INSTALL pip install matplotlib !!!!!!!!!!!!!!!!!"
 
 table_builder = TableBuilder()
 #import xml.etree.ElementTree as ET
@@ -219,6 +220,7 @@ def peptide_seq_ident():
 
 	# If data has been submitted to the page i.e uploaded, then the POST method engages
 	if request.method == "POST":
+		os.chdir(APP_ROOT)
 		# If the Textbox has been filled with peptide sequences, DB is searched for matching sequence and FAMILY + sequence returned
 		# Otherwise if no match found, displays no match
 		if request.form["fasta_content"] != "":
@@ -294,8 +296,8 @@ def peptide_seq_ident():
 						cur.execute("SELECT family, sequence FROM all_prot_seqs WHERE sequence = %s", [recordID])
 						result_seq =  cur.fetchall()
 						result_seq_one.append(result_seq)
-						DF_PD=pd.DataFrame(result_seq_one)
-						result_seq_df=DF_PD.to_html()
+						#DF_PD=pd.DataFrame(result_seq_one)
+						#result_seq_df=DF_PD.to_html()
 					if not cur.rowcount:
 					  return render_template("peptide_seq_ident.html", empty=no_match)
 					else:
@@ -309,8 +311,8 @@ def peptide_seq_ident():
 						result_seq =  cur.fetchall()
 						if cur.rowcount > 0:
 							result_seq_multi.append(result_seq)
-					DF_PD=pd.DataFrame(result_seq_multi)
-					result_seq_df=DF_PD.to_html()
+					#DF_PD=pd.DataFrame(result_seq_multi)
+					#result_seq_df=DF_PD.to_html()
 					if not cur.rowcount:
 					  return render_template("peptide_seq_ident.html", empty=no_match)
 					else:
@@ -349,6 +351,7 @@ def upload_peptide():
 
 	# Checks for post method (data submitted)
 	if request.method == "POST":
+		os.chdir(APP_ROOT)
 		target = os.path.join(APP_ROOT, "uploaded/")
 
 		#Creates the folder if it doesnt exist
