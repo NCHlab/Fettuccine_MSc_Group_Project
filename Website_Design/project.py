@@ -295,8 +295,8 @@ def peptide_seq_ident():
 						cur.execute("SELECT family, sequence FROM all_prot_seqs WHERE sequence = %s", [recordID])
 						result_seq =  cur.fetchall()
 						result_seq_one.append(result_seq)
-						DF_PD=pd.DataFrame(result_seq_one)
-						result_seq_df=DF_PD.to_html()
+						#DF_PD=pd.DataFrame(result_seq_one)
+						#result_seq_df=DF_PD.to_html()
 					if not cur.rowcount:
 					  return render_template("peptide_seq_ident.html", empty=no_match)
 					else:
@@ -310,8 +310,8 @@ def peptide_seq_ident():
 						result_seq =  cur.fetchall()
 						if cur.rowcount > 0:
 							result_seq_multi.append(result_seq)
-					DF_PD=pd.DataFrame(result_seq_multi)
-					result_seq_df=DF_PD.to_html()
+					#DF_PD=pd.DataFrame(result_seq_multi)
+					#result_seq_df=DF_PD.to_html()
 					if not cur.rowcount:
 					  return render_template("peptide_seq_ident.html", empty=no_match)
 					else:
