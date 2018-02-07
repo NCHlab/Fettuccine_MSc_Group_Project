@@ -16,7 +16,8 @@
 - Fasta file can now be read in (upload or search field, also accepts multuple fasta sequences in upload)
 
 
-
+link:
+https://academic.oup.com/gbe/article/8/12/3485/2680041
 
 
 # Useful Commands: 
