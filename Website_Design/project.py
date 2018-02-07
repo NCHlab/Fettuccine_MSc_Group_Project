@@ -13,11 +13,12 @@ import hashlib
 import json
 import cgi
 from mod_tables.models import TableBuilder
-import pylab
-import matplotlib
-import matplotlib.pyplot as plt
+
 
 try:
+	import pylab
+	import matplotlib
+	import matplotlib.pyplot as plt
 	import pygraphviz
 except:
 	print "PLEASE INSTALL GRAPHVIZ PROGRAM FROM THE WEBSITE, NOT PIP !!!!!!!!!!!!!!!!!!!!!"
@@ -188,7 +189,7 @@ def custom_tree():
 			# Phylo.draw(tree, axes=axes)
 			# plt.savefig("output_file.png", dpi=100)
 
-			return render_template("custom_tree.html", cdir = APP_ROOT)
+			return render_template("custom_tree.html")
 
 
 	else:
