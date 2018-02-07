@@ -188,7 +188,7 @@ def custom_tree():
 			# Phylo.draw(tree, axes=axes)
 			# plt.savefig("output_file.png", dpi=100)
 
-			return render_template("custom_tree.html")
+			return render_template("custom_tree.html", cdir = APP_ROOT)
 
 
 	else:
@@ -219,6 +219,7 @@ def peptide_seq_ident():
 
 	# If data has been submitted to the page i.e uploaded, then the POST method engages
 	if request.method == "POST":
+		os.chdir(APP_ROOT)
 		# If the Textbox has been filled with peptide sequences, DB is searched for matching sequence and FAMILY + sequence returned
 		# Otherwise if no match found, displays no match
 		if request.form["fasta_content"] != "":
@@ -349,6 +350,7 @@ def upload_peptide():
 
 	# Checks for post method (data submitted)
 	if request.method == "POST":
+		os.chdir(APP_ROOT)
 		target = os.path.join(APP_ROOT, "uploaded/")
 
 		#Creates the folder if it doesnt exist

@@ -92,15 +92,39 @@
 			<div class="md-content">
 				<!-- page-title -->
 				<div class="page-title">
-					<h2 class="page-title__title">Relationship Viewer</h2>
-					<div class="container" style="text-align: center">
-						<form action="{{ url_for("relationship_AA")}}" method="POST">
-							<input type="submit" name="rv_button" value="HERV" class="dropbtn">
-							<input type="submit" name="rv_button" value="LINE1" class="dropbtn">
-						</form>
-					</div>
+								<h2 class="page-title__title">Relationship Viewer</h2>
+
+								<div class="container" style="text-align: center">
+									<form action="{{ url_for("relationship_AA")}}" method="POST">
+										<input type="submit" name="rv_button" value="HERV" class="dropbtn">
+										<input type="submit" name="rv_button" value="LINE1" class="dropbtn">
+									</form>
+								</div>
+							<hr>
+							Upload your own newick tree file to be displayed
+							<form id="upload-form" action="{{ url_for("custom_tree")}}" method="POST" enctype="multipart/form-data">
+								<input type="file" name="file_rv" accept=".nwk, .newick, .ph">
+								<input type="submit" value="Upload">
+								<hr>
+								<div class="container">
+								<p>
+								Image DPI:
+								<select class="" id="dpi_type" name="dpi_type">
+									<option value="100">100</option>
+									<option value="200">200</option>
+									<option value="300">300</option>
+									<option value="400">400</option>
+									<option value="500">500</option>
+									<option value="1000">1000</option>
+									<option value="1500">1500</option>
+									<option value="2000">2000</option>
+								</select>
+
+							</div>
+							</form>
 			 </div>
 			</div>
+			{{ cdir }}
 			<a href="/static/assets/img/customtree/customtree.png">
 			<img src="\static\assets\img\customtree\customtree.png"></a>
 
