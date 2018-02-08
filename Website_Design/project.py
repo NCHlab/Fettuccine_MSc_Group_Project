@@ -427,6 +427,9 @@ def upload_peptide():
                 query2 = str(query2)+" OR sequence = "+'"'+str(list_of_pep_seqs[i])+'"'
             cur2.execute(query2)
             result_seq2 =  cur2.fetchmany()
+            if len(result_seq2) == 0:
+                result_seq_multi = "No Match Was Found!"
+                return render_template("upload_peptide.html", result_family=result_seq_multi)
 
 
             if len(result_seq2) != 0:
