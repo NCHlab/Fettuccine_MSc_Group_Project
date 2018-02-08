@@ -423,7 +423,7 @@ def upload_peptide():
             print len(list_of_pep_seqs)
             query2 = "SELECT /*+ MAX_EXECUTION_TIME(600000) */ family, sequence FROM all_prot_seqs WHERE sequence = "
             query2 = query2+'"'+str(list_of_pep_seqs[0])+'"'
-            for i in range(1,list_of_pep_seqs):
+            for i in range(1,len(list_of_pep_seqs)):
                 query2 = str(query2)+" OR sequence = "+'"'+str(list_of_pep_seqs[i])+'"'
             cur2.execute(query2)
             result_seq2 =  cur2.fetchmany()
