@@ -376,6 +376,7 @@ def upload_peptide():
     list_of_pep_seqs = []
     rowlist=[]
     rowlist2=[]
+    result_seq_write=[]
     global hashed2
     hashed2=str()
     # Checks for post method (data submitted)
@@ -514,9 +515,14 @@ def upload_peptide():
                         rowlist.append(hashed2)
                         writer.writerow(rowlist)
                         result_seq_multi2 = result_seq2
+                        # cur = connection.cursor()
+                        # query3 = "INSERT INTO exp_atlas (tissue, repeat_family) VALUES %s"
                         with open("atlas_seqs.csv", "a") as csvfile:
                             writer = csv.writer(csvfile)
-                            writer.writerow(result_seq2)
+                            for i in range(0, len(result_seq2)):
+                                result_seq_write.append(result_seq2[i][0])
+                                writer.writerow(result_seq_write)
+                                result_seq_write = []
 
             return render_template("upload_peptide.html", data=result_seq2, empty = hashed2)#result_seq_multi)
     else:
