@@ -2,7 +2,6 @@
 <html lang="en">
 	<head>
 		<title>Upload Peptide Sequence</title>
-
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 		<!-- Fonts-->
@@ -19,18 +18,33 @@
 		<link rel="stylesheet" href="http://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 		<script src="http://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+		<script src="https://cdn.datatables.net/buttons/1.5.1/js/dataTables.buttons.min.js"></script>
+		<script src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.flash.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
+		<script src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.html5.min.js"></script>
+		<script src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.print.min.js"></script>
 		<script>
 				$(document).ready(function() {
-			    var table = $('#mz_seq').DataTable()
-			} );
+			    var table = $('#mz_seq').DataTable({
+						dom: 'Bfrtip',
+        		buttons: [
+            'copy', 'csv', 'excel', 'pdf', 'print'
+					],
+						scrollY:        "2000px",
+						scrollX:        true,
+						scrollCollapse: true,
+						paging:         true
 
-				function showLoading() {
-	    document.getElementById('loadingmsg').style.display = 'block';
-	    document.getElementById('loadingover').style.display = 'block';
-			}
+					})
+			} );
+			function showLoading() {
+				document.getElementById('loadingmsg').style.display = 'block';
+				document.getElementById('loadingover').style.display = 'block';
+				}
 		</script>
 	</head>
-
 
 	<body>
 		<div class="page-wrap">
@@ -154,14 +168,15 @@
 										  <option value="tis_type">Vulva</option>
 											<option value="">...</option>
 										</select>
-										<hr>
 										<div id='loadingmsg' style='display: none;'><img src="/static/assets/img/loading.gif" height="200" width="200"></div>
 										<div id='loadingover' style='display: none;'></div>
+										<hr>
 										Please Upload a mzid or mztab formatted file
-
 										<form id="upload-form" action="{{ url_for("upload_peptide")}}" method="POST" enctype="multipart/form-data" onsubmit='refreshpage();showLoading();'>
 										<input type="file" name="file" accept=".xml, .mzid, .mzTab">
 										<input type="submit" value="Upload" onclick="showLoading();">
+
+
 
 										<hr>
 										</p>
@@ -170,13 +185,12 @@
 										{{ result_family }}
 									</div>
 								</div>
-
-
 							</div>
 	<div class="container">
 
 		</body>
 		<body>
+		 <p style="text-align: left;">Download the results:</p>
 		 <table id = "mz_seq" class = "display">
 			 <thead>
 				<tr>
@@ -189,7 +203,6 @@
 				 <tr>
 				 {% for d in row %}
 					 <td>{{ d }}</td>
-
 				 {% endfor %}
 				 </tr>
 			 {% endfor %}
