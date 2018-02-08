@@ -377,10 +377,15 @@ def upload_peptide():
     rowlist=[]
     rowlist2=[]
     result_seq_write=[]
+    tissue_type_write=[]
+    disease_type_write=[]
     global hashed2
     hashed2=str()
+
     # Checks for post method (data submitted)
     if request.method == "POST":
+
+
         os.chdir(APP_ROOT)
         target = os.path.join(APP_ROOT, "uploaded/")
 
@@ -500,6 +505,8 @@ def upload_peptide():
 
 
             if len(result_seq2) != 0:
+                tissue_type = str(request.form.get('tissue_type'))
+                disease_type = str(request.form.get('disease_type'))
 
                 #If data has been saved into memory, a hash check is conducted on the original file that was read in
                 #If the unique hash check is not duplicate, the data is saved for the atlas expression
@@ -517,14 +524,23 @@ def upload_peptide():
                         result_seq_multi2 = result_seq2
                         # cur = connection.cursor()
                         # query3 = "INSERT INTO exp_atlas (tissue, repeat_family) VALUES %s"
+
                         with open("atlas_seqs.csv", "a") as csvfile:
                             writer = csv.writer(csvfile)
                             for i in range(0, len(result_seq2)):
                                 result_seq_write.append(result_seq2[i][0])
+                                tissue_type_write.append(tissue_type)
+                                disease_type_write.append(disease_type)
                                 writer.writerow(result_seq_write)
+                                writer.writerow(tissue_type_write)
+                                writer.writerow(disease_type_write)
                                 result_seq_write = []
+                                tissue_type_write = []
+                                disease_type_write = []
 
-            return render_template("upload_peptide.html", data=result_seq2, empty = hashed2)#result_seq_multi)
+
+
+            return render_template("upload_peptide.html", data=result_seq2, empty = hashed2 + ", " + disease_type + ", " + tissue_type)#result_seq_multi)
     else:
         return render_template("upload_peptide.html")
 

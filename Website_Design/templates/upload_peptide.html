@@ -122,8 +122,9 @@
 									<div class="container">
 										<hr>
 										<p>
+										<form id="upload-form" action="{{ url_for("upload_peptide")}}" method="POST" enctype="multipart/form-data" onsubmit='refreshpage();showLoading();'>
 										Please Select Tissue Type:
-										<select class= id="tis_type" name="tis_type">
+										<select class= id="tissue_type" name="tissue_type">
 											<option value="Unknown">Unknown</option>
 										  <option value="Adrenal Gland">Adrenal Gland</option>
 										  <option value="Anus and Anal Canal">Anus and Anal Canal</option>
@@ -169,7 +170,7 @@
 										</select>
 										<p>
 											Please Select Disease Type:
-											<select class=>
+											<select class= id="disease_type" name="disease_type">
 												<option value="Unknown">Unknown</option>
 												<option value="AutoImmune">AutoImmune</option>
 												<option value="Cancer">Cancer</option>
@@ -184,9 +185,11 @@
 										<div id='loadingover' style='display: none;'></div>
 										<hr>
 										Please Upload a mzid or mztab formatted file
-										<form id="upload-form" action="{{ url_for("upload_peptide")}}" method="POST" enctype="multipart/form-data" onsubmit='refreshpage();showLoading();'>
+										<p>
+
 										<input type="file" name="file" accept=".xml, .mzid, .mzTab">
 										<input type="submit" value="Upload" onclick="showLoading();">
+										</form>
 
 
 
