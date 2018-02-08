@@ -27,6 +27,10 @@
 			        paging:         true
 			    } );
 			} );
+				function showLoading() {
+			document.getElementById('loadingmsg').style.display = 'block';
+			document.getElementById('loadingover').style.display = 'block';
+			}
 		</script>
 	</head>
 
@@ -106,17 +110,19 @@
 
 								<div class="container">
 								<p>
+										<div id='loadingmsg' style='display: none;'><img src="/static/assets/img/loading.gif" height="200" width="200"></div>
+										<div id='loadingover' style='display: none;'></div>
 										Please Upload a fasta file or enter the peptide sequence below
 										<form id="upload-form" action="{{ url_for("peptide_seq_ident")}}" method="POST" enctype="multipart/form-data">
 								 		<input type="file" name="file2" accept=".fasta">
-								 		<input type="submit" value="Upload">
+								 		<input type="submit" value="Upload" onclick="showLoading();">
 								</p>
 
 								<p>
 									<form action="{{ url_for("peptide_seq_ident")}}" method="POST">
 									  <textarea Name="fasta_content" rows=8 cols=90></textarea>
 										<br>
-									  <input type="submit" value="Search" id="fasta_search">
+									  <input type="submit" value="Search" id="fasta_search" onclick="showLoading();">
 									</form>
 								</p>
 								<hr>
@@ -155,12 +161,22 @@
 				 {% for row in data %}
 					 <tr>
 					 {% for d in row %}
-						 <td>{{ d[0] }}</td>
-						 <td>{{ d[1] }}</td>
+						 <td>{{ d }}</td>
+
 					 {% endfor %}
 					 </tr>
 				 {% endfor %}
 				 {% endif %}
+				 {% if data2 != "" %}
+ 					{% for row in data2 %}
+ 					 <tr>
+ 					 {% for d in row %}
+ 						 <td>{{ d[0] }}</td>
+						 <td>{{ d[1] }}</td>
+ 					 {% endfor %}
+ 					 </tr>
+ 				 {% endfor %}
+ 				{% endif %}
 			</tbody>
 		 </table>
 		</body>

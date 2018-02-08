@@ -39,6 +39,7 @@
 	32. fett_pageTitle
 	33. fett_sidebar
 	34. fett_slider
+  35. fett_loading
 
 --------------------------------------------------------------------------*/
 /*Pie chart*/
@@ -4764,4 +4765,33 @@ mark, .mark {
     right: 0;
     bottom: 50px;
     position: absolute;
+}
+
+/* 35. fett_loading
+--------------------------------------------------------------------------------*/
+
+#loadingmsg {
+color: black;
+padding: 10px;
+position: fixed;
+top: 45%;
+left: 45%;
+z-index: 100;
+margin-right: -55%;
+margin-bottom: -55%;
+}
+
+#loadingover {
+background: black;
+z-index: 99;
+width: 100%;
+height: 100%;
+position: fixed;
+top: 0;
+left: 0;
+-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
+filter: alpha(opacity=80);
+-moz-opacity: 0.8;
+-khtml-opacity: 0.8;
+opacity: 0.8;
 }
