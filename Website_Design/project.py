@@ -40,6 +40,7 @@ ALLOWED_EXTENSIONS = set(["xml", "mzid", "mzTab", "mztab" ,"fasta"])
 ALLOWED_EX_XML = set(["xml", "mzid"])
 ALLOWED_EX_MZTAB = set(["mzTab", "mztab"])
 ALLOWED_EX_FASTA = set(["fasta","fa", "faa"])
+ALLOWED_EX_NWK = set(["nwk","newick", "ph"])
 
 # Connect to the database
 try:
@@ -218,6 +219,7 @@ def peptide_seq_ident():
 
     # If data has been submitted to the page i.e uploaded, then the POST method engages
     if request.method == "POST":
+        os.chdir(APP_ROOT)
 
         # If the Textbox has been filled with peptide sequences, DB is searched for matching sequence and FAMILY + sequence returned
         # Otherwise if no match found, displays no match
@@ -298,7 +300,7 @@ def peptide_seq_ident():
                     if not cur.rowcount:
                       return render_template("peptide_seq_ident.html", empty=no_match)
                     else:
-                        return render_template("peptide_seq_ident.html", data=result_seq_one)
+                        return render_template("peptide_seq_ident.html", data2=result_seq_one)
                 else:
 
                         records_list = list(SeqIO.parse(filename, "fasta"))
@@ -347,6 +349,7 @@ def upload_peptide():
     hashed2=str()
     # Checks for post method (data submitted)
     if request.method == "POST":
+        os.chdir(APP_ROOT)
         target = os.path.join(APP_ROOT, "uploaded/")
 
         #Creates the folder if it doesnt exist
@@ -400,6 +403,7 @@ def upload_peptide():
             mztab_seq_mixed = [word for word in list_of_matches if word not in list_of_words]
             list_of_pep_seqs = [sequence for sequence in mztab_seq_mixed if len(sequence) > 5]
 
+
         else:
             #If the file extension does not match mztab or mzident, an error stating wrong filetype uploaded relayed back
             result_seq_multi = "Incorrect filetype uploaded! Please Upload a MzIdent or mzTab formatted file"
@@ -419,10 +423,13 @@ def upload_peptide():
             print len(list_of_pep_seqs)
             query2 = "SELECT /*+ MAX_EXECUTION_TIME(600000) */ family, sequence FROM all_prot_seqs WHERE sequence = "
             query2 = query2+'"'+str(list_of_pep_seqs[0])+'"'
-            for i in range(1,5000):
+            for i in range(1,len(list_of_pep_seqs)):
                 query2 = str(query2)+" OR sequence = "+'"'+str(list_of_pep_seqs[i])+'"'
             cur2.execute(query2)
             result_seq2 =  cur2.fetchmany()
+            if len(result_seq2) == 0:
+                result_seq_multi = "No Match Was Found!"
+                return render_template("upload_peptide.html", result_family=result_seq_multi)
 
 
             if len(result_seq2) != 0:

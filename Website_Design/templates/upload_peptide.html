@@ -2,6 +2,7 @@
 <html lang="en">
 	<head>
 		<title>Upload Peptide Sequence</title>
+
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 		<!-- Fonts-->
@@ -22,8 +23,14 @@
 				$(document).ready(function() {
 			    var table = $('#mz_seq').DataTable()
 			} );
+
+				function showLoading() {
+	    document.getElementById('loadingmsg').style.display = 'block';
+	    document.getElementById('loadingover').style.display = 'block';
+			}
 		</script>
 	</head>
+
 
 	<body>
 		<div class="page-wrap">
@@ -148,12 +155,13 @@
 											<option value="">...</option>
 										</select>
 										<hr>
+										<div id='loadingmsg' style='display: none;'><img src="/static/assets/img/loading.gif" height="200" width="200"></div>
+										<div id='loadingover' style='display: none;'></div>
 										Please Upload a mzid or mztab formatted file
-										<form id="upload-form" action="{{ url_for("upload_peptide")}}" method="POST" enctype="multipart/form-data">
+
+										<form id="upload-form" action="{{ url_for("upload_peptide")}}" method="POST" enctype="multipart/form-data" onsubmit='refreshpage();showLoading();'>
 										<input type="file" name="file" accept=".xml, .mzid, .mzTab">
-										<input type="submit" value="Upload">
-
-
+										<input type="submit" value="Upload" onclick="showLoading();">
 
 										<hr>
 										</p>
@@ -162,6 +170,8 @@
 										{{ result_family }}
 									</div>
 								</div>
+
+
 							</div>
 	<div class="container">
 
