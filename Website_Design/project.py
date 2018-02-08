@@ -239,12 +239,11 @@ def peptide_seq_ident():
                 # Does a MYSQL query for the correctly formatted peptide sequence
                 fastaseq = request.form["fasta_content"]
                 fastaseq = fastaseq.replace("\n","").replace("\r","").replace(" ","")
+                cur = connection.cursor()
                 rows_count = cur.execute("SELECT family, sequence FROM all_prot_seqs WHERE sequence = %s", [fastaseq])
                 cur.execute("SELECT family, sequence FROM all_prot_seqs WHERE sequence = %s", [fastaseq])
                 result_seq =  cur.fetchall()
-                result_seq_one.append(result_seq)
-                DF_PD=pd.DataFrame(result_seq_one)
-                result_seq_df=DF_PD.to_html()
+                cur.close()
                 if not cur.rowcount:
                   return render_template("peptide_seq_ident.html", result_family=no_match)
                 else:
@@ -278,8 +277,9 @@ def peptide_seq_ident():
             if os.stat(filename).st_size == 0:
                 return render_template("peptide_seq_ident.html", empty = error_empty2)
 
+
             # Checks the file extension, if it is not in the allowed fasta format, it is rejected
-            elif filename.rsplit('.', 1)[1].lower() not in ALLOWED_EX_FASTA:
+            elif "." not in filename or filename.rsplit('.', 1)[1].lower() not in ALLOWED_EX_FASTA:
                 result_seq_multi = "Incorrect filetype uploaded! Please Upload a Fasta formatted file"
                 return render_template("peptide_seq_ident.html", empty=result_seq_multi)
 
@@ -289,40 +289,71 @@ def peptide_seq_ident():
                 # if request from DB does not have data returned (rowcount=0), show no match,
                 # otherwise display Family + sequence
                 record_list = list(SeqIO.parse(filename, "fasta"))
+                temp_list=[]
+                for rec in record_list:
+                    temp_list.append(str(rec.seq))
+
                 if len(record_list) == 1:
                     #If only 1 fasta sequence in file
                     for record in SeqIO.parse(filename, "fasta"):
                         recordID = record.seq
+                        cur = connection.cursor()
                         rows_count = cur.execute("SELECT family, sequence FROM all_prot_seqs WHERE sequence = %s", [recordID])
                         cur.execute("SELECT family, sequence FROM all_prot_seqs WHERE sequence = %s", [recordID])
                         result_seq =  cur.fetchall()
-                        result_seq_one.append(result_seq)
+                        cur.close()
                     if not cur.rowcount:
                       return render_template("peptide_seq_ident.html", empty=no_match)
                     else:
-                        return render_template("peptide_seq_ident.html", data2=result_seq_one)
+                        return render_template("peptide_seq_ident.html", data2=result_seq)
                 else:
-
-                        records_list = list(SeqIO.parse(filename, "fasta"))
+                    record_list=temp_list
+                    if len(record_list)<=5000:
                         query = "SELECT family, sequence FROM all_prot_seqs WHERE sequence = "
-                        query = query+'"'+str(records_list[0].seq)+'"'
-                        for i in range(1,len(records_list)):
-                            query = str(query)+" OR sequence = "+'"'+str(records_list[i].seq)+'"'
+                        query = query+'"'+str(record_list[0])+'"'+' OR sequence="'
+                        sep = '" OR sequence="'
+                        query = query+sep.join(record_list[1:])
+                        query = query+'"'
+                        cur = connection.cursor()
                         cur.execute(query)
-                        result_seq =  cur.fetchall()
-                        if len(result_seq)==0:
-                          return render_template("peptide_seq_ident.html", empty=no_match)
-                        else:
-                          return render_template("peptide_seq_ident.html", data=result_seq)
+                        result_seq=cur.fetchall()
+                        cur.close()
+
+                    elif len(record_list)>5000:
+                        divide = (len(record_list)/5000)+1
+                        record_list = chunkify(record_list, divide)
+                        result_seq=[]
+                        for ele in record_list:
+                            query = "SELECT family, sequence FROM all_prot_seqs WHERE sequence = "
+                            query = query+'"'+str(ele[0])+'"'+' OR sequence="'
+                            sep = '" OR sequence="'
+                            query = query+sep.join(ele[1:])
+                            query = query+'""'
+                            cur = connection.cursor()
+                            cur.execute(query)
+                            for ele in cur.fetchall():
+                                result_seq.append(ele)
+                        cur.close()
+
+                if len(result_seq)==0:
+                  return render_template("peptide_seq_ident.html", empty=no_match)
+                else:
+                  return render_template("peptide_seq_ident.html", data=result_seq)
         elif request.form["fasta_content"] == "":
             return render_template("peptide_seq_ident.html", empty = error_empty2)
     else:
         # By default, this GET method is returned and displays 1000 sequences and families from the database
+        cur = connection.cursor()
         cur.execute("SELECT family, sequence FROM all_prot_seqs LIMIT 0, 1000")
         result_seq =  cur.fetchall()
+        cur.close()
         return render_template("peptide_seq_ident.html", data1=result_seq)
 
+def chunkify(lst,n):
+    return [lst[i::n] for i in xrange(n)]
 
+def py_unique(data):
+    return list(set(data))
 
 @app.route("/upload_peptide", methods=["GET","POST"])
 def upload_peptide():
@@ -375,6 +406,10 @@ def upload_peptide():
             result_seq_multi = "No File uploaded! Please Upload a MzIdent or mzTab formatted file"
             return render_template("upload_peptide.html", result_family=result_seq_multi)
 
+        if "." not in filename2:
+            result_seq_multi = "Incorrect filetype uploaded! Please Upload a MzIdent or mzTab formatted file"
+            return render_template("upload_peptide.html", result_family=result_seq_multi)
+
         # If the filetype is allowed, the file is read in and then regex match used to locate the peptide
         if filename2.rsplit('.', 1)[1].lower() in ALLOWED_EX_XML:
             file_mz_seq = open(filename2, "r")
@@ -403,33 +438,64 @@ def upload_peptide():
             mztab_seq_mixed = [word for word in list_of_matches if word not in list_of_words]
             list_of_pep_seqs = [sequence for sequence in mztab_seq_mixed if len(sequence) > 5]
 
-
         else:
+
             #If the file extension does not match mztab or mzident, an error stating wrong filetype uploaded relayed back
             result_seq_multi = "Incorrect filetype uploaded! Please Upload a MzIdent or mzTab formatted file"
             return render_template("upload_peptide.html", result_family=result_seq_multi)
 
+        list_of_pep_seqs = py_unique(list_of_pep_seqs) #keep only unique sequences
+
         if len(list_of_pep_seqs) == 1:
+
             #If only 1 fasta sequence in file
             for seqs in list_of_pep_seqs:
                 rows_count = cur.execute("SELECT Family, Sequence FROM prelim2 WHERE Sequence = %s", [seqs])
                 cur.execute("SELECT Family, Sequence FROM prelim2 WHERE Sequence = %s", [seqs])
                 result_seq =  cur.fetchall()
-            if not cur.rowcount:
+
+            if not cur.rowcount: #return no match
               return render_template("upload_peptide.html", result_family=no_match)
-            else:
+            else: #return match
                 return render_template("upload_peptide.html", data=result_seq)#, result_seq1=result_seq[0][1])
         else:
-            print len(list_of_pep_seqs)
-            query2 = "SELECT /*+ MAX_EXECUTION_TIME(600000) */ family, sequence FROM all_prot_seqs WHERE sequence = "
-            query2 = query2+'"'+str(list_of_pep_seqs[0])+'"'
-            for i in range(1,len(list_of_pep_seqs)):
-                query2 = str(query2)+" OR sequence = "+'"'+str(list_of_pep_seqs[i])+'"'
-            cur2.execute(query2)
-            result_seq2 =  cur2.fetchmany()
-            if len(result_seq2) == 0:
-                result_seq_multi = "No Match Was Found!"
-                return render_template("upload_peptide.html", result_family=result_seq_multi)
+            #If the inserted file is up to 5000 sequences
+            if len(list_of_pep_seqs)<=5000:
+
+                #A signle mysql query for all sequences
+                query2 = "SELECT family, sequence FROM all_prot_seqs WHERE sequence = "
+                query2 = query2+'"'+str(list_of_pep_seqs[0])+'"'+' OR sequence="'
+                sep = '" OR sequence="'
+                query2 = query2+sep.join(list_of_pep_seqs[1:])
+                query2 = query2+'"'
+                cur = connection.cursor()
+                cur.execute(query2)
+                result_seq2=cur.fetchall()
+                cur.close()
+
+            #If the inserted file is too big
+            elif len(list_of_pep_seqs)>5000:
+                divide = (len(list_of_pep_seqs)/5000)+1
+                #split the sequences into lists of around 5000 sequences
+                list_of_pep_seqs=chunkify(list_of_pep_seqs, divide)
+                result_seq2=[]
+                #query for each ~5000 sequences
+                for ele in list_of_pep_seqs:
+                    cur = connection.cursor()
+                    query2 = "SELECT family, sequence FROM all_prot_seqs WHERE sequence = "
+                    query2 = query2+'"'+str(ele[0])+'"'+' OR sequence="'
+                    sep = '" OR sequence="'
+                    query2 = query2+sep.join(ele[1:])
+                    query2 = query2+'"'
+                    cur.execute(query2)
+                    for ele in cur.fetchall():
+                        result_seq2.append(ele)
+                cur.close()
+
+            if len(result_seq2)==0:
+                result_seq_multi="No match was found!"
+                return render_template("upload_peptide.html", result_seq = result_seq_multi)#result_seq_multi)
+
 
 
             if len(result_seq2) != 0:
