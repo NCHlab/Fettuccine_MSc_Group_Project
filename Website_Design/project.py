@@ -520,8 +520,8 @@ def upload_peptide():
                 #If the unique hash check is not duplicate, the data is saved for the atlas expression
                 #otherwise the data is not saved (due to it already existing from the same source file)
                 hashed2 = str(hashlib.sha224(whole_file).hexdigest())
-
                 with open("hash_checker.csv", "r+b") as f:
+
                     reader = csv.reader(f)
                     writer = csv.writer(f)
                     for row in reader:
@@ -530,21 +530,45 @@ def upload_peptide():
                         rowlist.append(hashed2)
                         writer.writerow(rowlist)
                         result_seq_multi2 = result_seq2
-                        # cur = connection.cursor()
-                        # query3 = "INSERT INTO exp_atlas (tissue, repeat_family) VALUES %s"
+                        cur = connection.cursor()
+                        for i in range(0, len(result_seq2)):
+                            cur.execute("INSERT INTO exp_atlas(tissue_type, repeat_family, disease_type) VALUES (%s,%s,%s);", (tissue_type, result_seq2[i][0], disease_type))
+                            cur.fetchall()
+                            connection.commit()
+                        cur.close()
 
-                        with open("atlas_seqs.csv", "a") as csvfile:
-                            writer = csv.writer(csvfile)
-                            for i in range(0, len(result_seq2)):
-                                result_seq_write.append(result_seq2[i][0])
-                                tissue_type_write.append(tissue_type)
-                                disease_type_write.append(disease_type)
-                                writer.writerow(result_seq_write)
-                                writer.writerow(tissue_type_write)
-                                writer.writerow(disease_type_write)
-                                result_seq_write = []
-                                tissue_type_write = []
-                                disease_type_write = []
+
+
+
+
+
+                        # with open("atlas_seqs.csv", "a") as csvfile:
+                        #     writer = csv.writer(csvfile)
+                        #     for i in range(0, len(result_seq2)):
+                        #
+                        #
+                        #
+                        #         result_seq_write.append(result_seq2[i][0])
+                        #         tissue_type_write.append(tissue_type)
+                        #         disease_type_write.append(disease_type)
+                        #         writer.writerow(result_seq_write)
+                        #         writer.writerow(tissue_type_write)
+                        #         writer.writerow(disease_type_write)
+                        #         result_seq_write = []
+                        #         tissue_type_write = []
+                        #         disease_type_write = []
+                        # with open("atlas_seqs.csv", "a") as csvfile:
+                        #     writer = csv.writer(csvfile)
+                        #     for i in range(0, len(result_seq2)):
+                        #         result_seq_write.append(result_seq2[i][0])
+                        #         tissue_type_write.append(tissue_type)
+                        #         disease_type_write.append(disease_type)
+                        #         writer.writerow(result_seq_write)
+                        #         writer.writerow(tissue_type_write)
+                        #         writer.writerow(disease_type_write)
+                        #         result_seq_write = []
+                        #         tissue_type_write = []
+                        #         disease_type_write = []
 
 
 
@@ -555,11 +579,15 @@ def upload_peptide():
 
 @app.route("/expression_atlas")
 def atlas():
-    try:
-        atlas_seqs = result_seq_multi2
-    except:
-        pass
-    return render_template("expression_atlas.html")
+	#cur.execute("SELECT tissue, COUNT(tissue) AS RTs_no_found, GROUP_CONCAT(DISTINCT RT SEPARATOR ',') AS RT_found FROM exp_atlas GROUP BY Tissue")
+	#atlas=cur.fetchall()
+    cur = connection.cursor()
+    cur.execute("SELECT tissue, COUNT(tissue) AS RTs_no_found, GROUP_CONCAT(DISTINCT RT SEPARATOR ',') AS RT_found,concat(round(((SELECT COUNT(tissue))/(SELECT counts from exp_atlas_count)* 100 )),'%') FROM exp_atlas GROUP BY Tissue")
+    overall_percentage=cur.fetchall()
+    cur.execute("SELECT tissue, COUNT(tissue) AS RTs_no_found, GROUP_CONCAT(DISTINCT RT SEPARATOR ',') AS RT_found,concat(round(((SELECT COUNT(RT))/(SELECT heart from exp_atlas_count)* 100 )),'%') FROM exp_atlas WHERE `tissue`='heart' GROUP BY RT")
+    individual_percentage=cur.fetchall()
+    cur.close()
+    return render_template("expression_atlas.html",overall_percentage=overall_percentage,individual_percentage=individual_percentage)
 
 @app.route("/documentation")
 def documentation():
