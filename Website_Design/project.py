@@ -536,6 +536,8 @@ def upload_peptide():
                             cur.fetchall()
                         query3 = ("UPDATE exp_atlas_count SET counts = (SELECT COUNT(tissue_type) FROM exp_atlas);")
                         cur.execute(query3)
+                        query5 = ("UPDATE exp_atlas_count SET " + tissue_type + " = (SELECT COUNT(tissue_type) FROM exp_atlas WHERE tissue_type = '" + tissue_type + "');")
+                        cur.execute(query5)
                         connection.commit()
                         cur.close()
 
