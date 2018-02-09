@@ -39,6 +39,7 @@
 	32. fett_pageTitle
 	33. fett_sidebar
 	34. fett_slider
+  35. fett_loading
 
 --------------------------------------------------------------------------*/
 /*Pie chart*/
@@ -87,11 +88,18 @@
     z-index: 1;
 }
 
-.pie_sf {
-    width:350px;
-    height:350px;
-    position: relative;
-    left: 33%;
+.pie_sf1 {
+    width:290px;
+    height:290px;
+    position: absolute;
+    left: 22%;
+}
+
+.pie_sf2 {
+    width:290px;
+    height:290px;
+    position: absolute;
+    left: 55%;
 }
 .dropdown-content a {
     color: black;
@@ -878,14 +886,14 @@ input[type="search"], input[type="tel"], input[type="color"] {
     border-radius: 0;
     padding: 0 15px;
     line-height: 44px;
-    border: 1px solid #ebebeb;
+    border: 2px solid #ebebeb;
     color: #000;
     font-size: 14px;
     vertical-align: middle;
     height: 46px;
-    width: 40%;
+    width: 20%;
     margin-bottom: 20px;
-    background-color: #f7f7f7;
+    background-color: #fff;
 }
 
 .form-control::-webkit-input-placeholder, select::-webkit-input-placeholder,
@@ -1059,6 +1067,8 @@ input[type="checkbox"], input[type="radio"] {
 
 textarea {
     height: auto !important;
+    background: #fff;
+    border: 3px solid #ebebeb;
 }
 
  {
@@ -4757,4 +4767,33 @@ mark, .mark {
     right: 0;
     bottom: 50px;
     position: absolute;
+}
+
+/* 35. fett_loading
+--------------------------------------------------------------------------------*/
+
+#loadingmsg {
+color: black;
+padding: 10px;
+position: fixed;
+top: 45%;
+left: 30%;
+z-index: 100;
+margin-right: -55%;
+margin-bottom: -55%;
+}
+
+#loadingover {
+background: black;
+z-index: 99;
+width: 100%;
+height: 100%;
+position: fixed;
+top: 0;
+left: 0;
+-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
+filter: alpha(opacity=80);
+-moz-opacity: 0.8;
+-khtml-opacity: 0.8;
+opacity: 0.8;
 }

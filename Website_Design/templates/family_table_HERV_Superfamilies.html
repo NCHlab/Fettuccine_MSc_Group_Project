@@ -26,7 +26,10 @@
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
 			<script>
 	        $(document).ready( function () {
-	            $('#Superfamilies').DataTable();FFF
+	            $('#Superfamilies').DataTable({
+								"order": [[ 3, "desc" ]],
+								"lengthChange": false
+							});FFF
 	        } );
 	    </script>
 
@@ -63,13 +66,13 @@
 							<ul class="fett-menu">
 								<li class="fett-menu"><a href="{{ url_for('indexpage')}}">Home</a>
 								</li>
-								<li class="current-menu-item"><a href="{{ url_for('family_table')}}">Family Table</a>
+								<li class="current-menu-item"><a href="{{ url_for('family_table_HERV_Superfamilies')}}">Family Table</a>
 								</li>
 								<li class="fett-menu"><a href="{{ url_for('distribution')}}">Distribution</a>
 								</li>
 								<li class="menu-item-has-children"><a href="#">Translated</a>
 									<ul class="sub-menu">
-										<li><a href="{{ url_for('AA_seq_list')}}">Translated products</a>
+										<li><a href="{{ url_for('serverside_table')}}">Translated products</a>
 										</li>
 										<li><a href="{{ url_for('relationship_AA')}}">AA Relationship Viewer</a>
 										</li>
@@ -118,69 +121,41 @@
 		</div>
 
 </body>
-<script>
-/* When the user clicks on the button,
-toggle between hiding and showing the dropdown content */
-function myFunction() {
-    document.getElementById("myDropdown").classList.toggle("show");
-}
 
-// Close the dropdown if the user clicks outside of it
-window.onclick = function(event) {
-  if (!event.target.matches('.dropbtn')) {
-
-    var dropdowns = document.getElementsByClassName("dropdown-content");
-    var i;
-    for (i = 0; i < dropdowns.length; i++) {
-      var openDropdown = dropdowns[i];
-      if (openDropdown.classList.contains('show')) {
-        openDropdown.classList.remove('show');
-      }
-    }
-  }
-}
-/* When the user clicks on the button,
-toggle between hiding and showing the dropdown content */
-function myFunction2() {
-    document.getElementById("myDropdown2").classList.toggle("show");
-}
-
-// Close the dropdown if the user clicks outside of it
-window.onclick = function(event) {
-  if (!event.target.matches('.dropbtn')) {
-
-    var dropdowns = document.getElementsByClassName("dropdown-content");
-    var i;
-    for (i = 0; i < dropdowns.length; i++) {
-      var openDropdown = dropdowns[i];
-      if (openDropdown.classList.contains('show')) {
-        openDropdown.classList.remove('show');
-      }
-    }
-  }
-}
-</script>
 
 <body>
 	<p>&nbsp;</p>
-
+s
 <div class = "container">
-		<div class="pie_sf">
-	    <canvas id="myChart"></canvas>
+		<div class="pie_sf1">
+	    <canvas id="myChart_counts"></canvas>
+	  </div>
+		<div class="pie_sf2">
+	    <canvas id="myChart_prots"></canvas>
 	  </div>
 
+	<p>&nbsp;</p>
+	<p>&nbsp;</p>
+	<p>&nbsp;</p>
+	<p>&nbsp;</p>
+	<p>&nbsp;</p>
+	<p>&nbsp;</p>
+	<p>&nbsp;</p>
+	<p>&nbsp;</p>
+	<p>&nbsp;</p>
+</div>
 <script>
 function jsconv(vars) {
 	return vars
 }
 
-let myChart = document.getElementById('myChart').getContext('2d');
+let myChart1 = document.getElementById('myChart_counts').getContext('2d');
 
 // Global Options
 Chart.defaults.global.defaultFontSize = 15;
 Chart.defaults.global.defaultFontColor = '#777';
 
-let barChart = new Chart(myChart, {
+let barChart1 = new Chart(myChart1, {
 	type:'doughnut', // bar, horizontalBar, pie, line, doughnut, radar, polarArea
 	data:{
 		labels:['ERV1', 'ERV1?', 'ERVK', 'ERVL', 'ERV-MaLR', 'ERVL?'],
@@ -205,11 +180,65 @@ let barChart = new Chart(myChart, {
 	options:{
 		title:{
 			display:true,
-			text:'Superfamilies Genome Frequency',
+			text:'Genome Frequency',
 			fontSize:20
 		},
 		legend:{
+			display:false,
+			position:'bottom',
+			labels:{
+				fontColor:'#000',
+			usePointStyle: true,
+			horizontalAlign: "center",
+			verticalAlign: "center"
+			}
+		},
+		layout:{
+			padding:{
+				left:30,
+				right:0,
+				bottom:0,
+				top:0
+			}
+		},
+		tooltips:{
+			enabled:true
+		}
+	}
+});
+
+let myChart2 = document.getElementById('myChart_prots').getContext('2d');
+
+let barChart2 = new Chart(myChart2, {
+	type:'doughnut', // bar, horizontalBar, pie, line, doughnut, radar, polarArea
+	data:{
+		labels:['ERV1', 'ERV1?', 'ERVK', 'ERVL', 'ERV-MaLR', 'ERVL?'],
+		datasets:[{
+			label:'Population',
+			data:[
+				jsconv({{arr_sc_2[0]}}),
+				jsconv({{arr_sc_2[1]}}),
+				jsconv({{arr_sc_2[2]}}),
+				jsconv({{arr_sc_2[3]}}),
+				jsconv({{arr_sc_2[4]}}),
+				jsconv({{arr_sc_2[5]}})
+			],
+			//backgroundColor:'green',
+			backgroundColor:["#FAA43A", "#F15854", "#F17CB0", "#60BD68", "#5DA5DA", "#F4F11F"],
+			borderWidth:1,
+			borderColor:'#777',
+			hoverBorderWidth:3,
+			hoverBorderColor:'#000'
+		}]
+	},
+	options:{
+		title:{
 			display:true,
+			text:'Protein Frequency',
+			fontSize:20
+		},
+		legend:{
+			display:false,
 			position:'bottom',
 			labels:{
 				fontColor:'#000',
@@ -232,13 +261,15 @@ let barChart = new Chart(myChart, {
 	}
 });
 </script>
-
+<div class = "container">
 	 <table id = "Superfamilies" class = "display">
 		 <thead>
 			<tr>
-				<th>{{ firstcolumn }}</th>
+				<th>Superfamily</th>
 				<th>Description</th>
-				<th>Counts</th>
+				<th>No. of Repeats</th>
+				<th>No. of Proteins</th>
+				<th>Proteins</th>
 			</tr>
 		</thead>
 		<tbody>

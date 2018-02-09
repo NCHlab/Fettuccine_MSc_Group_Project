@@ -18,15 +18,30 @@
 		<link rel="stylesheet" href="http://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 		<script src="http://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+		<script src="https://cdn.datatables.net/buttons/1.5.1/js/dataTables.buttons.min.js"></script>
+		<script src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.flash.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/vfs_fonts.js"></script>
+		<script src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.html5.min.js"></script>
+		<script src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.print.min.js"></script>
 		<script>
 				$(document).ready(function() {
 			    var table = $('#Fam_seq').DataTable( {
+							dom: 'Bfrtip',
+	        		buttons: [
+	            'copy', 'csv', 'excel', 'pdf', 'print'
+						],
 			        scrollY:        "2000px",
 			        scrollX:        true,
 			        scrollCollapse: true,
 			        paging:         true
 			    } );
 			} );
+			function showLoading() {
+				document.getElementById('loadingmsg').style.display = 'block';
+				document.getElementById('loadingover').style.display = 'block';
+				}
 		</script>
 	</head>
 
@@ -62,13 +77,13 @@
 						<ul class="fett-menu">
 							<li class="fett-menu"><a href="{{ url_for('indexpage')}}">Home</a>
 							</li>
-							<li><a href="{{ url_for('family_table')}}">Family Table</a>
+							<li><a href="{{ url_for('family_table_HERV_Superfamilies')}}">Family Table</a>
 							</li>
 							<li><a href="{{ url_for('distribution')}}">Distribution</a>
 							</li>
 							<li class="menu-item-has-children"><a href="#">Translated</a>
 								<ul class="sub-menu">
-									<li><a href="{{ url_for('AA_seq_list')}}">Translated products</a>
+									<li><a href="{{ url_for('serverside_table')}}">Translated products</a>
 									</li>
 									<li><a href="{{ url_for('relationship_AA')}}">AA Relationship Viewer</a>
 									</li>
@@ -106,17 +121,19 @@
 
 								<div class="container">
 								<p>
+									<div id='loadingmsg' style='display: none;'><img src="/static/assets/img/loading.gif"></div>
+									<div id='loadingover' style='display: none;'></div>
 										Please Upload a fasta file or enter the peptide sequence below
 										<form id="upload-form" action="{{ url_for("peptide_seq_ident")}}" method="POST" enctype="multipart/form-data">
 								 		<input type="file" name="file2" accept=".fasta">
-								 		<input type="submit" value="Upload">
+								 		<input type="submit" value="Upload" onclick="showLoading();">
 								</p>
 
 								<p>
 									<form action="{{ url_for("peptide_seq_ident")}}" method="POST">
 									  <textarea Name="fasta_content" rows=8 cols=90></textarea>
 										<br>
-									  <input type="submit" value="Search" id="fasta_search">
+									  <input type="submit" value="Search" id="fasta_search" onclick="showLoading();">
 									</form>
 								</p>
 								<hr>
@@ -134,6 +151,7 @@
 
 		<hr>
 		<body>
+		 <p style="text-align: left;">Download the results:</p>
 		 <table id = "Fam_seq" class = "display">
 			 <thead>
 				<tr>
@@ -155,12 +173,22 @@
 				 {% for row in data %}
 					 <tr>
 					 {% for d in row %}
-						 <td>{{ d[0] }}</td>
-						 <td>{{ d[1] }}</td>
+						 <td>{{ d }}</td>
+
 					 {% endfor %}
 					 </tr>
 				 {% endfor %}
 				 {% endif %}
+				 {% if data2 != "" %}
+					{% for row in data2 %}
+						<tr>
+						{% for d in row %}
+							<td>{{ d }}</td>
+
+						{% endfor %}
+						</tr>
+					{% endfor %}
+					{% endif %}
 			</tbody>
 		 </table>
 		</body>

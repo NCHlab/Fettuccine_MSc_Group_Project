@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Amino Acid Relationship Viewer</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<!-- Fonts-->
+		<link rel="stylesheet" type="text/css" href="static/assets/fonts/fontawesome/font-awesome.min.css">
+		<link rel="stylesheet" type="text/css" href="static/assets/fonts/themify-icons/themify-icons.css">
+		<!-- Vendors-->
+		<!-- <link rel="stylesheet" type="text/css" href="static/vendors/bootstrap4/bootstrap-grid.min.css"> -->
+		<link rel="stylesheet" type="text/css" href="static/assets/vendors/magnific-popup/magnific-popup.min.css">
+		<link rel="stylesheet" type="text/css" href="static/assets/vendors/owl.carousel/owl.carousel.css">
+		<!-- App & fonts-->
+		<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i&amp;amp;subset=latin-ext">
+		<link rel="stylesheet" type="text/css" href="static/assets/css/main.css">
+		<link rel="stylesheet" href="static/assets/css/bootstrap.min.css">
+		<link rel="stylesheet" href="http://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<script src="http://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+	</head>
+
+	<body>
+		<div class="page-wrap">
+
+			<!-- header -->
+			<header class="header">
+				<div class="container">
+					<div class="header__logo"><a href="{{ url_for('indexpage')}}"><img src="static/assets/img/fetbase_logo.png" alt=""/></a></div>
+					<div class="header__toogleGroup">
+						<div class="header__chooseLanguage">
+						<div class="search-form">
+							<div class="search-form__toggle"><i class="ti-search"></i></div>
+							<div class="search-form__form">
+
+												<!-- form-search -->
+												<div class="form-search">
+													<form>
+														<input class="form-control" type="text" placeholder="Hit enter to search or ESC to close"/>
+													</form>
+												</div><!-- End / form-search -->
+
+							</div>
+						</div>
+					</div>
+				</div>
+
+					<!-- fett-nav -->
+					<nav class="fett-nav">
+
+						<!-- fett-menu -->
+						<ul class="fett-menu">
+							<li class="fett-menu"><a href="{{ url_for('indexpage')}}">Home</a>
+							</li>
+							<li><a href="{{ url_for('family_table_HERV_Superfamilies')}}">Family Table</a>
+							</li>
+							<li><a href="{{ url_for('distribution')}}">Distribution</a>
+							</li>
+							<li class="current-menu-item"><a href="#">Translated</a>
+								<ul class="sub-menu">
+									<li><a href="{{ url_for('serverside_table')}}">Translated products</a>
+									</li>
+									<li><a href="{{ url_for('relationship_AA')}}">AA Relationship Viewer</a>
+									</li>
+								</ul>
+							</li>
+							<li class="menu-item-has-children"><a href="#">Upload Files</a>
+								<ul class="sub-menu">
+									<li><a href="{{ url_for('peptide_seq_ident')}}">Peptide Sequence identifier</a>
+									</li>
+									<li><a href="{{ url_for('upload_peptide')}}">MzIdent / MzTab</a>
+									</li>
+								</ul>
+							</li>
+							<li class="fett-menu"><a href="{{ url_for('atlas')}}">Atlas</a>
+							</li>
+							<li class="menu-item-has-children"><a href="#">project</a>
+								<ul class="sub-menu">
+									<li><a href="{{ url_for('documentation')}}">Documentation</a>
+									</li>
+									<li><a href="{{ url_for('about_us')}}">About Us</a>
+									</li>
+								</ul>
+						</ul><!-- fett-menu -->
+
+						<div class="navbar-toggle"><span></span><span></span><span></span></div>
+					</nav><!-- End / fett-nav -->
+
+				</div>
+			</header><!-- End / header -->
+
+			<div class="md-content">
+				<!-- page-title -->
+				<div class="page-title">
+								<h2 class="page-title__title">Relationship Viewer</h2>
+
+								<div class="container" style="text-align: center">
+									<form action="{{ url_for("relationship_AA")}}" method="POST">
+										<input type="submit" name="rv_button" value="HERV" class="dropbtn">
+										<input type="submit" name="rv_button" value="LINE1" class="dropbtn_selected">
+									</form>
+								</div>
+							<hr>
+				<button onclick="window.location.href='{{ url_for('custom_tree')}}'" class="dropbtn">Upload User Tree</button>
+			 </div>
+				<div class="container">
+					<img src="/static/assets/img/line1_tree.png">
+				</div>
+			</div>
+	</body>
+
+</html>

@@ -25,7 +25,11 @@
 			<script src="http://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 			<script>
 	        $(document).ready( function () {
-	            $('#Repeats_L1').DataTable();FFF
+	            $('#Repeats_L1').DataTable({
+								"order": [[ 2, "desc" ]],
+								"lengthChange": false,
+								"pageLength":50
+							});FFF
 	        } );
 	    </script>
 		</head>
@@ -61,13 +65,13 @@
 							<ul class="fett-menu">
 								<li class="fett-menu"><a href="{{ url_for('indexpage')}}">Home</a>
 								</li>
-								<li class="current-menu-item"><a href="{{ url_for('family_table')}}">Family Table</a>
+								<li class="current-menu-item"><a href="{{ url_for('family_table_HERV_Superfamilies')}}">Family Table</a>
 								</li>
 								<li class="fett-menu"><a href="{{ url_for('distribution')}}">Distribution</a>
 								</li>
 								<li class="menu-item-has-children"><a href="#">Translated</a>
 									<ul class="sub-menu">
-										<li><a href="{{ url_for('AA_seq_list')}}">Translated products</a>
+										<li><a href="{{ url_for('serverside_table')}}">Translated products</a>
 										</li>
 										<li><a href="{{ url_for('relationship_AA')}}">AA Relationship Viewer</a>
 										</li>
@@ -161,7 +165,9 @@ window.onclick = function(event) {
 		<thead>
 		 <tr>
 			 <th>Family</th>
-			 <th>Counts</th>
+			 <th>No. of Repeats</th>
+			 <th>No. of Proteins</th>
+			 <th>Proteins</th>
 		 </tr>
 	 </thead>
 	 <tbody>

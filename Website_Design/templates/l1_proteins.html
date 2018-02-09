@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+		<head>
+			<title>Home</title>
+			<meta charset="utf-8">
+			<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+			<meta name="format-detection" content="telephone=no">
+			<meta name="apple-mobile-web-app-capable" content="yes">
+			<!-- Fonts-->
+			<link rel="stylesheet" type="text/css" href="static/assets/fonts/fontawesome/font-awesome.min.css">
+			<link rel="stylesheet" type="text/css" href="static/assets/fonts/themify-icons/themify-icons.css">
+			<!-- Vendors-->
+			<link rel="stylesheet" type="text/css" href="static/assets/vendors/bootstrap4/bootstrap-grid.min.css">
+			<link rel="stylesheet" type="text/css" href="static/assets/vendors/magnific-popup/magnific-popup.min.css">
+			<link rel="stylesheet" type="text/css" href="static/assets/vendors/owl.carousel/owl.carousel.css">
+			<link rel="stylesheet" type="text/css" href="static/assets/vendors/_jquery/jquery.min.css">
+			<!-- <link rel="stylesheet" type="text/css" href="static/assets/vendors/bootstrap4/bootstrap-grid.min.css"> -->
+			<!-- <link rel="stylesheet" type="text/css" href="static/assets/vendors/bootstrap4/bootstrap-grid.min.css"> -->
+			<!-- App & fonts-->
+			<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i&amp;amp;subset=latin-ext">
+			<link rel="stylesheet" type="text/css" href="static/assets/css/main.css"><!--[if lt IE 9]>
+				<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+			<![endif]-->		<link rel="stylesheet" href="http://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">
+			<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+			<script src="http://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+			<script src="https://cdn.datatables.net/scroller/1.4.4/js/dataTables.scroller.min.js"></script>
+		</head>
+		<body>
+			<div class="page-wrap">
+
+				<!-- header -->
+				<header class="header">
+					<div class="container">
+						<div class="header__logo"><a href="{{ url_for('indexpage')}}"><img src="static/assets/img/fetbase_logo.png" alt=""/></a></div>
+						<div class="header__toogleGroup">
+							<div class="header__chooseLanguage">
+							<div class="search-form">
+								<div class="search-form__toggle"><i class="ti-search"></i></div>
+								<div class="search-form__form">
+
+													<!-- form-search -->
+													<div class="form-search">
+														<form>
+															<input class="form-control" type="text" placeholder="Hit enter to search or ESC to close"/>
+														</form>
+													</div><!-- End / form-search -->
+
+								</div>
+							</div>
+						</div>
+					</div>
+
+						<!-- fett-nav -->
+						<nav class="fett-nav">
+
+							<!-- fett-menu -->
+							<ul class="fett-menu">
+								<li class="fett-menu"><a href="{{ url_for('indexpage')}}">Home</a>
+								</li>
+								<li class="fett-menu"><a href="{{ url_for('family_table_HERV_Superfamilies')}}">Family Table</a>
+								</li>
+								<li class="fett-menu"><a href="{{ url_for('distribution')}}">Distribution</a>
+								</li>
+								<li class="current-menu-item"><a href="#">Translated</a>
+									<ul class="sub-menu">
+										<li><a href="{{ url_for('serverside_table')}}">Translated products</a>
+										</li>
+										<li><a href="{{ url_for('relationship_AA')}}">AA Relationship Viewer</a>
+										</li>
+									</ul>
+								</li>
+								<li class="fett-menu"><a href="#">Upload Files</a>
+									<ul class="sub-menu">
+										<li><a href="{{ url_for('peptide_seq_ident')}}">Peptide Sequence identifier</a>
+										</li>
+										<li><a href="{{ url_for('upload_peptide')}}">MzIdent / MzTab</a>
+										</li>
+									</ul>
+								</li>
+								<li><a href="{{ url_for('atlas')}}">Atlas</a>
+								</li>
+								<li class="menu-item-has-children"><a href="#">project</a>
+									<ul class="sub-menu">
+										<li><a href="{{ url_for('documentation')}}">Documentation</a>
+										</li>
+										<li><a href="{{ url_for('about_us')}}">About Us</a>
+										</li>
+									</ul>
+							</ul><!-- fett-menu -->
+
+							<div class="navbar-toggle"><span></span><span></span><span></span></div>
+						</nav><!-- End / fett-nav -->
+
+				</div>
+		</header>
+		<body>
+		<div class=container>
+		 <p>&nbsp;</p>
+		 <h4 style="text-align: center;">Tables of retrotransposonal Proteins</h4>
+			 <div style="text-align: center;">
+				 <h5 style="text-align: center;">Please select a retrotransposon class:</h5>
+				 <button onclick="window.location.href='{{ url_for('serverside_table')}}'" class="dropbtn">HERV</button>
+				 <button onclick="return false;" class="dropbtn_selected">LINE-1</button>
+				 <p>&nbsp;</p>
+			 </div>
+		</div>
+</body>
+<script>
+/* When the user clicks on the button,
+toggle between hiding and showing the dropdown content */
+function myFunction() {
+    document.getElementById("myDropdown").classList.toggle("show");
+}
+
+// Close the dropdown if the user clicks outside of it
+window.onclick = function(event) {
+  if (!event.target.matches('.dropbtn')) {
+
+    var dropdowns = document.getElementsByClassName("dropdown-content");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
+      }
+    }
+  }
+}
+/* When the <th>{{ firstcolumn }}user clicks on the button,
+toggle between hiding and showing the dropdown content */
+function myFunction2() {
+    document.getElementById("myDropdown2").classList.toggle("show");
+}
+
+// Close the dropdown if the user clicks outside of it
+window.onclick = function(event) {
+  if (!event.target.matches('.dropbtn')) {
+
+    var dropdowns = document.getElementsByClassName("dropdown-content");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
+      }
+    }
+  }
+}
+</script>
+
+</body>
+<P> &nbsp; </P>
+
+
+	<script type="text/javascript" src="/static/assets/js/l1_serverside_table.js"></script>
+	<div class="container">
+		<body>
+	  <table id="serverside_table" cellspacing="0", class = "display">
+	    <thead>
+	      <tr>
+	        <th>ID</th>
+					<th>Family</th>
+					<th>Protein</th>
+	        <th>Sequence</th>
+	      </tr>
+	    </thead>
+
+	  </table>
+		</body>
+	</div>
+
+
+</html>
