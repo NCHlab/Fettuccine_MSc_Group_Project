@@ -52,13 +52,13 @@
 						<ul class="fett-menu">
 							<li class="fett-menu"><a href="{{ url_for('indexpage')}}">Home</a>
 							</li>
-							<li><a href="{{ url_for('family_table_HERV_Superfamilies')}}">Family Table</a>
+							<li><a href="{{ url_for('family_table')}}">Family Table</a>
 							</li>
 							<li><a href="{{ url_for('distribution')}}">Distribution</a>
 							</li>
 							<li class="menu-item-has-children"><a href="#">Translated</a>
 								<ul class="sub-menu">
-									<li><a href="{{ url_for('serverside_table')}}">Translated products</a>
+									<li><a href="{{ url_for('AA_seq_list')}}">Translated products</a>
 									</li>
 									<li><a href="{{ url_for('relationship_AA')}}">AA Relationship Viewer</a>
 									</li>
@@ -88,15 +88,71 @@
 
 				</div>
 			</header><!-- End / header -->
+			<div class="md-content">
+				<!-- page-title -->
+				<div class="page-title">
+							<div class="col-lg-8 offset-0 offset-sm-0 offset-md-0 offset-lg-2 ">
+								<h2 class="page-title__title">Expression Atlas</h2>
+									<div class="container">
+										<hr>
+										<div class=container>
+										<h5 style="text-align: center;">Contains all repeats found from successfull peptide identification by other users.</h5>
+										<h5 style="text-align: center;">Select a tissue type to view the percentage of each individual repaeat found.</h5>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
 
+			<script>
+					$(document).ready( function () {
+							$('#Atlas').DataTable();FFF
+					} );
+			</script>
+	<p>&nbsp;</p>
 	<div class="container">
-		{{ data }}
+
+		<table id = "Atlas" class = "display">
+			<thead>
+			 <tr>
+				 <th>Tissue Type</th>
+				 <th>No of Families found</th>
+				 <th>Familiess</th>
+				 <th>%</th>
+			 </tr>
+		 </thead>
+		 <tbody>
+				{% for row in overall_percentage %}
+						<tr>
+						{% for a in row %}
+								<td>{{ a }}</td>
+						{% endfor %}
+						</tr>
+				{% endfor %}
+		 </tbody>
+		</table>
+
+		<table id = "Atlas" class = "display">
+			<thead>
+			 <tr>
+				 <th>Tissue Type</th>
+				 <th>No of Families found</th>
+				 <th>Familiess</th>
+				 <th>%</th>
+			 </tr>
+		 </thead>
+		 <tbody>
+				{% for row in individual_percentage %}
+						<tr>
+						{% for a in row %}
+								<td>{{ a }}</td>
+						{% endfor %}
+						</tr>
+				{% endfor %}
+		 </tbody>
+		</table>
 
 	</div>
-
-
-
-
 	</body>
 
 </html>
