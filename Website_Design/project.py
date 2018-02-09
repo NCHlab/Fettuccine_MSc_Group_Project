@@ -140,6 +140,7 @@ def herv_rv1():
 @app.route("/custom_tree", methods=["GET", "POST"])
 def custom_tree():
     if request.method == "POST":
+
         if 'file_rv' in request.files:
             # Creates a path to the specified folder
             target = os.path.join(APP_ROOT, "static/assets/img/customtree/")
@@ -149,46 +150,53 @@ def custom_tree():
 
               # Saves the file to the target folder explicitly mentioned earlier
             for file in request.files.getlist("file_rv"):
-                filename = file.filename
-                destination = "/".join([target, filename])
+                filename3 = file.filename
+                destination = "/".join([target, filename3])
                 file.save(destination)
 
-            dpi_type = int(request.form.get('dpi_type'))
-
-                # Checks the current directory and moves to the correct folder
-            if os.getcwd() == APP_ROOT:
-                os.chdir("static/assets/img/customtree/")
-            elif os.getcwd() == APP_ROOT+"/static/assets/img/customtree/":
-                pass
-            elif os.getcwd() == APP_ROOT+"\uploaded":
-                os.chdir("../static/assets/img/customtree/")
-            elif os.getcwd() == APP_ROOT+"\sequence_ident":
-                os.chdir("../static/assets/img/customtree/")
+            if "." not in filename3 or filename3.rsplit('.', 1)[1].lower() not in ALLOWED_EX_NWK:
+                error_msg = "Incorrect filetype uploaded! Please Upload a Newick formatted file"
+                return render_template("relationship_AA.html", error_msg=error_msg)
 
 
-            tree = Phylo.read(filename, 'newick')
-            tree.ladderize()   # Flip branches so deeper clades are displayed at top
-            Phylo.draw(tree)
-            try:
-                Phylo.draw_graphviz(tree)
-            except:
-                pass
-            #pylab.show()
-            pylab.savefig("customtree.png", dpi=dpi_type)
+            if filename3.rsplit('.', 1)[1].lower() in ALLOWED_EX_NWK:
 
-            #\static\assets\img\customtree\customtree.png
+                dpi_type = int(request.form.get('dpi_type'))
 
-            # #ptree = Phylo.draw(tree)
-            # matplotlib.rc('font', size=6)
-            # # set the size of the figure
-            # fig = plt.figure(figsize=(10, 20), dpi=100)
-            # # alternatively
-            # # fig.set_size_inches(10, 20)
-            # axes = fig.add_subplot(1, 1, 1)
-            # Phylo.draw(tree, axes=axes)
-            # plt.savefig("output_file.png", dpi=100)
+                    # Checks the current directory and moves to the correct folder
+                if os.getcwd() == APP_ROOT:
+                    os.chdir("static/assets/img/customtree/")
+                elif os.getcwd() == APP_ROOT+"/static/assets/img/customtree/":
+                    pass
+                elif os.getcwd() == APP_ROOT+"\uploaded":
+                    os.chdir("../static/assets/img/customtree/")
+                elif os.getcwd() == APP_ROOT+"\sequence_ident":
+                    os.chdir("../static/assets/img/customtree/")
 
-            return render_template("custom_tree.html")
+
+                tree = Phylo.read(filename3, 'newick')
+                tree.ladderize()   # Flip branches so deeper clades are displayed at top
+                Phylo.draw(tree)
+                try:
+                    Phylo.draw_graphviz(tree)
+                except:
+                    pass
+                #pylab.show()
+                pylab.savefig("customtree.png", dpi=dpi_type)
+
+                #\static\assets\img\customtree\customtree.png
+
+                # #ptree = Phylo.draw(tree)
+                # matplotlib.rc('font', size=6)
+                # # set the size of the figure
+                # fig = plt.figure(figsize=(10, 20), dpi=100)
+                # # alternatively
+                # # fig.set_size_inches(10, 20)
+                # axes = fig.add_subplot(1, 1, 1)
+                # Phylo.draw(tree, axes=axes)
+                # plt.savefig("output_file.png", dpi=100)
+
+                return render_template("custom_tree.html")
 
 
     else:
