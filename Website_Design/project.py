@@ -579,20 +579,24 @@ def upload_peptide():
         return render_template("upload_peptide.html")
 
 
-@app.route("/expression_atlas")
+@app.route("/expression_atlas", methods=["GET","POST"])
 def atlas():
 	#cur.execute("SELECT tissue, COUNT(tissue) AS RTs_no_found, GROUP_CONCAT(DISTINCT RT SEPARATOR ',') AS RT_found FROM exp_atlas GROUP BY Tissue")
 	#atlas=cur.fetchall()
     cur = connection.cursor()
     cur.execute("SELECT tissue_type, COUNT(tissue_type) AS family_no_found, GROUP_CONCAT(DISTINCT repeat_family SEPARATOR ',') AS family_found,concat(round(((SELECT COUNT(tissue_type))/(SELECT counts from exp_atlas_count)* 100 )),'%') FROM exp_atlas GROUP BY tissue_type;")
     overall_percentage=cur.fetchall()
-    tissue_type = "heart"#str(request.form.get('tissue_type'))
-    #cur.execute("SELECT tissue_type, COUNT(tissue_type) AS family_no_found, GROUP_CONCAT(DISTINCT repeat_family SEPARATOR ',') AS family_found,concat(round(((SELECT COUNT(repeat_family))/(SELECT %s from exp_atlas_count)* 100 )),'%') FROM exp_atlas WHERE tissue_type = %s GROUP BY repeat_family;", (tissue_type, tissue_type))
-    query4 = "SELECT tissue_type, COUNT(tissue_type) AS family_no_found, GROUP_CONCAT(DISTINCT repeat_family SEPARATOR ',') AS family_found,concat(round(((SELECT COUNT(repeat_family))/(SELECT heart from exp_atlas_count)* 100 )),'%') FROM exp_atlas WHERE tissue_type = 'heart' GROUP BY repeat_family;"
-    cur.execute(query4)
-    individual_percentage=cur.fetchall()
     cur.close()
-    return render_template("expression_atlas.html",overall_percentage=overall_percentage,individual_percentage=individual_percentage)
+    if request.method == "POST":
+        cur = connection.cursor()
+        tissue_type1 = str(request.form.get('tissue_type'))
+        #cur.execute("SELECT tissue_type, COUNT(tissue_type) AS family_no_found, GROUP_CONCAT(DISTINCT repeat_family SEPARATOR ',') AS family_found,concat(round(((SELECT COUNT(repeat_family))/(SELECT %s from exp_atlas_count)* 100 )),'%') FROM exp_atlas WHERE tissue_type = %s GROUP BY repeat_family;", (tissue_type, tissue_type))
+        query4 = "SELECT tissue_type, COUNT(tissue_type) AS family_no_found, GROUP_CONCAT(DISTINCT repeat_family SEPARATOR ',') AS family_found,concat(round(((SELECT COUNT(repeat_family))/(SELECT " + tissue_type1 + " from exp_atlas_count)* 100 )),'%') FROM exp_atlas WHERE tissue_type = '" + tissue_type1 + "' GROUP BY repeat_family;"
+        cur.execute(query4)
+        individual_percentage=cur.fetchall()
+        cur.close()
+        return render_template("expression_atlas.html",overall_percentage=overall_percentage,individual_percentage=individual_percentage)
+    return render_template("expression_atlas.html",overall_percentage=overall_percentage)
 
 @app.route("/documentation")
 def documentation():
