@@ -534,7 +534,9 @@ def upload_peptide():
                         for i in range(0, len(result_seq2)):
                             cur.execute("INSERT INTO exp_atlas(tissue_type, repeat_family, disease_type) VALUES (%s,%s,%s);", (tissue_type, result_seq2[i][0], disease_type))
                             cur.fetchall()
-                            connection.commit()
+                        query3 = ("UPDATE exp_atlas_count SET counts = (SELECT COUNT(tissue_type) FROM exp_atlas);")
+                        cur.execute(query3)
+                        connection.commit()
                         cur.close()
 
 
