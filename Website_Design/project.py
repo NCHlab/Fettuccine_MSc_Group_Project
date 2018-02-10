@@ -526,7 +526,11 @@ def upload_peptide():
                     reader = csv.reader(f)
                     writer = csv.writer(f)
                     for row in reader:
-                        rowlist2.append(row[0])
+                        # Checks if row is empty, if not, appends rows to memory
+                        if not (row):
+                            pass
+                        else:
+                            rowlist2.append(row[0])
                     if hashed not in rowlist2:
                         rowlist.append(hashed)
                         writer.writerow(rowlist)
@@ -537,12 +541,12 @@ def upload_peptide():
                             cur.fetchall()
                         query3 = ("UPDATE exp_atlas_count SET counts = (SELECT COUNT(tissue_type) FROM exp_atlas);")
                         cur.execute(query3)
-                        query5 = ("UPDATE exp_atlas_count SET " + tissue_type + " = (SELECT COUNT(tissue_type) FROM exp_atlas WHERE tissue_type = '" + tissue_type + "');")
-                        cur.execute(query5)
+                        query4 = ("UPDATE exp_atlas_count SET " + tissue_type + " = (SELECT COUNT(tissue_type) FROM exp_atlas WHERE tissue_type = '" + tissue_type + "');")
+                        cur.execute(query4)
                         connection.commit()
                         cur.close()
 
-            return render_template("upload_peptide.html", data=result_seq2, empty = hashed + ", " + disease_type + ", " + tissue_type)
+            return render_template("upload_peptide.html", data=result_seq2)#, empty = hashed + ", " + disease_type + ", " + tissue_type)
     else:
         return render_template("upload_peptide.html")
 
@@ -559,8 +563,8 @@ def atlas():
         cur = connection.cursor()
         tissue_type1 = str(request.form.get('tissue_type'))
         #cur.execute("SELECT tissue_type, COUNT(tissue_type) AS family_no_found, GROUP_CONCAT(DISTINCT repeat_family SEPARATOR ',') AS family_found,concat(round(((SELECT COUNT(repeat_family))/(SELECT %s from exp_atlas_count)* 100 )),'%') FROM exp_atlas WHERE tissue_type = %s GROUP BY repeat_family;", (tissue_type, tissue_type))
-        query4 = "SELECT tissue_type, COUNT(tissue_type) AS family_no_found, GROUP_CONCAT(DISTINCT repeat_family SEPARATOR ',') AS family_found,concat(round(((SELECT COUNT(repeat_family))/(SELECT " + tissue_type1 + " from exp_atlas_count)* 100 )),'%') FROM exp_atlas WHERE tissue_type = '" + tissue_type1 + "' GROUP BY repeat_family;"
-        cur.execute(query4)
+        query5 = "SELECT tissue_type, COUNT(tissue_type) AS family_no_found, GROUP_CONCAT(DISTINCT repeat_family SEPARATOR ',') AS family_found,concat(round(((SELECT COUNT(repeat_family))/(SELECT " + tissue_type1 + " from exp_atlas_count)* 100 )),'%') FROM exp_atlas WHERE tissue_type = '" + tissue_type1 + "' GROUP BY repeat_family;"
+        cur.execute(query5)
         individual_percentage=cur.fetchall()
         cur.close()
         return render_template("expression_atlas.html",overall_percentage=overall_percentage,individual_percentage=individual_percentage)
