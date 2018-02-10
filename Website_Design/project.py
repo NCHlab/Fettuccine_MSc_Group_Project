@@ -578,32 +578,11 @@ def documentation():
 def about_us():
     return render_template("about_us.html")
 
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html'), 404
+
 ###############################################
-
-@app.route("/profile/<name>")
-def profile(name):
-    return render_template("profile2.html", name=name)
-
-
-@app.route('/user/<username>')
-def show_user_profile(username):
-    return render_template("style.html", username=username)
-    # show the user profile for that user
-    #return 'User %s' % username
-
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    if request.method == 'POST':
-        pass
-    else:
-        show_the_login_form()
-
-@app.route("/visualise")
-def visualise():
-    return "lolnope"
-
-
-
 #@app.route("/static")
 #def static1():
 #    url_for('static', filename='style.css')
