@@ -208,33 +208,27 @@ def line1_rv():
 
 @app.route("/peptide_seq_ident", methods=["GET","POST"])
 def peptide_seq_ident():
-    # global empty_error
-    # global rows_count
-    # global result_seq
-    # global no_match
-    # global recordID
-    # global result_seq_one
-    # global data11
-    result_seq_one=[]
-    result_seq_multi=[]
-    result_seq=""
+    result_seq_one = []
+    result_seq_multi = []
+    result_seq = ""
     rows_count = ""
     error_empty2 = "This is an empty file! Please upload a populated FASTA file"
-    no_match= "No Match was found!"
+    no_match = "No Match was found!"
     error_fasta_1 = "Please Enter only 1 fasta sequence in the search bar, for multiple use upload function"
     error_fasta_2 = "Please Remove the Headers and only Search using the peptide Sequences or use the upload function"
 
 
     # If data has been submitted to the page i.e uploaded, then the POST method engages
     if request.method == "POST":
+        # Change the directory to the root location of the python file
         os.chdir(APP_ROOT)
 
         # If the Textbox has been filled with peptide sequences, DB is searched for matching sequence and FAMILY + sequence returned
         # Otherwise if no match found, displays no match
-
         if request.form["fasta_content"] != "":
             fasta_check = request.form["fasta_content"]
             fasta_check = fasta_check.count(">")
+
             # Checks to see if a header exists and rejects the data if it does
             if fasta_check > 1:
                 return render_template("peptide_seq_ident.html", empty = error_fasta_1)
@@ -245,6 +239,7 @@ def peptide_seq_ident():
             else:
                 # Saves the peptide sequences and removes all spaces, tabs and new lines
                 # Does a MYSQL query for the correctly formatted peptide sequence
+                # and returns a result if cur.rowcount is not empty
                 fastaseq = request.form["fasta_content"]
                 fastaseq = fastaseq.replace("\n","").replace("\r","").replace(" ","")
                 cur = connection.cursor()
@@ -257,7 +252,7 @@ def peptide_seq_ident():
                 else:
                   return render_template("peptide_seq_ident.html", data1=result_seq)
 
-        # If a file has been uploaded (file2 - name of upload form), this if statement occurs
+        # If a file has been uploaded (file2 - ID name of upload form), this if statement occurs
         elif 'file2' in request.files:
             # Creates a path to the specified folder
             target = os.path.join(APP_ROOT, "sequence_ident/")
@@ -265,13 +260,13 @@ def peptide_seq_ident():
             if not os.path.isdir(target):
                 os.mkdir(target)
 
-              # Saves the file to the target folder explicitly mentioned earlier
+            # Saves the file to the target folder explicitly mentioned earlier
             for file in request.files.getlist("file2"):
                 filename = file.filename
                 destination = "/".join([target, filename])
                 file.save(destination)
 
-                # Checks the current directory and moves to the correct folder
+            # Checks the current directory and moves to the correct folder
             if os.getcwd() == APP_ROOT:
                 os.chdir("sequence_ident")
             elif os.getcwd() == APP_ROOT+"\sequence_ident":
@@ -280,7 +275,7 @@ def peptide_seq_ident():
                 os.chdir("..\sequence_ident")
 
 
-            # Goes through fasta file and checks whether if its empty
+            # Goes through fasta file and checks whether the file is empty
             seqfile = SeqIO.parse(filename, "fasta")
             if os.stat(filename).st_size == 0:
                 return render_template("peptide_seq_ident.html", empty = error_empty2)
@@ -315,6 +310,9 @@ def peptide_seq_ident():
                     else:
                         return render_template("peptide_seq_ident.html", data2=result_seq)
                 else:
+                    # Checks to see the size (number) of the Sequences
+                    # If it is below 5000, a large query is sent
+                    # otherwise the query is chunked into bits of 5000 and then MySQL query executed
                     record_list=temp_list
                     if len(record_list)<=5000:
                         query = "SELECT family, sequence FROM all_prot_seqs WHERE sequence = "
@@ -343,10 +341,13 @@ def peptide_seq_ident():
                                 result_seq.append(ele)
                         cur.close()
 
+                # If no matches are found, the webpage is returned stating no match
+                # otherwise if matches are found, data is returned and displayed
                 if len(result_seq)==0:
                   return render_template("peptide_seq_ident.html", empty=no_match)
                 else:
-                  return render_template("peptide_seq_ident.html", data=result_seq)
+                    return render_template("peptide_seq_ident.html", data=result_seq)
+        # if nothing is submitted via text box form, empty error raised
         elif request.form["fasta_content"] == "":
             return render_template("peptide_seq_ident.html", empty = error_empty2)
     else:
@@ -365,16 +366,6 @@ def py_unique(data):
 
 @app.route("/upload_peptide", methods=["GET","POST"])
 def upload_peptide():
-    # global filename2
-    # global pepseq
-    # global list_of_matches
-    # global list_of_pep_seqs
-    # global empty_error
-    # global rows_count
-    # global result_seq
-    # global no_match
-    # global recordID
-    global result_seq_multi
     result_seq_multi=[]
     result_seq_multi2=[]
     result_seq=""
@@ -387,13 +378,12 @@ def upload_peptide():
     result_seq_write=[]
     tissue_type_write=[]
     disease_type_write=[]
-    global hashed2
-    hashed2=str()
+    result_seq2=[]
+    hashed=str()
 
     # Checks for post method (data submitted)
     if request.method == "POST":
-
-
+        #Move to root directory of project python file
         os.chdir(APP_ROOT)
         target = os.path.join(APP_ROOT, "uploaded/")
 
@@ -420,6 +410,7 @@ def upload_peptide():
             result_seq_multi = "No File uploaded! Please Upload a MzIdent or mzTab formatted file"
             return render_template("upload_peptide.html", result_family=result_seq_multi)
 
+        # Checks to see for the presence of an extension.
         if "." not in filename2:
             result_seq_multi = "Incorrect filetype uploaded! Please Upload a MzIdent or mzTab formatted file"
             return render_template("upload_peptide.html", result_family=result_seq_multi)
@@ -429,6 +420,7 @@ def upload_peptide():
             file_mz_seq = open(filename2, "r")
             whole_file = file_mz_seq.read()
 
+            # Regex used to locate the peptide sequences
             regex = r">[a-zA-z]+"
             matches = re.finditer(regex, whole_file)
             for matchNum, match in enumerate(matches):
@@ -443,6 +435,8 @@ def upload_peptide():
             file_mztab_seq = open(filename2, "r")
             whole_file = file_mztab_seq.read()
 
+            # Regex used to locate the peptide sequences
+            # Sequences also filtered out using some keywords typically found and a set size allowed
             regex = r"[A-Z]+\S\B[A-Z]"
             matches = re.finditer(regex, whole_file)
             for matchNum, match in enumerate(matches):
@@ -461,22 +455,26 @@ def upload_peptide():
         list_of_pep_seqs = py_unique(list_of_pep_seqs) #keep only unique sequences
 
         if len(list_of_pep_seqs) == 1:
-
             #If only 1 fasta sequence in file
+            cur = connection.cursor()
             for seqs in list_of_pep_seqs:
                 rows_count = cur.execute("SELECT Family, Sequence FROM prelim2 WHERE Sequence = %s", [seqs])
                 cur.execute("SELECT Family, Sequence FROM prelim2 WHERE Sequence = %s", [seqs])
                 result_seq =  cur.fetchall()
 
-            if not cur.rowcount: #return no match
-              return render_template("upload_peptide.html", result_family=no_match)
+            #return no match
+            if not cur.rowcount:
+                cur.close()
+                return render_template("upload_peptide.html", result_family=no_match)
             else: #return match
-                return render_template("upload_peptide.html", data=result_seq)#, result_seq1=result_seq[0][1])
+                cur.close()
+                return render_template("upload_peptide.html", data=result_seq)
+
         else:
-            #If the inserted file is up to 5000 sequences
+            #If the inserted file is up to or equal to 5000 sequences
             if len(list_of_pep_seqs)<=5000:
 
-                #A signle mysql query for all sequences
+                #A single mysql query for all sequences
                 query2 = "SELECT family, sequence FROM all_prot_seqs WHERE sequence = "
                 query2 = query2+'"'+str(list_of_pep_seqs[0])+'"'+' OR sequence="'
                 sep = '" OR sequence="'
@@ -492,7 +490,7 @@ def upload_peptide():
                 divide = (len(list_of_pep_seqs)/5000)+1
                 #split the sequences into lists of around 5000 sequences
                 list_of_pep_seqs=chunkify(list_of_pep_seqs, divide)
-                result_seq2=[]
+
                 #query for each ~5000 sequences
                 for ele in list_of_pep_seqs:
                     cur = connection.cursor()
@@ -506,28 +504,31 @@ def upload_peptide():
                         result_seq2.append(ele)
                 cur.close()
 
+            # If not result is found, display no match
             if len(result_seq2)==0:
                 result_seq_multi="No match was found!"
                 return render_template("upload_peptide.html", result_seq = result_seq_multi)#result_seq_multi)
 
-
-
+            # If a result is found, the data from dropdown boxes are saved into memory
             if len(result_seq2) != 0:
                 tissue_type = str(request.form.get('tissue_type'))
                 disease_type = str(request.form.get('disease_type'))
 
-                #If data has been saved into memory, a hash check is conducted on the original file that was read in
+                # A hash check of the contents of the file is conducted providing a unique SHA224 ID
                 #If the unique hash check is not duplicate, the data is saved for the atlas expression
                 #otherwise the data is not saved (due to it already existing from the same source file)
-                hashed2 = str(hashlib.sha224(whole_file).hexdigest())
+                #if no match is found
+                # The family matches, and the data from the dropdown boxes are saved into MySQL
+                # Using MySQL query. This data can then be viewed in expression atlas.
+                hashed = str(hashlib.sha224(whole_file).hexdigest())
                 with open("hash_checker.csv", "r+b") as f:
 
                     reader = csv.reader(f)
                     writer = csv.writer(f)
                     for row in reader:
                         rowlist2.append(row[0])
-                    if hashed2 not in rowlist2:
-                        rowlist.append(hashed2)
+                    if hashed not in rowlist2:
+                        rowlist.append(hashed)
                         writer.writerow(rowlist)
                         result_seq_multi2 = result_seq2
                         cur = connection.cursor()
@@ -541,42 +542,7 @@ def upload_peptide():
                         connection.commit()
                         cur.close()
 
-
-
-
-
-
-                        # with open("atlas_seqs.csv", "a") as csvfile:
-                        #     writer = csv.writer(csvfile)
-                        #     for i in range(0, len(result_seq2)):
-                        #
-                        #
-                        #
-                        #         result_seq_write.append(result_seq2[i][0])
-                        #         tissue_type_write.append(tissue_type)
-                        #         disease_type_write.append(disease_type)
-                        #         writer.writerow(result_seq_write)
-                        #         writer.writerow(tissue_type_write)
-                        #         writer.writerow(disease_type_write)
-                        #         result_seq_write = []
-                        #         tissue_type_write = []
-                        #         disease_type_write = []
-                        # with open("atlas_seqs.csv", "a") as csvfile:
-                        #     writer = csv.writer(csvfile)
-                        #     for i in range(0, len(result_seq2)):
-                        #         result_seq_write.append(result_seq2[i][0])
-                        #         tissue_type_write.append(tissue_type)
-                        #         disease_type_write.append(disease_type)
-                        #         writer.writerow(result_seq_write)
-                        #         writer.writerow(tissue_type_write)
-                        #         writer.writerow(disease_type_write)
-                        #         result_seq_write = []
-                        #         tissue_type_write = []
-                        #         disease_type_write = []
-
-
-
-            return render_template("upload_peptide.html", data=result_seq2, empty = hashed2 + ", " + disease_type + ", " + tissue_type)#result_seq_multi)
+            return render_template("upload_peptide.html", data=result_seq2, empty = hashed + ", " + disease_type + ", " + tissue_type)
     else:
         return render_template("upload_peptide.html")
 
