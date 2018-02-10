@@ -140,6 +140,7 @@ def herv_rv1():
 @app.route("/custom_tree", methods=["GET", "POST"])
 def custom_tree():
     if request.method == "POST":
+
         if 'file_rv' in request.files:
             # Creates a path to the specified folder
             target = os.path.join(APP_ROOT, "static/assets/img/customtree/")
@@ -149,46 +150,53 @@ def custom_tree():
 
               # Saves the file to the target folder explicitly mentioned earlier
             for file in request.files.getlist("file_rv"):
-                filename = file.filename
-                destination = "/".join([target, filename])
+                filename3 = file.filename
+                destination = "/".join([target, filename3])
                 file.save(destination)
 
-            dpi_type = int(request.form.get('dpi_type'))
-
-                # Checks the current directory and moves to the correct folder
-            if os.getcwd() == APP_ROOT:
-                os.chdir("static/assets/img/customtree/")
-            elif os.getcwd() == APP_ROOT+"/static/assets/img/customtree/":
-                pass
-            elif os.getcwd() == APP_ROOT+"\uploaded":
-                os.chdir("../static/assets/img/customtree/")
-            elif os.getcwd() == APP_ROOT+"\sequence_ident":
-                os.chdir("../static/assets/img/customtree/")
+            if "." not in filename3 or filename3.rsplit('.', 1)[1].lower() not in ALLOWED_EX_NWK:
+                error_msg = "Incorrect filetype uploaded! Please Upload a Newick formatted file"
+                return render_template("relationship_AA.html", error_msg=error_msg)
 
 
-            tree = Phylo.read(filename, 'newick')
-            tree.ladderize()   # Flip branches so deeper clades are displayed at top
-            Phylo.draw(tree)
-            try:
-                Phylo.draw_graphviz(tree)
-            except:
-                pass
-            #pylab.show()
-            pylab.savefig("customtree.png", dpi=dpi_type)
+            if filename3.rsplit('.', 1)[1].lower() in ALLOWED_EX_NWK:
 
-            #\static\assets\img\customtree\customtree.png
+                dpi_type = int(request.form.get('dpi_type'))
 
-            # #ptree = Phylo.draw(tree)
-            # matplotlib.rc('font', size=6)
-            # # set the size of the figure
-            # fig = plt.figure(figsize=(10, 20), dpi=100)
-            # # alternatively
-            # # fig.set_size_inches(10, 20)
-            # axes = fig.add_subplot(1, 1, 1)
-            # Phylo.draw(tree, axes=axes)
-            # plt.savefig("output_file.png", dpi=100)
+                    # Checks the current directory and moves to the correct folder
+                if os.getcwd() == APP_ROOT:
+                    os.chdir("static/assets/img/customtree/")
+                elif os.getcwd() == APP_ROOT+"/static/assets/img/customtree/":
+                    pass
+                elif os.getcwd() == APP_ROOT+"\uploaded":
+                    os.chdir("../static/assets/img/customtree/")
+                elif os.getcwd() == APP_ROOT+"\sequence_ident":
+                    os.chdir("../static/assets/img/customtree/")
 
-            return render_template("custom_tree.html")
+
+                tree = Phylo.read(filename3, 'newick')
+                tree.ladderize()   # Flip branches so deeper clades are displayed at top
+                Phylo.draw(tree)
+                try:
+                    Phylo.draw_graphviz(tree)
+                except:
+                    pass
+                #pylab.show()
+                pylab.savefig("customtree.png", dpi=dpi_type)
+
+                #\static\assets\img\customtree\customtree.png
+
+                # #ptree = Phylo.draw(tree)
+                # matplotlib.rc('font', size=6)
+                # # set the size of the figure
+                # fig = plt.figure(figsize=(10, 20), dpi=100)
+                # # alternatively
+                # # fig.set_size_inches(10, 20)
+                # axes = fig.add_subplot(1, 1, 1)
+                # Phylo.draw(tree, axes=axes)
+                # plt.savefig("output_file.png", dpi=100)
+
+                return render_template("custom_tree.html")
 
 
     else:
@@ -376,10 +384,16 @@ def upload_peptide():
     list_of_pep_seqs = []
     rowlist=[]
     rowlist2=[]
+    result_seq_write=[]
+    tissue_type_write=[]
+    disease_type_write=[]
     global hashed2
     hashed2=str()
+
     # Checks for post method (data submitted)
     if request.method == "POST":
+
+
         os.chdir(APP_ROOT)
         target = os.path.join(APP_ROOT, "uploaded/")
 
@@ -499,13 +513,15 @@ def upload_peptide():
 
 
             if len(result_seq2) != 0:
+                tissue_type = str(request.form.get('tissue_type'))
+                disease_type = str(request.form.get('disease_type'))
 
                 #If data has been saved into memory, a hash check is conducted on the original file that was read in
                 #If the unique hash check is not duplicate, the data is saved for the atlas expression
                 #otherwise the data is not saved (due to it already existing from the same source file)
                 hashed2 = str(hashlib.sha224(whole_file).hexdigest())
-
                 with open("hash_checker.csv", "r+b") as f:
+
                     reader = csv.reader(f)
                     writer = csv.writer(f)
                     for row in reader:
@@ -514,22 +530,75 @@ def upload_peptide():
                         rowlist.append(hashed2)
                         writer.writerow(rowlist)
                         result_seq_multi2 = result_seq2
-                        with open("atlas_seqs.csv", "a") as csvfile:
-                            writer = csv.writer(csvfile)
-                            writer.writerow(result_seq2)
+                        cur = connection.cursor()
+                        for i in range(0, len(result_seq2)):
+                            cur.execute("INSERT INTO exp_atlas(tissue_type, repeat_family, disease_type) VALUES (%s,%s,%s);", (tissue_type, result_seq2[i][0], disease_type))
+                            cur.fetchall()
+                        query3 = ("UPDATE exp_atlas_count SET counts = (SELECT COUNT(tissue_type) FROM exp_atlas);")
+                        cur.execute(query3)
+                        query5 = ("UPDATE exp_atlas_count SET " + tissue_type + " = (SELECT COUNT(tissue_type) FROM exp_atlas WHERE tissue_type = '" + tissue_type + "');")
+                        cur.execute(query5)
+                        connection.commit()
+                        cur.close()
 
-            return render_template("upload_peptide.html", data=result_seq2, empty = hashed2)#result_seq_multi)
+
+
+
+
+
+                        # with open("atlas_seqs.csv", "a") as csvfile:
+                        #     writer = csv.writer(csvfile)
+                        #     for i in range(0, len(result_seq2)):
+                        #
+                        #
+                        #
+                        #         result_seq_write.append(result_seq2[i][0])
+                        #         tissue_type_write.append(tissue_type)
+                        #         disease_type_write.append(disease_type)
+                        #         writer.writerow(result_seq_write)
+                        #         writer.writerow(tissue_type_write)
+                        #         writer.writerow(disease_type_write)
+                        #         result_seq_write = []
+                        #         tissue_type_write = []
+                        #         disease_type_write = []
+                        # with open("atlas_seqs.csv", "a") as csvfile:
+                        #     writer = csv.writer(csvfile)
+                        #     for i in range(0, len(result_seq2)):
+                        #         result_seq_write.append(result_seq2[i][0])
+                        #         tissue_type_write.append(tissue_type)
+                        #         disease_type_write.append(disease_type)
+                        #         writer.writerow(result_seq_write)
+                        #         writer.writerow(tissue_type_write)
+                        #         writer.writerow(disease_type_write)
+                        #         result_seq_write = []
+                        #         tissue_type_write = []
+                        #         disease_type_write = []
+
+
+
+            return render_template("upload_peptide.html", data=result_seq2, empty = hashed2 + ", " + disease_type + ", " + tissue_type)#result_seq_multi)
     else:
         return render_template("upload_peptide.html")
 
 
-@app.route("/expression_atlas")
+@app.route("/expression_atlas", methods=["GET","POST"])
 def atlas():
-    try:
-        atlas_seqs = result_seq_multi2
-    except:
-        pass
-    return render_template("expression_atlas.html")
+	#cur.execute("SELECT tissue, COUNT(tissue) AS RTs_no_found, GROUP_CONCAT(DISTINCT RT SEPARATOR ',') AS RT_found FROM exp_atlas GROUP BY Tissue")
+	#atlas=cur.fetchall()
+    cur = connection.cursor()
+    cur.execute("SELECT tissue_type, COUNT(tissue_type) AS family_no_found, GROUP_CONCAT(DISTINCT repeat_family SEPARATOR ',') AS family_found,concat(round(((SELECT COUNT(tissue_type))/(SELECT counts from exp_atlas_count)* 100 )),'%') FROM exp_atlas GROUP BY tissue_type;")
+    overall_percentage=cur.fetchall()
+    cur.close()
+    if request.method == "POST":
+        cur = connection.cursor()
+        tissue_type1 = str(request.form.get('tissue_type'))
+        #cur.execute("SELECT tissue_type, COUNT(tissue_type) AS family_no_found, GROUP_CONCAT(DISTINCT repeat_family SEPARATOR ',') AS family_found,concat(round(((SELECT COUNT(repeat_family))/(SELECT %s from exp_atlas_count)* 100 )),'%') FROM exp_atlas WHERE tissue_type = %s GROUP BY repeat_family;", (tissue_type, tissue_type))
+        query4 = "SELECT tissue_type, COUNT(tissue_type) AS family_no_found, GROUP_CONCAT(DISTINCT repeat_family SEPARATOR ',') AS family_found,concat(round(((SELECT COUNT(repeat_family))/(SELECT " + tissue_type1 + " from exp_atlas_count)* 100 )),'%') FROM exp_atlas WHERE tissue_type = '" + tissue_type1 + "' GROUP BY repeat_family;"
+        cur.execute(query4)
+        individual_percentage=cur.fetchall()
+        cur.close()
+        return render_template("expression_atlas.html",overall_percentage=overall_percentage,individual_percentage=individual_percentage)
+    return render_template("expression_atlas.html",overall_percentage=overall_percentage)
 
 @app.route("/documentation")
 def documentation():

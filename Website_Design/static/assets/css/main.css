@@ -886,14 +886,14 @@ input[type="search"], input[type="tel"], input[type="color"] {
     border-radius: 0;
     padding: 0 15px;
     line-height: 44px;
-    border: 1px solid #ebebeb;
+    border: 2px solid #ebebeb;
     color: #000;
     font-size: 14px;
     vertical-align: middle;
     height: 46px;
-    width: 40%;
+    width: 20%;
     margin-bottom: 20px;
-    background-color: #f7f7f7;
+    background-color: #fff;
 }
 
 .form-control::-webkit-input-placeholder, select::-webkit-input-placeholder,
@@ -1067,6 +1067,8 @@ input[type="checkbox"], input[type="radio"] {
 
 textarea {
     height: auto !important;
+    background: #fff;
+    border: 3px solid #ebebeb;
 }
 
  {
@@ -4775,7 +4777,7 @@ color: black;
 padding: 10px;
 position: fixed;
 top: 45%;
-left: 45%;
+left: 30%;
 z-index: 100;
 margin-right: -55%;
 margin-bottom: -55%;
