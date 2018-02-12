@@ -22,14 +22,8 @@
 				$(document).ready( function () {
 						$('#Atlas').DataTable();FFF;
 			} );
-			$(document).ready( function () {
-					$('#Atlas2').DataTable();FFF;
-		} );
 		$(document).ready( function () {
 				$('#Atlas3').DataTable();FFF;
-		} );
-		$(document).ready( function () {
-				$('#Atlas4').DataTable();FFF;
 		} );
 		</script>
 	</head>
@@ -112,6 +106,8 @@
 										<div class=container>
 										<h5 style="text-align: center;">Contains all repeats found from successfull peptide identification by other users.</h5>
 										<h5 style="text-align: center;">Select a disease or tissue type to view the percentage of each individual repeat found.</h5>
+										<hr>
+										<button onclick="window.location.href='{{ url_for('atlas2')}}'" class="dropbtn">View Individual Repeats</button>
 										</div>
 									</div>
 								</div>
@@ -164,99 +160,6 @@
 		 </tbody>
 		</table>
 
-		<form id="upload-form" action="{{ url_for("atlas")}}" method="POST" enctype="multipart/form-data">
-		Please Select Tissue Type to display:
-		<select class= id="tissue_type" name="tissue_type">
-			<option value="unknown">Unknown</option>
-			<option value="adrenal gland">Adrenal Gland</option>
-			<option value="anus and anal canal">Anus and Anal Canal</option>
-			<option value="bile duct">Bile duct</option>
-			<option value="bladder">Bladder</option>
-			<option value="blood">Blood</option>
-			<option value="bone">Bone</option>
-			<option value="bone marrow">Bone Marrow</option>
-			<option value="brain">Brain</option>
-			<option value="breast">Breast</option>
-			<option value="bronchus and lung">Bronchus and Lung</option>
-			<option value="cervix">Cervix</option>
-			<option value="colon">Colon</option>
-			<option value="colorectal">Colorectal</option>
-			<option value="esophagus">Esophagus</option>
-			<option value="eye">Eye</option>
-			<option value="head and neck">Head and Neck</option>
-			<option value="heart">Heart</option>
-			<option value="kidney">Kidney</option>
-			<option value="liver and bile ducts">Liver and bile ducts</option>
-			<option value="lung">Lung</option>
-			<option value="lymph nodes">Lymph Nodes</option>
-			<option value="nervous system">Nervous System</option>
-			<option value="ovary">Ovary</option>
-			<option value= "other">Other</option>
-			<option value="pancreas">Pancreas</option>
-			<option value="penis">Penis</option>
-			<option value="peripheral nerves and ans">Peripheral nerves and ANS</option>
-			<option value="prostate">Prostate</option>
-			<option value="rectum">Rectum</option>
-			<option value="skin">Skin</option>
-			<option value="small intestine">Small Intestine</option>
-			<option value="soft tissue">Soft Tissue</option>
-			<option value="spinal cord / other cns">Spinal Cord / other CNS</option>
-			<option value="stomach">Stomach</option>
-			<option value="testes">Testes</option>
-			<option value="thymus">Thymus</option>
-			<option value="thyroid">Thyroid</option>
-			<option value="trachea">Trachea</option>
-			<option value="ureter">Ureter</option>
-			<option value="uterus">Uterus</option>
-			<option value="vagina">Vagina</option>
-			<option value="vulva">Vulva</option>
-		</select>
-		<input type="submit" value="submit">
-		</form>
-
-
-		<table id = "Atlas2" class = "display">
-		<h5 style="text-align: center;">% OF each repeat/tissue selected found:</h5>
-			<thead>
-			 <tr>
-				 <th>Tissue Type</th>
-				 <th>No of Families found</th>
-				 <th>Familiess</th>
-				 <th>%</th>
-			 </tr>
-		 </thead>
-		 <tbody>
-				{% for row in individual_percentage %}
-						<tr>
-						{% for a in row %}
-								<td>{{ a }}</td>
-						{% endfor %}
-						</tr>
-				{% endfor %}
-		 </tbody>
-		</table>
-
-		<table id = "Atlas4" class = "display">
-		<h5 style="text-align: center;">% OF each repeat/disease selected found:</h5>
-			<thead>
-			 <tr>
-				 <th>Disease Type</th>
-				 <th>Tissue Type</th>
-				 <th>No of Families found</th>
-				 <th>Familiess</th>
-				 <th>%</th>
-			 </tr>
-		 </thead>
-		 <tbody>
-				{% for row in ind_repeat_disease %}
-						<tr>
-						{% for a in row %}
-								<td>{{ a }}</td>
-						{% endfor %}
-						</tr>
-				{% endfor %}
-		 </tbody>
-		</table>
 
 	</div>
 

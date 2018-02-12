@@ -555,6 +555,8 @@ def upload_peptide():
                         cur.execute(query3)
                         query4 = ("UPDATE exp_atlas_count SET " + tissue_type + " = (SELECT COUNT(tissue_type) FROM exp_atlas WHERE tissue_type = '" + tissue_type + "');")
                         cur.execute(query4)
+                        query5 = ("UPDATE exp_atlas_disease_counts SET " + disease_type + " = (SELECT COUNT(disease_type) FROM exp_atlas WHERE disease_type = '" + disease_type + "');")
+                        cur.execute(query5)
                         connection.commit()
                         cur.close()
 
@@ -570,21 +572,12 @@ def atlas():
     cur = connection.cursor()
     cur.execute("SELECT GROUP_CONCAT(DISTINCT disease_type SEPARATOR ','),GROUP_CONCAT(DISTINCT tissue_type SEPARATOR ','), COUNT(tissue_type) AS RTs_no_found, GROUP_CONCAT(DISTINCT repeat_family SEPARATOR ',') AS RT_found, concat(round(((SELECT COUNT(disease_type))/(SELECT counts from exp_atlas_count)* 100 )),'%') FROM exp_atlas GROUP BY disease_type;")
     overall_disease_percentage=cur.fetchall()
-    cur.execute("SELECT GROUP_CONCAT(DISTINCT disease_type SEPARATOR ','), tissue_type, COUNT(tissue_type) AS RTs_no_found, GROUP_CONCAT(DISTINCT repeat_family SEPARATOR ',') AS RT_found,concat(round(((SELECT COUNT(disease_type))/(SELECT cancer from exp_atlas_disease_counts)* 100 )),'%') FROM exp_atlas WHERE disease_type = 'Cancer' OR 'cancer' GROUP BY disease_type,tissue_type, repeat_family;")
-    ind_repeat_disease=cur.fetchall()
+
     cur.execute("SELECT tissue_type, COUNT(tissue_type) AS family_no_found, GROUP_CONCAT(DISTINCT repeat_family SEPARATOR ',') AS family_found,concat(round(((SELECT COUNT(tissue_type))/(SELECT counts from exp_atlas_count)* 100 )),'%') FROM exp_atlas GROUP BY tissue_type;")
     overall_percentage=cur.fetchall()
     cur.close()
-    if request.method == "POST":
-        cur = connection.cursor()
-        tissue_type1 = str(request.form.get('tissue_type'))
-        #cur.execute("SELECT tissue_type, COUNT(tissue_type) AS family_no_found, GROUP_CONCAT(DISTINCT repeat_family SEPARATOR ',') AS family_found,concat(round(((SELECT COUNT(repeat_family))/(SELECT %s from exp_atlas_count)* 100 )),'%') FROM exp_atlas WHERE tissue_type = %s GROUP BY repeat_family;", (tissue_type, tissue_type))
-        query5 = "SELECT tissue_type, COUNT(tissue_type) AS family_no_found, GROUP_CONCAT(DISTINCT repeat_family SEPARATOR ',') AS family_found,concat(round(((SELECT COUNT(repeat_family))/(SELECT " + tissue_type1 + " from exp_atlas_count)* 100 )),'%') FROM exp_atlas WHERE tissue_type = '" + tissue_type1 + "' GROUP BY repeat_family;"
-        cur.execute(query5)
-        individual_percentage=cur.fetchall()
-        cur.close()
-        return render_template("expression_atlas.html",overall_percentage=overall_percentage,individual_percentage=individual_percentage,overall_disease_percentage=overall_disease_percentage,ind_repeat_disease=ind_repeat_disease)
-    return render_template("expression_atlas.html",overall_percentage=overall_percentage,overall_disease_percentage=overall_disease_percentage,ind_repeat_disease=ind_repeat_disease)
+
+    return render_template("expression_atlas.html",overall_percentage=overall_percentage,overall_disease_percentage=overall_disease_percentage)
 @app.route("/documentation")
 def documentation():
     return render_template("documentation.html")
@@ -592,6 +585,35 @@ def documentation():
 @app.route("/about_us")
 def about_us():
     return render_template("about_us.html")
+
+
+@app.route("/expression_atlas_2", methods=["GET","POST"])
+def atlas2():
+    if request.method == "POST":
+        ind_repeat_disease = []
+        individual_percentage = []
+
+        cur = connection.cursor()
+        try:
+            disease_type1 = str(request.form.get('disease_type'))
+            cur.execute("SELECT GROUP_CONCAT(DISTINCT disease_type SEPARATOR ','), tissue_type, COUNT(tissue_type) AS RTs_no_found, GROUP_CONCAT(DISTINCT repeat_family SEPARATOR ',') AS RT_found,concat(round(((SELECT COUNT(disease_type))/(SELECT " + disease_type1 + " from exp_atlas_disease_counts)* 100 )),'%') FROM exp_atlas WHERE disease_type = '" + disease_type1 + "' GROUP BY disease_type,tissue_type, repeat_family;")
+            ind_repeat_disease=cur.fetchall()
+        except:
+            pass
+
+        try:
+            tissue_type1 = str(request.form.get('tissue_type'))
+
+            #cur.execute("SELECT tissue_type, COUNT(tissue_type) AS family_no_found, GROUP_CONCAT(DISTINCT repeat_family SEPARATOR ',') AS family_found,concat(round(((SELECT COUNT(repeat_family))/(SELECT %s from exp_atlas_count)* 100 )),'%') FROM exp_atlas WHERE tissue_type = %s GROUP BY repeat_family;", (tissue_type, tissue_type))
+            query5 = "SELECT tissue_type, COUNT(tissue_type) AS family_no_found, GROUP_CONCAT(DISTINCT repeat_family SEPARATOR ',') AS family_found,concat(round(((SELECT COUNT(repeat_family))/(SELECT " + tissue_type1 + " from exp_atlas_count)* 100 )),'%') FROM exp_atlas WHERE tissue_type = '" + tissue_type1 + "' GROUP BY repeat_family;"
+            cur.execute(query5)
+            individual_percentage=cur.fetchall()
+        except:
+            pass
+        cur.close()
+        return render_template("expression_atlas_2.html",individual_percentage=individual_percentage,ind_repeat_disease=ind_repeat_disease)
+
+    return render_template("expression_atlas_2.html")
 
 @app.errorhandler(404)
 def page_not_found(e):
