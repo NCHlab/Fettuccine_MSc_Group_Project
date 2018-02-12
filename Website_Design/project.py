@@ -107,10 +107,10 @@ def family_table_HERV_Repeats():
 
 @app.route("/distribution")
 def distribution():
-    cur.execute("SELECT counts FROM `herv_chromosome_count`")
+    cur.execute("SELECT counts FROM `herv_chromosome_count`") #select the number of HERV repeats for each chromosome
     Herv_count=cur.fetchall()
     H=[element for h in Herv_count for element in h] #removes tuple
-    cur.execute("SELECT counts FROM `l1_chromosome_count`")
+    cur.execute("SELECT counts FROM `l1_chromosome_count`") #select the number of LINE1 repeats for each chromosome
     L1_count=cur.fetchall()
     L=[element for l in L1_count for element in l] #removes tuple
     return render_template("distribution.html", H=H, L=L)
@@ -556,6 +556,10 @@ def atlas():
 	#cur.execute("SELECT tissue, COUNT(tissue) AS RTs_no_found, GROUP_CONCAT(DISTINCT RT SEPARATOR ',') AS RT_found FROM exp_atlas GROUP BY Tissue")
 	#atlas=cur.fetchall()
     cur = connection.cursor()
+    cur.execute("SELECT GROUP_CONCAT(DISTINCT disease_type SEPARATOR ','),GROUP_CONCAT(DISTINCT tissue_type SEPARATOR ','), COUNT(tissue_type) AS RTs_no_found, GROUP_CONCAT(DISTINCT repeat_family SEPARATOR ',') AS RT_found, concat(round(((SELECT COUNT(disease_type))/(SELECT counts from exp_atlas_count)* 100 )),'%') FROM exp_atlas GROUP BY disease_type;")
+    overall_disease_percentage=cur.fetchall()
+    cur.execute("SELECT GROUP_CONCAT(DISTINCT disease_type SEPARATOR ','), tissue_type, COUNT(tissue_type) AS RTs_no_found, GROUP_CONCAT(DISTINCT repeat_family SEPARATOR ',') AS RT_found,concat(round(((SELECT COUNT(disease_type))/(SELECT cancer from exp_atlas_disease_counts)* 100 )),'%') FROM exp_atlas WHERE disease_type = 'Cancer' OR 'cancer' GROUP BY disease_type,tissue_type, repeat_family;")
+    ind_repeat_disease=cur.fetchall()
     cur.execute("SELECT tissue_type, COUNT(tissue_type) AS family_no_found, GROUP_CONCAT(DISTINCT repeat_family SEPARATOR ',') AS family_found,concat(round(((SELECT COUNT(tissue_type))/(SELECT counts from exp_atlas_count)* 100 )),'%') FROM exp_atlas GROUP BY tissue_type;")
     overall_percentage=cur.fetchall()
     cur.close()
@@ -567,9 +571,8 @@ def atlas():
         cur.execute(query5)
         individual_percentage=cur.fetchall()
         cur.close()
-        return render_template("expression_atlas.html",overall_percentage=overall_percentage,individual_percentage=individual_percentage)
-    return render_template("expression_atlas.html",overall_percentage=overall_percentage)
-
+        return render_template("expression_atlas.html",overall_percentage=overall_percentage,individual_percentage=individual_percentage,overall_disease_percentage=overall_disease_percentage,ind_repeat_disease=ind_repeat_disease)
+    return render_template("expression_atlas.html",overall_percentage=overall_percentage,overall_disease_percentage=overall_disease_percentage,ind_repeat_disease=ind_repeat_disease)
 @app.route("/documentation")
 def documentation():
     return render_template("documentation.html")
