@@ -13,10 +13,10 @@ import hashlib
 import json
 import cgi
 from mod_tables.models import TableBuilder
+import matplotlib
+import matplotlib.pyplot as plt
 try:
     import pylab
-    import matplotlib
-    import matplotlib.pyplot as plt
     import pygraphviz
 except:
     print "PLEASE INSTALL GRAPHVIZ PROGRAM FROM THE WEBSITE, NOT PIP !!!!!!!!!!!!!!!!!!!!!"
@@ -148,6 +148,12 @@ def herv_rv():
 @app.route("/herv_rv1")
 def herv_rv1():
     return render_template("herv_rv1.html")
+
+@app.route("/custom_tree2")
+def custom_tree2():
+    #This function only required to manually access the page for ctrl + f5 refresh, to refresh the page to load new image
+    #This is because custom_tree by default returns AA_relationship.html when a GET method is used.
+    return render_template("custom_tree.html")
 
 @app.route("/custom_tree", methods=["GET", "POST"])
 def custom_tree():

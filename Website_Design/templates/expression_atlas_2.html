@@ -101,6 +101,8 @@
 										<hr>
 										<div class=container>
 										<h5 style="text-align: center;">Select a disease or tissue type to view the percentage of each individual repeat found.</h5>
+										<hr>
+										<button onclick="window.location.href='{{ url_for('atlas')}}'" class="dropbtn">View All Repeats</button>
 										</div>
 									</div>
 								</div>
@@ -182,6 +184,12 @@
 		 </tbody>
 		</table>
 	</form>
+	<br>
+	<br>
+	<hr>
+	<br>
+	<br>
+
 
 	<form id="upload-form" action="{{ url_for("atlas2")}}" method="POST" enctype="multipart/form-data">
 		Please Select Disease Type to display:
