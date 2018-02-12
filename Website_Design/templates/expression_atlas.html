@@ -25,6 +25,12 @@
 			$(document).ready( function () {
 					$('#Atlas2').DataTable();FFF;
 		} );
+		$(document).ready( function () {
+				$('#Atlas3').DataTable();FFF;
+		} );
+		$(document).ready( function () {
+				$('#Atlas4').DataTable();FFF;
+		} );
 		</script>
 	</head>
 
@@ -105,7 +111,7 @@
 										<hr>
 										<div class=container>
 										<h5 style="text-align: center;">Contains all repeats found from successfull peptide identification by other users.</h5>
-										<h5 style="text-align: center;">Select a tissue type to view the percentage of each individual repeat found.</h5>
+										<h5 style="text-align: center;">Select a disease or tissue type to view the percentage of each individual repeat found.</h5>
 										</div>
 									</div>
 								</div>
@@ -115,8 +121,30 @@
 
 	<p>&nbsp;</p>
 	<div class="container">
+		<table id = "Atlas3" class = "display">
+			<h5 style="text-align: center;">% OF disease/total repeats found:</h5>
+			<thead>
+			 <tr>
+				 <th>Disease Type</th>
+				 <th>Tissue Type</th>
+				 <th>No of Families found</th>
+				 <th>Familiess</th>
+				 <th>%</th>
+			 </tr>
+		 </thead>
+		 <tbody>
+				{% for row in overall_disease_percentage %}
+						<tr>
+						{% for a in row %}
+								<td>{{ a }}</td>
+						{% endfor %}
+						</tr>
+				{% endfor %}
+		 </tbody>
+		</table>
 
 		<table id = "Atlas" class = "display">
+			<h5 style="text-align: center;">% OF tissue/total repeats found:</h5>
 			<thead>
 			 <tr>
 				 <th>Tissue Type</th>
@@ -140,39 +168,39 @@
 		Please Select Tissue Type to display:
 		<select class= id="tissue_type" name="tissue_type">
 			<option value="unknown">Unknown</option>
-			<option value="adrenal_gland">Adrenal Gland</option>
-			<option value="anus_and_anal_canal">Anus and Anal Canal</option>
-			<option value="bile_duct">Bile duct</option>
+			<option value="adrenal gland">Adrenal Gland</option>
+			<option value="anus and anal canal">Anus and Anal Canal</option>
+			<option value="bile duct">Bile duct</option>
 			<option value="bladder">Bladder</option>
 			<option value="blood">Blood</option>
 			<option value="bone">Bone</option>
-			<option value="bone_marrow">Bone Marrow</option>
+			<option value="bone marrow">Bone Marrow</option>
 			<option value="brain">Brain</option>
 			<option value="breast">Breast</option>
-			<option value="bronchus_and_lung">Bronchus and Lung</option>
+			<option value="bronchus and lung">Bronchus and Lung</option>
 			<option value="cervix">Cervix</option>
 			<option value="colon">Colon</option>
 			<option value="colorectal">Colorectal</option>
 			<option value="esophagus">Esophagus</option>
 			<option value="eye">Eye</option>
-			<option value="head_and_neck">Head and Neck</option>
+			<option value="head and neck">Head and Neck</option>
 			<option value="heart">Heart</option>
 			<option value="kidney">Kidney</option>
-			<option value="liver_and_bile_ducts">Liver and bile ducts</option>
+			<option value="liver and bile ducts">Liver and bile ducts</option>
 			<option value="lung">Lung</option>
-			<option value="lymph_nodes">Lymph Nodes</option>
-			<option value="nervous_system">Nervous System</option>
+			<option value="lymph nodes">Lymph Nodes</option>
+			<option value="nervous system">Nervous System</option>
 			<option value="ovary">Ovary</option>
 			<option value= "other">Other</option>
 			<option value="pancreas">Pancreas</option>
 			<option value="penis">Penis</option>
-			<option value="peripheral_nerves_and_ans">Peripheral nerves and ANS</option>
+			<option value="peripheral nerves and ans">Peripheral nerves and ANS</option>
 			<option value="prostate">Prostate</option>
 			<option value="rectum">Rectum</option>
 			<option value="skin">Skin</option>
-			<option value="small_intestine">Small Intestine</option>
-			<option value="soft_tissue">Soft Tissue</option>
-			<option value="spinal_cord / other cns">Spinal Cord / other CNS</option>
+			<option value="small intestine">Small Intestine</option>
+			<option value="soft tissue">Soft Tissue</option>
+			<option value="spinal cord / other cns">Spinal Cord / other CNS</option>
 			<option value="stomach">Stomach</option>
 			<option value="testes">Testes</option>
 			<option value="thymus">Thymus</option>
@@ -188,6 +216,7 @@
 
 
 		<table id = "Atlas2" class = "display">
+		<h5 style="text-align: center;">% OF each repeat/tissue selected found:</h5>
 			<thead>
 			 <tr>
 				 <th>Tissue Type</th>
@@ -207,6 +236,27 @@
 		 </tbody>
 		</table>
 
+		<table id = "Atlas4" class = "display">
+		<h5 style="text-align: center;">% OF each repeat/disease selected found:</h5>
+			<thead>
+			 <tr>
+				 <th>Disease Type</th>
+				 <th>Tissue Type</th>
+				 <th>No of Families found</th>
+				 <th>Familiess</th>
+				 <th>%</th>
+			 </tr>
+		 </thead>
+		 <tbody>
+				{% for row in ind_repeat_disease %}
+						<tr>
+						{% for a in row %}
+								<td>{{ a }}</td>
+						{% endfor %}
+						</tr>
+				{% endfor %}
+		 </tbody>
+		</table>
 
 	</div>
 
