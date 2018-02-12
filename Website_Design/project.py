@@ -195,24 +195,15 @@ def custom_tree():
                 tree = Phylo.read(filename3, 'newick')
                 tree.ladderize()   # Flip branches so deeper clades are displayed at top
                 Phylo.draw(tree)
-                try:
-                    Phylo.draw_graphviz(tree)
-                except:
-                    pass
-                #pylab.show()
-                pylab.savefig("customtree.png", dpi=dpi_type)
 
-                #\static\assets\img\customtree\customtree.png
+                # Only USE THIS CODE IF USING 32BIT PYTHON AND YOU HAVE PYGRAPHVIZ INSTALLED
+                # try:
+                #     Phylo.draw_graphviz(tree)
+                # except:
+                #     pass
+                #
+                # pylab.savefig("customtree.png", dpi=dpi_type)
 
-                # #ptree = Phylo.draw(tree)
-                # matplotlib.rc('font', size=6)
-                # # set the size of the figure
-                # fig = plt.figure(figsize=(10, 20), dpi=100)
-                # # alternatively
-                # # fig.set_size_inches(10, 20)
-                # axes = fig.add_subplot(1, 1, 1)
-                # Phylo.draw(tree, axes=axes)
-                # plt.savefig("output_file.png", dpi=100)
 
                 return render_template("custom_tree.html")
 
