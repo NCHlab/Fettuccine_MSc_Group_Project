@@ -334,7 +334,7 @@ def peptide_seq_ident():
                             query = query+'"'+str(ele[0])+'"'+' OR sequence="'
                             sep = '" OR sequence="'
                             query = query+sep.join(ele[1:])
-                            query = query+'""'
+                            query = query+'"'
                             cur = connection.cursor()
                             cur.execute(query)
                             for ele in cur.fetchall():
@@ -580,16 +580,8 @@ def about_us():
 
 @app.errorhandler(404)
 def page_not_found(e):
+    # Returns error page if user goes to any page that is not valid
     return render_template('404.html'), 404
-
-###############################################
-#@app.route("/static")
-#def static1():
-#    url_for('static', filename='style.css')
-
-@app.route('/<path:path>')
-def static_file(path):
-    return app.send_static_file(path)
 
 #if __name__ == "__main__":
 #    app.run(debug=True)
