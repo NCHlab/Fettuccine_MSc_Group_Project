@@ -61,9 +61,21 @@ cur2 = MySQLdb.cursors.SSCursor(connection)
 
 @app.route("/")
 def indexpage():
-    now = datetime.now().strftime('%H:%M:%S %d-%m-%Y')#datetime.now(timezone('Europe/London'))
-    return render_template("index.html", time = now)
-    #return "The time is {}".format(now)
+    # Gets the time and count data from MySQL table to display in browser
+    now = datetime.now().strftime('%H:%M:%S %d-%m-%Y')
+    cur = connection.cursor()
+    cur.execute("SELECT COUNT(*) FROM herv_repeats")
+    herv_index_count = cur.fetchall()
+    cur.execute("SELECT COUNT(*) FROM l1_repeats")
+    l1_index_count = cur.fetchall()
+    cur.execute("SELECT ((SELECT COUNT(*) FROM l1_repeats)+(SELECT COUNT(*) FROM herv_repeats));")
+    total_index_count = cur.fetchall()
+    cur.close()
+    # Formatting the code to display it neater (creates comma seperators e.g 1,000,000)
+    herv_index_count ="{:,.0f}".format(int(herv_index_count[0][0]))
+    l1_index_count ="{:,.0f}".format(int(l1_index_count[0][0]))
+    total_index_count ="{:,.0f}".format(int(total_index_count[0][0]))
+    return render_template("index.html", time = now, herv_index = herv_index_count, l1_index = l1_index_count, total_index = total_index_count)
 
 @app.route('/family_table_LINE1')
 def family_table_LINE1():
