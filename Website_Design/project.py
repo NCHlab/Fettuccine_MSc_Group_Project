@@ -1,6 +1,6 @@
 from flask import Flask, send_from_directory, render_template, request, url_for, flash
-from datetime import datetime
-from pytz import timezone
+#from datetime import datetime
+#from pytz import timezone
 import os
 import MySQLdb
 import pandas as pd
@@ -62,7 +62,7 @@ cur2 = MySQLdb.cursors.SSCursor(connection)
 @app.route("/")
 def indexpage():
     # Gets the time and count data from MySQL table to display in browser
-    now = datetime.now().strftime('%H:%M:%S %d-%m-%Y')
+
     cur = connection.cursor()
     cur.execute("SELECT COUNT(*) FROM herv_repeats")
     herv_index_count = cur.fetchall()
@@ -75,7 +75,7 @@ def indexpage():
     herv_index_count ="{:,.0f}".format(int(herv_index_count[0][0]))
     l1_index_count ="{:,.0f}".format(int(l1_index_count[0][0]))
     total_index_count ="{:,.0f}".format(int(total_index_count[0][0]))
-    return render_template("index.html", time = now, herv_index = herv_index_count, l1_index = l1_index_count, total_index = total_index_count)
+    return render_template("index.html", herv_index = herv_index_count, l1_index = l1_index_count, total_index = total_index_count)
 
 @app.route('/family_table_LINE1')
 def family_table_LINE1():
