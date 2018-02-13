@@ -13,10 +13,10 @@ import hashlib
 import json
 import cgi
 from mod_tables.models import TableBuilder
+import matplotlib
+import matplotlib.pyplot as plt
 try:
     import pylab
-    import matplotlib
-    import matplotlib.pyplot as plt
     import pygraphviz
 except:
     print "PLEASE INSTALL GRAPHVIZ PROGRAM FROM THE WEBSITE, NOT PIP !!!!!!!!!!!!!!!!!!!!!"
@@ -61,9 +61,21 @@ cur2 = MySQLdb.cursors.SSCursor(connection)
 
 @app.route("/")
 def indexpage():
-    now = datetime.now().strftime('%H:%M:%S %d-%m-%Y')#datetime.now(timezone('Europe/London'))
-    return render_template("index.html", time = now)
-    #return "The time is {}".format(now)
+    # Gets the time and count data from MySQL table to display in browser
+    now = datetime.now().strftime('%H:%M:%S %d-%m-%Y')
+    cur = connection.cursor()
+    cur.execute("SELECT COUNT(*) FROM herv_repeats")
+    herv_index_count = cur.fetchall()
+    cur.execute("SELECT COUNT(*) FROM l1_repeats")
+    l1_index_count = cur.fetchall()
+    cur.execute("SELECT ((SELECT COUNT(*) FROM l1_repeats)+(SELECT COUNT(*) FROM herv_repeats));")
+    total_index_count = cur.fetchall()
+    cur.close()
+    # Formatting the code to display it neater (creates comma seperators e.g 1,000,000)
+    herv_index_count ="{:,.0f}".format(int(herv_index_count[0][0]))
+    l1_index_count ="{:,.0f}".format(int(l1_index_count[0][0]))
+    total_index_count ="{:,.0f}".format(int(total_index_count[0][0]))
+    return render_template("index.html", time = now, herv_index = herv_index_count, l1_index = l1_index_count, total_index = total_index_count)
 
 @app.route('/family_table_LINE1')
 def family_table_LINE1():
@@ -107,10 +119,10 @@ def family_table_HERV_Repeats():
 
 @app.route("/distribution")
 def distribution():
-    cur.execute("SELECT counts FROM `herv_chromosome_count`")
+    cur.execute("SELECT counts FROM `herv_chromosome_count`") #select the number of HERV repeats for each chromosome
     Herv_count=cur.fetchall()
     H=[element for h in Herv_count for element in h] #removes tuple
-    cur.execute("SELECT counts FROM `l1_chromosome_count`")
+    cur.execute("SELECT counts FROM `l1_chromosome_count`") #select the number of LINE1 repeats for each chromosome
     L1_count=cur.fetchall()
     L=[element for l in L1_count for element in l] #removes tuple
     return render_template("distribution.html", H=H, L=L)
@@ -136,6 +148,12 @@ def herv_rv():
 @app.route("/herv_rv1")
 def herv_rv1():
     return render_template("herv_rv1.html")
+
+@app.route("/custom_tree2")
+def custom_tree2():
+    #This function only required to manually access the page for ctrl + f5 refresh, to refresh the page to load new image
+    #This is because custom_tree by default returns AA_relationship.html when a GET method is used.
+    return render_template("custom_tree.html")
 
 @app.route("/custom_tree", methods=["GET", "POST"])
 def custom_tree():
@@ -177,24 +195,15 @@ def custom_tree():
                 tree = Phylo.read(filename3, 'newick')
                 tree.ladderize()   # Flip branches so deeper clades are displayed at top
                 Phylo.draw(tree)
-                try:
-                    Phylo.draw_graphviz(tree)
-                except:
-                    pass
-                #pylab.show()
-                pylab.savefig("customtree.png", dpi=dpi_type)
 
-                #\static\assets\img\customtree\customtree.png
+                # Only USE THIS CODE IF USING 32BIT PYTHON AND YOU HAVE PYGRAPHVIZ INSTALLED
+                # try:
+                #     Phylo.draw_graphviz(tree)
+                # except:
+                #     pass
+                #
+                # pylab.savefig("customtree.png", dpi=dpi_type)
 
-                # #ptree = Phylo.draw(tree)
-                # matplotlib.rc('font', size=6)
-                # # set the size of the figure
-                # fig = plt.figure(figsize=(10, 20), dpi=100)
-                # # alternatively
-                # # fig.set_size_inches(10, 20)
-                # axes = fig.add_subplot(1, 1, 1)
-                # Phylo.draw(tree, axes=axes)
-                # plt.savefig("output_file.png", dpi=100)
 
                 return render_template("custom_tree.html")
 
@@ -543,6 +552,8 @@ def upload_peptide():
                         cur.execute(query3)
                         query4 = ("UPDATE exp_atlas_count SET " + tissue_type + " = (SELECT COUNT(tissue_type) FROM exp_atlas WHERE tissue_type = '" + tissue_type + "');")
                         cur.execute(query4)
+                        query5 = ("UPDATE exp_atlas_disease_counts SET " + disease_type + " = (SELECT COUNT(disease_type) FROM exp_atlas WHERE disease_type = '" + disease_type + "');")
+                        cur.execute(query5)
                         connection.commit()
                         cur.close()
 
@@ -556,20 +567,14 @@ def atlas():
 	#cur.execute("SELECT tissue, COUNT(tissue) AS RTs_no_found, GROUP_CONCAT(DISTINCT RT SEPARATOR ',') AS RT_found FROM exp_atlas GROUP BY Tissue")
 	#atlas=cur.fetchall()
     cur = connection.cursor()
+    cur.execute("SELECT GROUP_CONCAT(DISTINCT disease_type SEPARATOR ','),GROUP_CONCAT(DISTINCT tissue_type SEPARATOR ','), COUNT(tissue_type) AS RTs_no_found, GROUP_CONCAT(DISTINCT repeat_family SEPARATOR ',') AS RT_found, concat(round(((SELECT COUNT(disease_type))/(SELECT counts from exp_atlas_count)* 100 )),'%') FROM exp_atlas GROUP BY disease_type;")
+    overall_disease_percentage=cur.fetchall()
+
     cur.execute("SELECT tissue_type, COUNT(tissue_type) AS family_no_found, GROUP_CONCAT(DISTINCT repeat_family SEPARATOR ',') AS family_found,concat(round(((SELECT COUNT(tissue_type))/(SELECT counts from exp_atlas_count)* 100 )),'%') FROM exp_atlas GROUP BY tissue_type;")
     overall_percentage=cur.fetchall()
     cur.close()
-    if request.method == "POST":
-        cur = connection.cursor()
-        tissue_type1 = str(request.form.get('tissue_type'))
-        #cur.execute("SELECT tissue_type, COUNT(tissue_type) AS family_no_found, GROUP_CONCAT(DISTINCT repeat_family SEPARATOR ',') AS family_found,concat(round(((SELECT COUNT(repeat_family))/(SELECT %s from exp_atlas_count)* 100 )),'%') FROM exp_atlas WHERE tissue_type = %s GROUP BY repeat_family;", (tissue_type, tissue_type))
-        query5 = "SELECT tissue_type, COUNT(tissue_type) AS family_no_found, GROUP_CONCAT(DISTINCT repeat_family SEPARATOR ',') AS family_found,concat(round(((SELECT COUNT(repeat_family))/(SELECT " + tissue_type1 + " from exp_atlas_count)* 100 )),'%') FROM exp_atlas WHERE tissue_type = '" + tissue_type1 + "' GROUP BY repeat_family;"
-        cur.execute(query5)
-        individual_percentage=cur.fetchall()
-        cur.close()
-        return render_template("expression_atlas.html",overall_percentage=overall_percentage,individual_percentage=individual_percentage)
-    return render_template("expression_atlas.html",overall_percentage=overall_percentage)
 
+    return render_template("expression_atlas.html",overall_percentage=overall_percentage,overall_disease_percentage=overall_disease_percentage)
 @app.route("/documentation")
 def documentation():
     return render_template("documentation.html")
@@ -577,6 +582,35 @@ def documentation():
 @app.route("/about_us")
 def about_us():
     return render_template("about_us.html")
+
+
+@app.route("/expression_atlas_2", methods=["GET","POST"])
+def atlas2():
+    if request.method == "POST":
+        ind_repeat_disease = []
+        individual_percentage = []
+
+        cur = connection.cursor()
+        try:
+            disease_type1 = str(request.form.get('disease_type'))
+            cur.execute("SELECT GROUP_CONCAT(DISTINCT disease_type SEPARATOR ','), tissue_type, COUNT(tissue_type) AS RTs_no_found, GROUP_CONCAT(DISTINCT repeat_family SEPARATOR ',') AS RT_found,concat(round(((SELECT COUNT(disease_type))/(SELECT " + disease_type1 + " from exp_atlas_disease_counts)* 100 )),'%') FROM exp_atlas WHERE disease_type = '" + disease_type1 + "' GROUP BY disease_type,tissue_type, repeat_family;")
+            ind_repeat_disease=cur.fetchall()
+        except:
+            pass
+
+        try:
+            tissue_type1 = str(request.form.get('tissue_type'))
+
+            #cur.execute("SELECT tissue_type, COUNT(tissue_type) AS family_no_found, GROUP_CONCAT(DISTINCT repeat_family SEPARATOR ',') AS family_found,concat(round(((SELECT COUNT(repeat_family))/(SELECT %s from exp_atlas_count)* 100 )),'%') FROM exp_atlas WHERE tissue_type = %s GROUP BY repeat_family;", (tissue_type, tissue_type))
+            query5 = "SELECT tissue_type, COUNT(tissue_type) AS family_no_found, GROUP_CONCAT(DISTINCT repeat_family SEPARATOR ',') AS family_found,concat(round(((SELECT COUNT(repeat_family))/(SELECT " + tissue_type1 + " from exp_atlas_count)* 100 )),'%') FROM exp_atlas WHERE tissue_type = '" + tissue_type1 + "' GROUP BY repeat_family;"
+            cur.execute(query5)
+            individual_percentage=cur.fetchall()
+        except:
+            pass
+        cur.close()
+        return render_template("expression_atlas_2.html",individual_percentage=individual_percentage,ind_repeat_disease=ind_repeat_disease)
+
+    return render_template("expression_atlas_2.html")
 
 @app.errorhandler(404)
 def page_not_found(e):
