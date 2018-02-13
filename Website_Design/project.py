@@ -552,10 +552,16 @@ def upload_peptide():
                             cur.fetchall()
                         query3 = ("UPDATE exp_atlas_count SET counts = (SELECT COUNT(tissue_type) FROM exp_atlas);")
                         cur.execute(query3)
-                        query4 = ("UPDATE exp_atlas_count SET " + tissue_type + " = (SELECT COUNT(tissue_type) FROM exp_atlas WHERE tissue_type = '" + tissue_type + "');")
-                        cur.execute(query4)
-                        query5 = ("UPDATE exp_atlas_disease_counts SET " + disease_type + " = (SELECT COUNT(disease_type) FROM exp_atlas WHERE disease_type = '" + disease_type + "');")
-                        cur.execute(query5)
+                        try:
+                            query4 = ("UPDATE exp_atlas_count SET " + tissue_type + " = (SELECT COUNT(tissue_type) FROM exp_atlas WHERE tissue_type = '" + tissue_type + "');")
+                            cur.execute(query4)
+                        except:
+                            pass
+                        try:
+                            query5 = ("UPDATE exp_atlas_disease_counts SET " + disease_type + " = (SELECT COUNT(disease_type) FROM exp_atlas WHERE disease_type = '" + disease_type + "');")
+                            cur.execute(query5)
+                        except:
+                            pass
                         connection.commit()
                         cur.close()
 
@@ -571,9 +577,24 @@ def atlas():
     cur = connection.cursor()
     cur.execute("SELECT GROUP_CONCAT(DISTINCT disease_type SEPARATOR ','),GROUP_CONCAT(DISTINCT tissue_type SEPARATOR ','), COUNT(tissue_type) AS RTs_no_found, GROUP_CONCAT(DISTINCT repeat_family SEPARATOR ',') AS RT_found, concat(round(((SELECT COUNT(disease_type))/(SELECT counts from exp_atlas_count)* 100 )),'%') FROM exp_atlas GROUP BY disease_type;")
     overall_disease_percentage=cur.fetchall()
+    #overall_disease_percentage = overall_disease_percentage.replace("_", " ")
+
+    #overall_disease_percentage2 = [list(i) for i in overall_disease_percentage]
+    #overall_disease_percentage3 = [[x.replace("_"," ") for x in i] for i in overall_disease_percentage2]
+    #overall_disease_percentage3 = [w.replace('_', ' ') for w in overall_disease_percentage2]
+
+
+
+    #overall_disease_percentage3=[]
+    #for i in overall_disease_percentage2:
+    #    j = i.replace('_',' ')
+    #    overall_disease_percentage3.append(j)
+
+    #lst = [tuple(i for i in tpl if i) for tpl in lst]
 
     cur.execute("SELECT tissue_type, COUNT(tissue_type) AS family_no_found, GROUP_CONCAT(DISTINCT repeat_family SEPARATOR ',') AS family_found,concat(round(((SELECT COUNT(tissue_type))/(SELECT counts from exp_atlas_count)* 100 )),'%') FROM exp_atlas GROUP BY tissue_type;")
     overall_percentage=cur.fetchall()
+    #overall_percentage = overall_percentage.replace("_", " ")
     cur.close()
 
     return render_template("expression_atlas.html",overall_percentage=overall_percentage,overall_disease_percentage=overall_disease_percentage)
