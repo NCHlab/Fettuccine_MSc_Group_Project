@@ -2,6 +2,7 @@ from flask import Flask, send_from_directory, render_template, request, url_for,
 #from datetime import datetime
 #from pytz import timezone
 import os
+import os.path
 import MySQLdb
 import pandas as pd
 import numpy as py
@@ -526,14 +527,18 @@ def upload_peptide():
                 disease_type = str(request.form.get('disease_type'))
 
 
+                # CHecks to see if the hash checker file is present otehrwise creates it
+                if os.path.isfile(APP_ROOT+"/uploaded/hash_checker.csv"):
+                    pass
+                else:
+                    open("hash_checker.csv", "w")
+
                 #If the unique hash check is not duplicate, the data is saved for the atlas expression
                 #otherwise the data is not saved (due to it already existing from the same source file)
                 #if no match is found
                 # The family matches, and the data from the dropdown boxes are saved into MySQL
                 # Using MySQL query. This data can then be viewed in expression atlas.
-
                 with open("hash_checker.csv", "r+b") as f:
-
                     reader = csv.reader(f)
                     writer = csv.writer(f)
                     for row in reader:
