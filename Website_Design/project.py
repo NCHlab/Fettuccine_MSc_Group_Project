@@ -462,6 +462,8 @@ def upload_peptide():
             return render_template("upload_peptide.html", result_family=result_seq_multi)
 
         list_of_pep_seqs = py_unique(list_of_pep_seqs) #keep only unique sequences
+        str_pep_seqs = ''.join(str(i) for i in list_of_pep_seqs) # converts list to string for hash checker
+        hashed = str(hashlib.sha224(str_pep_seqs).hexdigest()) # A hash check of the found peptide sequences of the file is conducted providing a unique SHA224 ID
 
         if len(list_of_pep_seqs) == 1:
             #If only 1 fasta sequence in file
@@ -523,13 +525,13 @@ def upload_peptide():
                 tissue_type = str(request.form.get('tissue_type'))
                 disease_type = str(request.form.get('disease_type'))
 
-                # A hash check of the contents of the file is conducted providing a unique SHA224 ID
+
                 #If the unique hash check is not duplicate, the data is saved for the atlas expression
                 #otherwise the data is not saved (due to it already existing from the same source file)
                 #if no match is found
                 # The family matches, and the data from the dropdown boxes are saved into MySQL
                 # Using MySQL query. This data can then be viewed in expression atlas.
-                hashed = str(hashlib.sha224(whole_file).hexdigest())
+
                 with open("hash_checker.csv", "r+b") as f:
 
                     reader = csv.reader(f)
