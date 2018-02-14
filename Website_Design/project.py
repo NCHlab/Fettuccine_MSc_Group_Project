@@ -1,7 +1,8 @@
 from flask import Flask, send_from_directory, render_template, request, url_for, flash
-from datetime import datetime
-from pytz import timezone
+#from datetime import datetime
+#from pytz import timezone
 import os
+import os.path
 import MySQLdb
 import pandas as pd
 import numpy as py
@@ -13,10 +14,10 @@ import hashlib
 import json
 import cgi
 from mod_tables.models import TableBuilder
+import matplotlib
+import matplotlib.pyplot as plt
 try:
     import pylab
-    import matplotlib
-    import matplotlib.pyplot as plt
     import pygraphviz
 except:
     print "PLEASE INSTALL GRAPHVIZ PROGRAM FROM THE WEBSITE, NOT PIP !!!!!!!!!!!!!!!!!!!!!"
@@ -61,9 +62,21 @@ cur2 = MySQLdb.cursors.SSCursor(connection)
 
 @app.route("/")
 def indexpage():
-    now = datetime.now().strftime('%H:%M:%S %d-%m-%Y')#datetime.now(timezone('Europe/London'))
-    return render_template("index.html", time = now)
-    #return "The time is {}".format(now)
+    # Gets the time and count data from MySQL table to display in browser
+
+    cur = connection.cursor()
+    cur.execute("SELECT COUNT(*) FROM herv_repeats")
+    herv_index_count = cur.fetchall()
+    cur.execute("SELECT COUNT(*) FROM l1_repeats")
+    l1_index_count = cur.fetchall()
+    cur.execute("SELECT ((SELECT COUNT(*) FROM l1_repeats)+(SELECT COUNT(*) FROM herv_repeats));")
+    total_index_count = cur.fetchall()
+    cur.close()
+    # Formatting the code to display it neater (creates comma seperators e.g 1,000,000)
+    herv_index_count ="{:,.0f}".format(int(herv_index_count[0][0]))
+    l1_index_count ="{:,.0f}".format(int(l1_index_count[0][0]))
+    total_index_count ="{:,.0f}".format(int(total_index_count[0][0]))
+    return render_template("index.html", herv_index = herv_index_count, l1_index = l1_index_count, total_index = total_index_count)
 
 @app.route('/family_table_LINE1')
 def family_table_LINE1():
@@ -107,10 +120,10 @@ def family_table_HERV_Repeats():
 
 @app.route("/distribution")
 def distribution():
-    cur.execute("SELECT counts FROM `herv_chromosome_count`")
+    cur.execute("SELECT counts FROM `herv_chromosome_count`") #select the number of HERV repeats for each chromosome
     Herv_count=cur.fetchall()
     H=[element for h in Herv_count for element in h] #removes tuple
-    cur.execute("SELECT counts FROM `l1_chromosome_count`")
+    cur.execute("SELECT counts FROM `l1_chromosome_count`") #select the number of LINE1 repeats for each chromosome
     L1_count=cur.fetchall()
     L=[element for l in L1_count for element in l] #removes tuple
     return render_template("distribution.html", H=H, L=L)
@@ -136,6 +149,12 @@ def herv_rv():
 @app.route("/herv_rv1")
 def herv_rv1():
     return render_template("herv_rv1.html")
+
+@app.route("/custom_tree2")
+def custom_tree2():
+    #This function only required to manually access the page for ctrl + f5 refresh, to refresh the page to load new image
+    #This is because custom_tree by default returns AA_relationship.html when a GET method is used.
+    return render_template("custom_tree.html")
 
 @app.route("/custom_tree", methods=["GET", "POST"])
 def custom_tree():
@@ -177,24 +196,15 @@ def custom_tree():
                 tree = Phylo.read(filename3, 'newick')
                 tree.ladderize()   # Flip branches so deeper clades are displayed at top
                 Phylo.draw(tree)
-                try:
-                    Phylo.draw_graphviz(tree)
-                except:
-                    pass
-                #pylab.show()
-                pylab.savefig("customtree.png", dpi=dpi_type)
 
-                #\static\assets\img\customtree\customtree.png
+                # Only USE THIS CODE IF USING 32BIT PYTHON AND YOU HAVE PYGRAPHVIZ INSTALLED
+                # try:
+                #     Phylo.draw_graphviz(tree)
+                # except:
+                #     pass
+                #
+                # pylab.savefig("customtree.png", dpi=dpi_type)
 
-                # #ptree = Phylo.draw(tree)
-                # matplotlib.rc('font', size=6)
-                # # set the size of the figure
-                # fig = plt.figure(figsize=(10, 20), dpi=100)
-                # # alternatively
-                # # fig.set_size_inches(10, 20)
-                # axes = fig.add_subplot(1, 1, 1)
-                # Phylo.draw(tree, axes=axes)
-                # plt.savefig("output_file.png", dpi=100)
 
                 return render_template("custom_tree.html")
 
@@ -208,33 +218,27 @@ def line1_rv():
 
 @app.route("/peptide_seq_ident", methods=["GET","POST"])
 def peptide_seq_ident():
-    # global empty_error
-    # global rows_count
-    # global result_seq
-    # global no_match
-    # global recordID
-    # global result_seq_one
-    # global data11
-    result_seq_one=[]
-    result_seq_multi=[]
-    result_seq=""
+    result_seq_one = []
+    result_seq_multi = []
+    result_seq = ""
     rows_count = ""
     error_empty2 = "This is an empty file! Please upload a populated FASTA file"
-    no_match= "No Match was found!"
+    no_match = "No Match was found!"
     error_fasta_1 = "Please Enter only 1 fasta sequence in the search bar, for multiple use upload function"
     error_fasta_2 = "Please Remove the Headers and only Search using the peptide Sequences or use the upload function"
 
 
     # If data has been submitted to the page i.e uploaded, then the POST method engages
     if request.method == "POST":
+        # Change the directory to the root location of the python file
         os.chdir(APP_ROOT)
 
         # If the Textbox has been filled with peptide sequences, DB is searched for matching sequence and FAMILY + sequence returned
         # Otherwise if no match found, displays no match
-
         if request.form["fasta_content"] != "":
             fasta_check = request.form["fasta_content"]
             fasta_check = fasta_check.count(">")
+
             # Checks to see if a header exists and rejects the data if it does
             if fasta_check > 1:
                 return render_template("peptide_seq_ident.html", empty = error_fasta_1)
@@ -245,6 +249,7 @@ def peptide_seq_ident():
             else:
                 # Saves the peptide sequences and removes all spaces, tabs and new lines
                 # Does a MYSQL query for the correctly formatted peptide sequence
+                # and returns a result if cur.rowcount is not empty
                 fastaseq = request.form["fasta_content"]
                 fastaseq = fastaseq.replace("\n","").replace("\r","").replace(" ","")
                 cur = connection.cursor()
@@ -257,7 +262,7 @@ def peptide_seq_ident():
                 else:
                   return render_template("peptide_seq_ident.html", data1=result_seq)
 
-        # If a file has been uploaded (file2 - name of upload form), this if statement occurs
+        # If a file has been uploaded (file2 - ID name of upload form), this if statement occurs
         elif 'file2' in request.files:
             # Creates a path to the specified folder
             target = os.path.join(APP_ROOT, "sequence_ident/")
@@ -265,13 +270,13 @@ def peptide_seq_ident():
             if not os.path.isdir(target):
                 os.mkdir(target)
 
-              # Saves the file to the target folder explicitly mentioned earlier
+            # Saves the file to the target folder explicitly mentioned earlier
             for file in request.files.getlist("file2"):
                 filename = file.filename
                 destination = "/".join([target, filename])
                 file.save(destination)
 
-                # Checks the current directory and moves to the correct folder
+            # Checks the current directory and moves to the correct folder
             if os.getcwd() == APP_ROOT:
                 os.chdir("sequence_ident")
             elif os.getcwd() == APP_ROOT+"\sequence_ident":
@@ -280,7 +285,7 @@ def peptide_seq_ident():
                 os.chdir("..\sequence_ident")
 
 
-            # Goes through fasta file and checks whether if its empty
+            # Goes through fasta file and checks whether the file is empty
             seqfile = SeqIO.parse(filename, "fasta")
             if os.stat(filename).st_size == 0:
                 return render_template("peptide_seq_ident.html", empty = error_empty2)
@@ -315,6 +320,9 @@ def peptide_seq_ident():
                     else:
                         return render_template("peptide_seq_ident.html", data2=result_seq)
                 else:
+                    # Checks to see the size (number) of the Sequences
+                    # If it is below 5000, a large query is sent
+                    # otherwise the query is chunked into bits of 5000 and then MySQL query executed
                     record_list=temp_list
                     if len(record_list)<=5000:
                         query = "SELECT family, sequence FROM all_prot_seqs WHERE sequence = "
@@ -336,17 +344,20 @@ def peptide_seq_ident():
                             query = query+'"'+str(ele[0])+'"'+' OR sequence="'
                             sep = '" OR sequence="'
                             query = query+sep.join(ele[1:])
-                            query = query+'""'
+                            query = query+'"'
                             cur = connection.cursor()
                             cur.execute(query)
                             for ele in cur.fetchall():
                                 result_seq.append(ele)
                         cur.close()
 
+                # If no matches are found, the webpage is returned stating no match
+                # otherwise if matches are found, data is returned and displayed
                 if len(result_seq)==0:
                   return render_template("peptide_seq_ident.html", empty=no_match)
                 else:
-                  return render_template("peptide_seq_ident.html", data=result_seq)
+                    return render_template("peptide_seq_ident.html", data=result_seq)
+        # if nothing is submitted via text box form, empty error raised
         elif request.form["fasta_content"] == "":
             return render_template("peptide_seq_ident.html", empty = error_empty2)
     else:
@@ -365,16 +376,6 @@ def py_unique(data):
 
 @app.route("/upload_peptide", methods=["GET","POST"])
 def upload_peptide():
-    # global filename2
-    # global pepseq
-    # global list_of_matches
-    # global list_of_pep_seqs
-    # global empty_error
-    # global rows_count
-    # global result_seq
-    # global no_match
-    # global recordID
-    global result_seq_multi
     result_seq_multi=[]
     result_seq_multi2=[]
     result_seq=""
@@ -387,13 +388,12 @@ def upload_peptide():
     result_seq_write=[]
     tissue_type_write=[]
     disease_type_write=[]
-    global hashed2
-    hashed2=str()
+    result_seq2=[]
+    hashed=str()
 
     # Checks for post method (data submitted)
     if request.method == "POST":
-
-
+        #Move to root directory of project python file
         os.chdir(APP_ROOT)
         target = os.path.join(APP_ROOT, "uploaded/")
 
@@ -420,6 +420,7 @@ def upload_peptide():
             result_seq_multi = "No File uploaded! Please Upload a MzIdent or mzTab formatted file"
             return render_template("upload_peptide.html", result_family=result_seq_multi)
 
+        # Checks to see for the presence of an extension.
         if "." not in filename2:
             result_seq_multi = "Incorrect filetype uploaded! Please Upload a MzIdent or mzTab formatted file"
             return render_template("upload_peptide.html", result_family=result_seq_multi)
@@ -429,6 +430,7 @@ def upload_peptide():
             file_mz_seq = open(filename2, "r")
             whole_file = file_mz_seq.read()
 
+            # Regex used to locate the peptide sequences
             regex = r">[a-zA-z]+"
             matches = re.finditer(regex, whole_file)
             for matchNum, match in enumerate(matches):
@@ -443,6 +445,8 @@ def upload_peptide():
             file_mztab_seq = open(filename2, "r")
             whole_file = file_mztab_seq.read()
 
+            # Regex used to locate the peptide sequences
+            # Sequences also filtered out using some keywords typically found and a set size allowed
             regex = r"[A-Z]+\S\B[A-Z]"
             matches = re.finditer(regex, whole_file)
             for matchNum, match in enumerate(matches):
@@ -459,24 +463,30 @@ def upload_peptide():
             return render_template("upload_peptide.html", result_family=result_seq_multi)
 
         list_of_pep_seqs = py_unique(list_of_pep_seqs) #keep only unique sequences
+        str_pep_seqs = ''.join(str(i) for i in list_of_pep_seqs) # converts list to string for hash checker
+        hashed = str(hashlib.sha224(str_pep_seqs).hexdigest()) # A hash check of the found peptide sequences of the file is conducted providing a unique SHA224 ID
 
         if len(list_of_pep_seqs) == 1:
-
             #If only 1 fasta sequence in file
+            cur = connection.cursor()
             for seqs in list_of_pep_seqs:
                 rows_count = cur.execute("SELECT Family, Sequence FROM prelim2 WHERE Sequence = %s", [seqs])
                 cur.execute("SELECT Family, Sequence FROM prelim2 WHERE Sequence = %s", [seqs])
                 result_seq =  cur.fetchall()
 
-            if not cur.rowcount: #return no match
-              return render_template("upload_peptide.html", result_family=no_match)
+            #return no match
+            if not cur.rowcount:
+                cur.close()
+                return render_template("upload_peptide.html", result_family=no_match)
             else: #return match
-                return render_template("upload_peptide.html", data=result_seq)#, result_seq1=result_seq[0][1])
+                cur.close()
+                return render_template("upload_peptide.html", data=result_seq)
+
         else:
-            #If the inserted file is up to 5000 sequences
+            #If the inserted file is up to or equal to 5000 sequences
             if len(list_of_pep_seqs)<=5000:
 
-                #A signle mysql query for all sequences
+                #A single mysql query for all sequences
                 query2 = "SELECT family, sequence FROM all_prot_seqs WHERE sequence = "
                 query2 = query2+'"'+str(list_of_pep_seqs[0])+'"'+' OR sequence="'
                 sep = '" OR sequence="'
@@ -492,7 +502,7 @@ def upload_peptide():
                 divide = (len(list_of_pep_seqs)/5000)+1
                 #split the sequences into lists of around 5000 sequences
                 list_of_pep_seqs=chunkify(list_of_pep_seqs, divide)
-                result_seq2=[]
+
                 #query for each ~5000 sequences
                 for ele in list_of_pep_seqs:
                     cur = connection.cursor()
@@ -506,28 +516,39 @@ def upload_peptide():
                         result_seq2.append(ele)
                 cur.close()
 
+            # If not result is found, display no match
             if len(result_seq2)==0:
                 result_seq_multi="No match was found!"
                 return render_template("upload_peptide.html", result_seq = result_seq_multi)#result_seq_multi)
 
-
-
+            # If a result is found, the data from dropdown boxes are saved into memory
             if len(result_seq2) != 0:
                 tissue_type = str(request.form.get('tissue_type'))
                 disease_type = str(request.form.get('disease_type'))
 
-                #If data has been saved into memory, a hash check is conducted on the original file that was read in
+
+                # CHecks to see if the hash checker file is present otehrwise creates it
+                if os.path.isfile(APP_ROOT+"/uploaded/hash_checker.csv"):
+                    pass
+                else:
+                    open("hash_checker.csv", "w")
+
                 #If the unique hash check is not duplicate, the data is saved for the atlas expression
                 #otherwise the data is not saved (due to it already existing from the same source file)
-                hashed2 = str(hashlib.sha224(whole_file).hexdigest())
+                #if no match is found
+                # The family matches, and the data from the dropdown boxes are saved into MySQL
+                # Using MySQL query. This data can then be viewed in expression atlas.
                 with open("hash_checker.csv", "r+b") as f:
-
                     reader = csv.reader(f)
                     writer = csv.writer(f)
                     for row in reader:
-                        rowlist2.append(row[0])
-                    if hashed2 not in rowlist2:
-                        rowlist.append(hashed2)
+                        # Checks if row is empty, if not, appends rows to memory
+                        if not (row):
+                            pass
+                        else:
+                            rowlist2.append(row[0])
+                    if hashed not in rowlist2:
+                        rowlist.append(hashed)
                         writer.writerow(rowlist)
                         result_seq_multi2 = result_seq2
                         cur = connection.cursor()
@@ -536,47 +557,20 @@ def upload_peptide():
                             cur.fetchall()
                         query3 = ("UPDATE exp_atlas_count SET counts = (SELECT COUNT(tissue_type) FROM exp_atlas);")
                         cur.execute(query3)
-                        query5 = ("UPDATE exp_atlas_count SET " + tissue_type + " = (SELECT COUNT(tissue_type) FROM exp_atlas WHERE tissue_type = '" + tissue_type + "');")
-                        cur.execute(query5)
+                        try:
+                            query4 = ("UPDATE exp_atlas_count SET " + tissue_type + " = (SELECT COUNT(tissue_type) FROM exp_atlas WHERE tissue_type = '" + tissue_type + "');")
+                            cur.execute(query4)
+                        except:
+                            pass
+                        try:
+                            query5 = ("UPDATE exp_atlas_disease_counts SET " + disease_type + " = (SELECT COUNT(disease_type) FROM exp_atlas WHERE disease_type = '" + disease_type + "');")
+                            cur.execute(query5)
+                        except:
+                            pass
                         connection.commit()
                         cur.close()
 
-
-
-
-
-
-                        # with open("atlas_seqs.csv", "a") as csvfile:
-                        #     writer = csv.writer(csvfile)
-                        #     for i in range(0, len(result_seq2)):
-                        #
-                        #
-                        #
-                        #         result_seq_write.append(result_seq2[i][0])
-                        #         tissue_type_write.append(tissue_type)
-                        #         disease_type_write.append(disease_type)
-                        #         writer.writerow(result_seq_write)
-                        #         writer.writerow(tissue_type_write)
-                        #         writer.writerow(disease_type_write)
-                        #         result_seq_write = []
-                        #         tissue_type_write = []
-                        #         disease_type_write = []
-                        # with open("atlas_seqs.csv", "a") as csvfile:
-                        #     writer = csv.writer(csvfile)
-                        #     for i in range(0, len(result_seq2)):
-                        #         result_seq_write.append(result_seq2[i][0])
-                        #         tissue_type_write.append(tissue_type)
-                        #         disease_type_write.append(disease_type)
-                        #         writer.writerow(result_seq_write)
-                        #         writer.writerow(tissue_type_write)
-                        #         writer.writerow(disease_type_write)
-                        #         result_seq_write = []
-                        #         tissue_type_write = []
-                        #         disease_type_write = []
-
-
-
-            return render_template("upload_peptide.html", data=result_seq2, empty = hashed2 + ", " + disease_type + ", " + tissue_type)#result_seq_multi)
+            return render_template("upload_peptide.html", data=result_seq2)#, empty = hashed + ", " + disease_type + ", " + tissue_type)
     else:
         return render_template("upload_peptide.html")
 
@@ -586,20 +580,29 @@ def atlas():
 	#cur.execute("SELECT tissue, COUNT(tissue) AS RTs_no_found, GROUP_CONCAT(DISTINCT RT SEPARATOR ',') AS RT_found FROM exp_atlas GROUP BY Tissue")
 	#atlas=cur.fetchall()
     cur = connection.cursor()
+    cur.execute("SELECT GROUP_CONCAT(DISTINCT disease_type SEPARATOR ','),GROUP_CONCAT(DISTINCT tissue_type SEPARATOR ','), COUNT(tissue_type) AS RTs_no_found, GROUP_CONCAT(DISTINCT repeat_family SEPARATOR ',') AS RT_found, concat(round(((SELECT COUNT(disease_type))/(SELECT counts from exp_atlas_count)* 100 )),'%') FROM exp_atlas GROUP BY disease_type;")
+    overall_disease_percentage=cur.fetchall()
+    #overall_disease_percentage = overall_disease_percentage.replace("_", " ")
+
+    #overall_disease_percentage2 = [list(i) for i in overall_disease_percentage]
+    #overall_disease_percentage3 = [[x.replace("_"," ") for x in i] for i in overall_disease_percentage2]
+    #overall_disease_percentage3 = [w.replace('_', ' ') for w in overall_disease_percentage2]
+
+
+
+    #overall_disease_percentage3=[]
+    #for i in overall_disease_percentage2:
+    #    j = i.replace('_',' ')
+    #    overall_disease_percentage3.append(j)
+
+    #lst = [tuple(i for i in tpl if i) for tpl in lst]
+
     cur.execute("SELECT tissue_type, COUNT(tissue_type) AS family_no_found, GROUP_CONCAT(DISTINCT repeat_family SEPARATOR ',') AS family_found,concat(round(((SELECT COUNT(tissue_type))/(SELECT counts from exp_atlas_count)* 100 )),'%') FROM exp_atlas GROUP BY tissue_type;")
     overall_percentage=cur.fetchall()
+    #overall_percentage = overall_percentage.replace("_", " ")
     cur.close()
-    if request.method == "POST":
-        cur = connection.cursor()
-        tissue_type1 = str(request.form.get('tissue_type'))
-        #cur.execute("SELECT tissue_type, COUNT(tissue_type) AS family_no_found, GROUP_CONCAT(DISTINCT repeat_family SEPARATOR ',') AS family_found,concat(round(((SELECT COUNT(repeat_family))/(SELECT %s from exp_atlas_count)* 100 )),'%') FROM exp_atlas WHERE tissue_type = %s GROUP BY repeat_family;", (tissue_type, tissue_type))
-        query4 = "SELECT tissue_type, COUNT(tissue_type) AS family_no_found, GROUP_CONCAT(DISTINCT repeat_family SEPARATOR ',') AS family_found,concat(round(((SELECT COUNT(repeat_family))/(SELECT " + tissue_type1 + " from exp_atlas_count)* 100 )),'%') FROM exp_atlas WHERE tissue_type = '" + tissue_type1 + "' GROUP BY repeat_family;"
-        cur.execute(query4)
-        individual_percentage=cur.fetchall()
-        cur.close()
-        return render_template("expression_atlas.html",overall_percentage=overall_percentage,individual_percentage=individual_percentage)
-    return render_template("expression_atlas.html",overall_percentage=overall_percentage)
 
+    return render_template("expression_atlas.html",overall_percentage=overall_percentage,overall_disease_percentage=overall_disease_percentage)
 @app.route("/documentation")
 def documentation():
     return render_template("documentation.html")
@@ -608,39 +611,39 @@ def documentation():
 def about_us():
     return render_template("about_us.html")
 
-###############################################
 
-@app.route("/profile/<name>")
-def profile(name):
-    return render_template("profile2.html", name=name)
+@app.route("/expression_atlas_2", methods=["GET","POST"])
+def atlas2():
+    if request.method == "POST":
+        ind_repeat_disease = []
+        individual_percentage = []
 
+        cur = connection.cursor()
+        try:
+            disease_type1 = str(request.form.get('disease_type'))
+            cur.execute("SELECT GROUP_CONCAT(DISTINCT disease_type SEPARATOR ','), tissue_type, COUNT(tissue_type) AS RTs_no_found, GROUP_CONCAT(DISTINCT repeat_family SEPARATOR ',') AS RT_found,concat(round(((SELECT COUNT(disease_type))/(SELECT " + disease_type1 + " from exp_atlas_disease_counts)* 100 )),'%') FROM exp_atlas WHERE disease_type = '" + disease_type1 + "' GROUP BY disease_type,tissue_type, repeat_family;")
+            ind_repeat_disease=cur.fetchall()
+        except:
+            pass
 
-@app.route('/user/<username>')
-def show_user_profile(username):
-    return render_template("style.html", username=username)
-    # show the user profile for that user
-    #return 'User %s' % username
+        try:
+            tissue_type1 = str(request.form.get('tissue_type'))
 
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    if request.method == 'POST':
-        pass
-    else:
-        show_the_login_form()
+            #cur.execute("SELECT tissue_type, COUNT(tissue_type) AS family_no_found, GROUP_CONCAT(DISTINCT repeat_family SEPARATOR ',') AS family_found,concat(round(((SELECT COUNT(repeat_family))/(SELECT %s from exp_atlas_count)* 100 )),'%') FROM exp_atlas WHERE tissue_type = %s GROUP BY repeat_family;", (tissue_type, tissue_type))
+            query5 = "SELECT tissue_type, COUNT(tissue_type) AS family_no_found, GROUP_CONCAT(DISTINCT repeat_family SEPARATOR ',') AS family_found,concat(round(((SELECT COUNT(repeat_family))/(SELECT " + tissue_type1 + " from exp_atlas_count)* 100 )),'%') FROM exp_atlas WHERE tissue_type = '" + tissue_type1 + "' GROUP BY repeat_family;"
+            cur.execute(query5)
+            individual_percentage=cur.fetchall()
+        except:
+            pass
+        cur.close()
+        return render_template("expression_atlas_2.html",individual_percentage=individual_percentage,ind_repeat_disease=ind_repeat_disease)
 
-@app.route("/visualise")
-def visualise():
-    return "lolnope"
+    return render_template("expression_atlas_2.html")
 
-
-
-#@app.route("/static")
-#def static1():
-#    url_for('static', filename='style.css')
-
-@app.route('/<path:path>')
-def static_file(path):
-    return app.send_static_file(path)
+@app.errorhandler(404)
+def page_not_found(e):
+    # Returns error page if user goes to any page that is not valid
+    return render_template('404.html'), 404
 
 #if __name__ == "__main__":
 #    app.run(debug=True)

@@ -1,19 +1,23 @@
 # Fettuccine_MSc_Group_Project
 - Ensure you have the following modules install on your pc (by any means necessary e.g using pip install)
-- pytz
+- Flask
+- Pandas (Provides pytz, numpy)
+- Pytz
 - MySQLdb
-- pandas
-- numpy
+- Numpy
+- Biopython
+- Pylab
+- Matplotlib
+- Pygraphviz (and graphviz, not via pip)
 
-- You also need to download MAMP (which does the MYSQL hosting for you) otherwise there will be no database
+- You also need to download MAMP or AAMP for linux (which does the MYSQL hosting for you) otherwise there will be no database
 - https://www.mamp.info/en/
 
 # Complete
-- Added the gantt chart and software architecture templates for filling them with the team.
-- Basic UI complete
-- Documentation tab, semi-complete: DOCUMENTATION still required. Random placeholder file used.
-- Upload function works (uploaded file gets placed into the /uploaded folder)
-- Fasta file can now be read in (upload or search field, also accepts multuple fasta sequences in upload)
+- Gantt Chart
+- Architecture
+- UI
+- All Pages complete
 
 
 link:

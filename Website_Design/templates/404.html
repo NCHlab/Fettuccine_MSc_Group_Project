@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<title>Amino Acid Relationship Viewer</title>
+		<title>Error 404!</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 		<!-- Fonts-->
@@ -33,7 +33,6 @@
 							<div class="search-form__toggle"><i class=""></i></div>
 							<div class="search-form__form">
 
-
 							</div>
 						</div>
 					</div>
@@ -50,7 +49,7 @@
 							</li>
 							<li><a href="{{ url_for('distribution')}}">Distribution</a>
 							</li>
-							<li class="current-menu-item"><a href="#">Translated</a>
+							<li class="fett-menu"><a href="#">Translated</a>
 								<ul class="sub-menu">
 									<li><a href="{{ url_for('serverside_table')}}">Translated products</a>
 									</li>
@@ -86,23 +85,20 @@
 			<div class="md-content">
 				<!-- page-title -->
 				<div class="page-title">
-								<h2 class="page-title__title">Relationship Viewer</h2>
-
-								<div class="container" style="text-align: center">
-									<form action="{{ url_for("relationship_AA")}}" method="POST">
-										<input type="submit" name="rv_button" value="HERV" class="dropbtn_selected">
-										<input type="submit" name="rv_button" value="LINE1" class="dropbtn">
-									</form>
+								<h2 class="page-title__title">ERROR 404!</h2>
+								<hr>
+								WHOOPS!
+								<br>
+								You have taken a wrong turn!
+								<br>
+								This URL you are looking for does not exist!
+								<br>
+								<button onclick="window.location.href='{{ url_for('indexpage')}}'" class="dropbtn">Back To Homepage</button>
 								</div>
-							<hr>
-							<button onclick="window.location.href='{{ url_for('custom_tree')}}'" class="dropbtn">Upload User Tree</button>
-						</div>
-				<div class="container">
-					<a href="/static/assets/img/HERV_TREE.png">
-					<img src="/static/assets/img/HERV_TREE.png"> </a>
-				</div>
 
-			</div>
+
+
+
 
 	</body>
 
