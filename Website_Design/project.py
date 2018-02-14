@@ -519,8 +519,12 @@ def upload_peptide():
             result_seq_multi = "Incorrect filetype uploaded! Please Upload a MzIdent or mzTab formatted file"
             return render_template("upload_peptide.html", result_family=result_seq_multi)
 
+<<<<<<< HEAD
         #list_of_pep_seqs = py_unique(list_of_pep_seqs) #keep only unique sequences
 
+=======
+        list_of_pep_seqs = py_unique(list_of_pep_seqs) #keep only unique sequences
+>>>>>>> 6ee738d342da70fde238c926dae65095637983bf
         str_pep_seqs = ''.join(str(i) for i in list_of_pep_seqs) # converts list to string for hash checker
         hashed = str(hashlib.sha224(str_pep_seqs).hexdigest()) # A hash check of the found peptide sequences of the file is conducted providing a unique SHA224 ID
         #elapsed_python = timeit.default_timer() - start_time
@@ -558,17 +562,6 @@ def upload_peptide():
                 cur.close()
 
 
-                # query2 = "SELECT family, sequence FROM all_prot_seqs WHERE sequence LIKE "
-                # query2 = query2+'"'+"%%"+str(list_of_pep_seqs[0])+"%%"+'" OR sequence LIKE "'+"%%"+''
-                # sep = ''+"%%"+'" OR sequence LIKE "'+"%%"+''
-                # query2 = query2+sep.join(list_of_pep_seqs[1:])
-                # query2 = query2+"%%"+'"'
-                # #return render_template("upload_peptide.html", empty=query2)
-                # cur = connection.cursor()
-                # cur.execute(query2)
-                # result_seq2=cur.fetchall()
-                # cur.close()
-
             #If the inserted file is too big
             elif len(list_of_pep_seqs)>5000:
                 divide = (len(list_of_pep_seqs)/5000)+1
@@ -587,10 +580,10 @@ def upload_peptide():
                         result_seq2.append(somet)
                 cur.close()
 
-            # elapsed = timeit.default_timer() - start_time
-            # print "python = "+str(elapsed_python)
-            # print "all = "+str(elapsed)
-            # print "seqs ="+str(len(list_of_pep_seqs))
+            elapsed = timeit.default_timer() - start_time
+            print "python = "+str(elapsed_python)
+            print "all = "+str(elapsed)
+            print "seqs ="+str(len(list_of_pep_seqs))
             # If not result is found, display no match
             if len(result_seq2)==0:
                 result_seq_multi="No match was found!"
