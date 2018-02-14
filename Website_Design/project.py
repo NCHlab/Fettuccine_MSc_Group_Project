@@ -519,12 +519,12 @@ def upload_peptide():
             result_seq_multi = "Incorrect filetype uploaded! Please Upload a MzIdent or mzTab formatted file"
             return render_template("upload_peptide.html", result_family=result_seq_multi)
 
-<<<<<<< HEAD
+
         #list_of_pep_seqs = py_unique(list_of_pep_seqs) #keep only unique sequences
 
-=======
-        list_of_pep_seqs = py_unique(list_of_pep_seqs) #keep only unique sequences
->>>>>>> 6ee738d342da70fde238c926dae65095637983bf
+
+        #list_of_pep_seqs = py_unique(list_of_pep_seqs) #keep only unique sequences
+
         str_pep_seqs = ''.join(str(i) for i in list_of_pep_seqs) # converts list to string for hash checker
         hashed = str(hashlib.sha224(str_pep_seqs).hexdigest()) # A hash check of the found peptide sequences of the file is conducted providing a unique SHA224 ID
         #elapsed_python = timeit.default_timer() - start_time
