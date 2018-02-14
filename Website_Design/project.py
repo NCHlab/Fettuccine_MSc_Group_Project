@@ -520,7 +520,6 @@ def upload_peptide():
             return render_template("upload_peptide.html", result_family=result_seq_multi)
 
         list_of_pep_seqs = py_unique(list_of_pep_seqs) #keep only unique sequences
-        list_of_pep_seqs = [x for x in list_of_pep_seqs if len(x) > 50]
         str_pep_seqs = ''.join(str(i) for i in list_of_pep_seqs) # converts list to string for hash checker
         hashed = str(hashlib.sha224(str_pep_seqs).hexdigest()) # A hash check of the found peptide sequences of the file is conducted providing a unique SHA224 ID
         elapsed_python = timeit.default_timer() - start_time
@@ -547,26 +546,15 @@ def upload_peptide():
             if len(list_of_pep_seqs)<=5000:
 
                 #A single mysql query for all sequences
-                querya = "SELECT family, sequence FROM all_prot_seqs WHERE INSTR("+'"'+str(list_of_pep_seqs[0])+'"'+", sequence) >0 "
-                queryb = "OR INSTR("+'"'+str(list_of_pep_seqs[1])+'"'+", sequence) >0 OR INSTR("+'"'
-                sep = '"'+", sequence) >0 "+"OR INSTR("+'"'
-                query2 = querya+queryb+sep.join(list_of_pep_seqs[2:])+'", sequence) >0'
+                query2 = "SELECT family, sequence FROM all_prot_seqs2 WHERE sequence LIKE "
+                query2 = query2+'"%'+str(list_of_pep_seqs[0])+'%"'+' OR sequence LIKE "%'
+                sep = '%" OR sequence LIKE "%'
+                query2 = query2+sep.join(list_of_pep_seqs[1:])+'%"'
                 cur = connection.cursor()
                 cur.execute(query2)
                 result_seq2=cur.fetchall()
                 cur.close()
 
-
-                # query2 = "SELECT family, sequence FROM all_prot_seqs WHERE sequence LIKE "
-                # query2 = query2+'"'+"%%"+str(list_of_pep_seqs[0])+"%%"+'" OR sequence LIKE "'+"%%"+''
-                # sep = ''+"%%"+'" OR sequence LIKE "'+"%%"+''
-                # query2 = query2+sep.join(list_of_pep_seqs[1:])
-                # query2 = query2+"%%"+'"'
-                # #return render_template("upload_peptide.html", empty=query2)
-                # cur = connection.cursor()
-                # cur.execute(query2)
-                # result_seq2=cur.fetchall()
-                # cur.close()
 
             #If the inserted file is too big
             elif len(list_of_pep_seqs)>5000:
@@ -577,14 +565,15 @@ def upload_peptide():
                 #query for each ~5000 sequences
                 for ele in list_of_pep_seqs:
                     cur = connection.cursor()
-                    querya = "SELECT family, sequence FROM all_prot_seqs WHERE INSTR("+'"'+str(ele[0])+'"'+", sequence) >0 "
-                    queryb = "OR INSTR("+'"'+str(ele[1])+'"'+", sequence) >0 OR INSTR("+'"'
-                    sep = '"'+", sequence) >0 "+"OR INSTR("+'"'
-                    query2 = querya+queryb+sep.join(ele[2:])+'", sequence) >0'
+                    query2 = "SELECT family, sequence FROM all_prot_seqs2 WHERE sequence LIKE "
+                    query2 = query2+'"%'+str(ele[0])+'%"'+' OR sequence LIKE "%'
+                    sep = '%" OR sequence LIKE "%'
+                    query2 = query2+sep.join(list_of_pep_seqs[1:])+'%"'
                     cur.execute(query2)
                     for somet in cur.fetchall():
                         result_seq2.append(somet)
                 cur.close()
+
             elapsed = timeit.default_timer() - start_time
             print "python = "+str(elapsed_python)
             print "all = "+str(elapsed)
