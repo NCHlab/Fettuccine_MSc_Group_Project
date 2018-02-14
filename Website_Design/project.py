@@ -1,6 +1,4 @@
 from flask import Flask, send_from_directory, render_template, request, url_for, flash
-#from datetime import datetime
-#from pytz import timezone
 import os
 import os.path
 import MySQLdb
@@ -34,17 +32,12 @@ except:
 #Serverside processing:
 table_builder = TableBuilder()
 
-#import xml.etree.ElementTree as ET
-#from pyfastaq import sequences
-#import fasta
-
 app = Flask(__name__)
 from common.routes import main #Serverside processing - Creates a root for the serverside tables (common/routes.py)
 from mod_tables.controllers import tables #Serverside processing - Convert DB data into json obsects
 app.register_blueprint(main) #roots defined above
 app.register_blueprint(tables) #roots defined above
 APP_ROOT = os.path.dirname(os.path.abspath(__file__))
-#app.secret_key = 'SUPER_SECRET_KEY_BIO_PROJECT'
 
 #Safety measures
 ALLOWED_EXTENSIONS = set(["xml", "mzid", "mzTab", "mztab" ,"fasta"])
@@ -90,7 +83,6 @@ def indexpage():
 
 #Family Table - LINE1
 @app.route('/family_table_LINE1')
-
 def family_table_LINE1():
     #Get LINE-1 repeats from DB
     cur.execute("SELECT repeat_name, no_repeats, no_proteins_found, proteins_found FROM `l1_groupby_repeat_names` ORDER BY `l1_groupby_repeat_names`.`no_proteins_found` DESC")
@@ -98,9 +90,8 @@ def family_table_LINE1():
     #Return them to the website
     return render_template("family_table_LINE1.html", data=HERV_LbR_rows)
 
-#Family table - HERV SUperfamilies
+#Family table - HERV Superfamilies
 @app.route("/family_table_HERV_Superfamilies")
-
 def family_table_HERV_Superfamilies():
     #Get HERV repeats from DB
     cur.execute("SELECT superfamily, description, no_repeats, no_proteins_found, proteins_found FROM `herv_groupby_superfamilies`")
@@ -118,31 +109,26 @@ def family_table_HERV_Superfamilies():
 
 #Family table - HERV SUperfamilies
 @app.route("/family_table_HERV_Families")
-
 def family_table_HERV_Families():
     #Get HERV families from DB
     cur.execute("SELECT * FROM `herv_groupby_families`")
     HERV_GbF_rows = cur.fetchall()
-
     #Return data for the tables to the html
     return render_template("family_table_HERV_Families.html", data=HERV_GbF_rows)
 
 #Family table - HERV Repeats
 @app.route("/family_table_HERV_Repeats")
 def family_table_HERV_Repeats():
-
     #Get HERV Repeats from DB
     cur.execute("SELECT * FROM `herv_groupby_repeat_names`")
     HERV_GbR_rows = cur.fetchall()
     wisit="Repeat Name"
-
     #Return data for the tables to the html
     return render_template("family_table_HERV_Repeats.html", data=HERV_GbR_rows)
 
 #Distribution
 @app.route("/distribution")
 def distribution():
-
     #Get HERV Repeats from DB
     cur.execute("SELECT counts FROM `herv_chromosome_count`") #select the number of HERV repeats for each chromosome
     Herv_count=cur.fetchall()
@@ -150,7 +136,6 @@ def distribution():
     cur.execute("SELECT counts FROM `l1_chromosome_count`") #select the number of LINE1 repeats for each chromosome
     L1_count=cur.fetchall()
     L=[element for l in L1_count for element in l] #removes tuple
-
     #Return data for the tables to the html
     return render_template("distribution.html", H=H, L=L)
 
@@ -217,9 +202,7 @@ def custom_tree():
                 error_msg = "Incorrect filetype uploaded! Please Upload a Newick formatted file"
                 return render_template("relationship_AA.html", error_msg=error_msg)
 
-
             if filename3.rsplit('.', 1)[1].lower() in ALLOWED_EX_NWK:
-
                 dpi_type = int(request.form.get('dpi_type'))
 
                     # Checks the current directory and moves to the correct folder
@@ -232,7 +215,6 @@ def custom_tree():
                 elif os.getcwd() == APP_ROOT+"\sequence_ident":
                     os.chdir("../static/assets/img/customtree/")
 
-
                 tree = Phylo.read(filename3, 'newick')
                 tree.ladderize()   # Flip branches so deeper clades are displayed at top
                 Phylo.draw(tree)
@@ -244,11 +226,7 @@ def custom_tree():
                 #     pass
                 #
                 # pylab.savefig("customtree.png", dpi=dpi_type)
-
-
                 return render_template("custom_tree.html")
-
-
     else:
         return render_template("relationship_AA.html")
 
@@ -272,7 +250,6 @@ def py_unique(data):
 
 #Protein sequence identifier
 @app.route("/peptide_seq_ident", methods=["GET","POST"])
-
 def peptide_seq_ident():
     result_seq_one = []
     result_seq_multi = []
@@ -519,17 +496,11 @@ def upload_peptide():
             result_seq_multi = "Incorrect filetype uploaded! Please Upload a MzIdent or mzTab formatted file"
             return render_template("upload_peptide.html", result_family=result_seq_multi)
 
-
-        #list_of_pep_seqs = py_unique(list_of_pep_seqs) #keep only unique sequences
-
-
-        #list_of_pep_seqs = py_unique(list_of_pep_seqs) #keep only unique sequences
-
         str_pep_seqs = ''.join(str(i) for i in list_of_pep_seqs) # converts list to string for hash checker
         hashed = str(hashlib.sha224(str_pep_seqs).hexdigest()) # A hash check of the found peptide sequences of the file is conducted providing a unique SHA224 ID
-        #elapsed_python = timeit.default_timer() - start_time
+
         if len(list_of_pep_seqs) == 1:
-            #If only 1 fasta sequence in file
+            #If only 1 sequence in file
             cur = connection.cursor()
             for seqs in list_of_pep_seqs:
                 rows_count = cur.execute("SELECT family, sequence FROM all_prot_seqs2 WHERE sequence LIKE %s", ["%%"+seqs+"%%"])
@@ -542,9 +513,6 @@ def upload_peptide():
             if not cur.rowcount:
                 cur.close()
                 return render_template("upload_peptide.html", result_family=no_match)
-            # else: #return match
-            #
-            #     return render_template("upload_peptide.html", data=result_seq2)
 
         else:
             #If the inserted file is up to or equal to 5000 sequences
@@ -646,18 +614,15 @@ def upload_peptide():
 
 @app.route("/expression_atlas", methods=["GET","POST"])
 def atlas():
-	#cur.execute("SELECT tissue, COUNT(tissue) AS RTs_no_found, GROUP_CONCAT(DISTINCT RT SEPARATOR ',') AS RT_found FROM exp_atlas GROUP BY Tissue")
-	#atlas=cur.fetchall()
     cur = connection.cursor()
     cur.execute("SELECT GROUP_CONCAT(DISTINCT disease_type SEPARATOR ','),GROUP_CONCAT(DISTINCT tissue_type SEPARATOR ','), COUNT(tissue_type) AS RTs_no_found, concat(round(((SELECT COUNT(disease_type))/(SELECT counts from exp_atlas_count)* 100 )),'%'), GROUP_CONCAT(DISTINCT repeat_family SEPARATOR ',') AS RT_found,GROUP_CONCAT(DISTINCT sequence SEPARATOR ',') FROM exp_atlas GROUP BY disease_type;")
     overall_disease_percentage=cur.fetchall()
 
     cur.execute("SELECT tissue_type, COUNT(tissue_type) AS family_no_found, concat(round(((SELECT COUNT(tissue_type))/(SELECT counts from exp_atlas_count)* 100 )),'%'), GROUP_CONCAT(DISTINCT repeat_family SEPARATOR ',') AS family_found,GROUP_CONCAT(DISTINCT sequence SEPARATOR ',') FROM exp_atlas GROUP BY tissue_type;")
     overall_percentage=cur.fetchall()
-    #overall_percentage = overall_percentage.replace("_", " ")
     cur.close()
-
     return render_template("expression_atlas.html",overall_percentage=overall_percentage,overall_disease_percentage=overall_disease_percentage)
+
 @app.route("/documentation")
 def documentation():
     return render_template("documentation.html")
@@ -672,7 +637,6 @@ def atlas2():
     if request.method == "POST":
         ind_repeat_disease = []
         individual_percentage = []
-
         cur = connection.cursor()
         try:
             disease_type1 = str(request.form.get('disease_type'))
@@ -683,16 +647,12 @@ def atlas2():
 
         try:
             tissue_type1 = str(request.form.get('tissue_type'))
-
-            #cur.execute("SELECT tissue_type, COUNT(tissue_type) AS family_no_found, GROUP_CONCAT(DISTINCT repeat_family SEPARATOR ',') AS family_found,concat(round(((SELECT COUNT(repeat_family))/(SELECT %s from exp_atlas_count)* 100 )),'%') FROM exp_atlas WHERE tissue_type = %s GROUP BY repeat_family;", (tissue_type, tissue_type))
-            query5 = "SELECT tissue_type, COUNT(tissue_type) AS family_no_found, concat(round(((SELECT COUNT(repeat_family))/(SELECT " + tissue_type1 + " from exp_atlas_count)* 100 )),'%'), GROUP_CONCAT(DISTINCT repeat_family SEPARATOR ',') AS family_found,GROUP_CONCAT(DISTINCT sequence SEPARATOR ',') FROM exp_atlas WHERE tissue_type = '" + tissue_type1 + "' GROUP BY repeat_family;"
-            cur.execute(query5)
+            cur.execute("SELECT tissue_type, COUNT(tissue_type) AS family_no_found, concat(round(((SELECT COUNT(repeat_family))/(SELECT " + tissue_type1 + " from exp_atlas_count)* 100 )),'%'), GROUP_CONCAT(DISTINCT repeat_family SEPARATOR ',') AS family_found,GROUP_CONCAT(DISTINCT sequence SEPARATOR ',') FROM exp_atlas WHERE tissue_type = '" + tissue_type1 + "' GROUP BY repeat_family;")
             individual_percentage=cur.fetchall()
         except:
             pass
         cur.close()
         return render_template("expression_atlas_2.html",individual_percentage=individual_percentage,ind_repeat_disease=ind_repeat_disease)
-
     return render_template("expression_atlas_2.html")
 
 @app.errorhandler(404)
