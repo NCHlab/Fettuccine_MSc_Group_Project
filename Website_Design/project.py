@@ -13,10 +13,16 @@ import csv
 import hashlib
 import json
 import cgi
-from mod_tables.models import TableBuilder
+
+#Serverside processing used for huge protein tables from DB
+#Serverside processing: https://github.com/SergioLlana/datatables-flask-serverside
+from mod_tables.models import TableBuilder #Serverside processing - Gets the protein data from DB (mod_tables/models.py)
+
 import matplotlib
 import matplotlib.pyplot as plt
 import timeit
+
+#Packages for "Create your own tree function"
 try:
     import pylab
     import pygraphviz
@@ -25,19 +31,22 @@ except:
     print "PLEASE INSTALL pip install pygraphviz !!!!!!!!!!!!!!!!!!!!!!"
     print "PLEASE INSTALL pip install matplotlib !!!!!!!!!!!!!!!!!"
 
+#Serverside processing:
 table_builder = TableBuilder()
+
 #import xml.etree.ElementTree as ET
 #from pyfastaq import sequences
 #import fasta
 
 app = Flask(__name__)
-from common.routes import main
-from mod_tables.controllers import tables
-app.register_blueprint(main)
-app.register_blueprint(tables)
+from common.routes import main #Serverside processing - Creates a root for the serverside tables (common/routes.py)
+from mod_tables.controllers import tables #Serverside processing - Convert DB data into json obsects
+app.register_blueprint(main) #roots defined above
+app.register_blueprint(tables) #roots defined above
 APP_ROOT = os.path.dirname(os.path.abspath(__file__))
 #app.secret_key = 'SUPER_SECRET_KEY_BIO_PROJECT'
 
+#Safety measures
 ALLOWED_EXTENSIONS = set(["xml", "mzid", "mzTab", "mztab" ,"fasta"])
 ALLOWED_EX_XML = set(["xml", "mzid"])
 ALLOWED_EX_MZTAB = set(["mzTab", "mztab"])
@@ -79,65 +88,95 @@ def indexpage():
     total_index_count ="{:,.0f}".format(int(total_index_count[0][0]))
     return render_template("index.html", herv_index = herv_index_count, l1_index = l1_index_count, total_index = total_index_count)
 
+#Family Table - LINE1
 @app.route('/family_table_LINE1')
+
 def family_table_LINE1():
+    #Get LINE-1 repeats from DB
     cur.execute("SELECT repeat_name, no_repeats, no_proteins_found, proteins_found FROM `l1_groupby_repeat_names` ORDER BY `l1_groupby_repeat_names`.`no_proteins_found` DESC")
     HERV_LbR_rows = cur.fetchall()
+    #Return them to the website
     return render_template("family_table_LINE1.html", data=HERV_LbR_rows)
 
-@app.route("/protein_table_HERV")
-def serverside_table():
-    return render_template("erv_proteins.html")
-
-@app.route("/protein_table_L1")
-def serverside_table2():
-    return render_template("l1_proteins.html")
-
+#Family table - HERV SUperfamilies
 @app.route("/family_table_HERV_Superfamilies")
+
 def family_table_HERV_Superfamilies():
+    #Get HERV repeats from DB
     cur.execute("SELECT superfamily, description, no_repeats, no_proteins_found, proteins_found FROM `herv_groupby_superfamilies`")
     HERV_GbS_rows = cur.fetchall()
     protlist = []
     countlist = []
+
+    #Get values for the Bar Chart
     for ele in HERV_GbS_rows:
-        countlist.append(int(ele[2]))
-        protlist.append(int(ele[3]))
+        countlist.append(int(ele[2])) #Values for the chart
+        protlist.append(int(ele[3])) #Legend names
+
+    #Return data for table and chart to the html
     return render_template("family_table_HERV_Superfamilies.html", data=HERV_GbS_rows, arr_sc=countlist, arr_sc_2=protlist)
 
+#Family table - HERV SUperfamilies
 @app.route("/family_table_HERV_Families")
+
 def family_table_HERV_Families():
+    #Get HERV families from DB
     cur.execute("SELECT * FROM `herv_groupby_families`")
     HERV_GbF_rows = cur.fetchall()
+
+    #Return data for the tables to the html
     return render_template("family_table_HERV_Families.html", data=HERV_GbF_rows)
 
-
+#Family table - HERV Repeats
 @app.route("/family_table_HERV_Repeats")
 def family_table_HERV_Repeats():
+
+    #Get HERV Repeats from DB
     cur.execute("SELECT * FROM `herv_groupby_repeat_names`")
     HERV_GbR_rows = cur.fetchall()
     wisit="Repeat Name"
+
+    #Return data for the tables to the html
     return render_template("family_table_HERV_Repeats.html", data=HERV_GbR_rows)
 
-
+#Distribution
 @app.route("/distribution")
 def distribution():
+
+    #Get HERV Repeats from DB
     cur.execute("SELECT counts FROM `herv_chromosome_count`") #select the number of HERV repeats for each chromosome
     Herv_count=cur.fetchall()
     H=[element for h in Herv_count for element in h] #removes tuple
     cur.execute("SELECT counts FROM `l1_chromosome_count`") #select the number of LINE1 repeats for each chromosome
     L1_count=cur.fetchall()
     L=[element for l in L1_count for element in l] #removes tuple
+
+    #Return data for the tables to the html
     return render_template("distribution.html", H=H, L=L)
 
-@app.route("/AA_seq_list")
-def AA_seq_list():
-    return render_template("AA_seq_list.html")
+#Protein Table - HERV
+@app.route("/protein_table_HERV")
+def serverside_table():
+    #Opens the url and displays the serverside table
+    #This is serverside processing - See above
+    return render_template("erv_proteins.html")
+
+#Protein Table - LINE-1
+@app.route("/protein_table_L1")
+def serverside_table2():
+    #Opens the url and displays the serverside table
+    #This is serverside processing - See above
+    return render_template("l1_proteins.html")
 
 @app.route("/relationship_AA", methods=["GET", "POST"])
 def relationship_AA():
     if request.method == "POST":
+
+        #HERV tree image
         if request.form["rv_button"] == "HERV":
             return render_template("herv_rv.html")
+
+        #LINE-1 tree image
         elif request.form["rv_button"] == "LINE1":
             return render_template("line1_rv.html")
     else:
@@ -213,11 +252,27 @@ def custom_tree():
     else:
         return render_template("relationship_AA.html")
 
+@app.route("/AA_seq_list")
+def AA_seq_list():
+    return render_template("AA_seq_list.html")
+
 @app.route("/line1_rv")
 def line1_rv():
     return render_template("line1_rv.html")
 
+#Functions needed for FASTA and MZID-MZTAB identifiers
+
+#Split a list into chunks
+def chunkify(lst,n):
+    return [lst[i::n] for i in xrange(n)]
+
+#Remove identical elements of a list
+def py_unique(data):
+    return list(set(data))
+
+#Protein sequence identifier
 @app.route("/peptide_seq_ident", methods=["GET","POST"])
+
 def peptide_seq_ident():
     result_seq_one = []
     result_seq_multi = []
@@ -304,11 +359,13 @@ def peptide_seq_ident():
                 # otherwise display Family + sequence
                 record_list = list(SeqIO.parse(filename, "fasta"))
                 temp_list=[]
+
                 for rec in record_list:
                     temp_list.append(str(rec.seq))
 
                 if len(record_list) == 1:
                     #If only 1 fasta sequence in file
+
                     for record in SeqIO.parse(filename, "fasta"):
                         recordID = record.seq
                         cur = connection.cursor()
@@ -316,6 +373,7 @@ def peptide_seq_ident():
                         cur.execute("SELECT family, sequence FROM all_prot_seqs WHERE sequence = %s", [recordID])
                         result_seq =  cur.fetchall()
                         cur.close()
+
                     if not cur.rowcount:
                       return render_template("peptide_seq_ident.html", empty=no_match)
                     else:
@@ -337,9 +395,11 @@ def peptide_seq_ident():
                         cur.close()
 
                     elif len(record_list)>5000:
+                        #Split records into 5000 chunks
                         divide = (len(record_list)/5000)+1
                         record_list = chunkify(record_list, divide)
                         result_seq=[]
+
                         for ele in record_list:
                             query = "SELECT family, sequence FROM all_prot_seqs WHERE sequence = "
                             query = query+'"'+str(ele[0])+'"'+' OR sequence="'
@@ -369,11 +429,6 @@ def peptide_seq_ident():
         cur.close()
         return render_template("peptide_seq_ident.html", data1=result_seq)
 
-def chunkify(lst,n):
-    return [lst[i::n] for i in xrange(n)]
-
-def py_unique(data):
-    return list(set(data))
 
 @app.route("/upload_peptide", methods=["GET","POST"])
 def upload_peptide():
@@ -558,6 +613,7 @@ def upload_peptide():
                         writer.writerow(rowlist)
                         result_seq_multi2 = result_seq2
                         cur = connection.cursor()
+
                         for i in range(0, len(result_seq2)):
                             cur.execute("INSERT INTO exp_atlas(tissue_type, repeat_family, disease_type) VALUES (%s,%s,%s);", (tissue_type, result_seq2[i][0], disease_type))
                             cur.fetchall()
