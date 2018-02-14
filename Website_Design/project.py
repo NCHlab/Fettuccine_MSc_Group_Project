@@ -497,6 +497,18 @@ def upload_peptide():
                 result_seq2=cur.fetchall()
                 cur.close()
 
+
+                # query2 = "SELECT family, sequence FROM all_prot_seqs WHERE sequence LIKE "
+                # query2 = query2+'"'+"%%"+str(list_of_pep_seqs[0])+"%%"+'" OR sequence LIKE "'+"%%"+''
+                # sep = ''+"%%"+'" OR sequence LIKE "'+"%%"+''
+                # query2 = query2+sep.join(list_of_pep_seqs[1:])
+                # query2 = query2+"%%"+'"'
+                # #return render_template("upload_peptide.html", empty=query2)
+                # cur = connection.cursor()
+                # cur.execute(query2)
+                # result_seq2=cur.fetchall()
+                # cur.close()
+
             #If the inserted file is too big
             elif len(list_of_pep_seqs)>5000:
                 divide = (len(list_of_pep_seqs)/5000)+1
@@ -580,10 +592,10 @@ def atlas():
 	#cur.execute("SELECT tissue, COUNT(tissue) AS RTs_no_found, GROUP_CONCAT(DISTINCT RT SEPARATOR ',') AS RT_found FROM exp_atlas GROUP BY Tissue")
 	#atlas=cur.fetchall()
     cur = connection.cursor()
-    cur.execute("SELECT GROUP_CONCAT(DISTINCT disease_type SEPARATOR ','),GROUP_CONCAT(DISTINCT tissue_type SEPARATOR ','), COUNT(tissue_type) AS RTs_no_found, GROUP_CONCAT(DISTINCT repeat_family SEPARATOR ',') AS RT_found,GROUP_CONCAT(DISTINCT sequence SEPARATOR ','),concat(round(((SELECT COUNT(disease_type))/(SELECT counts from exp_atlas_count)* 100 )),'%') FROM exp_atlas GROUP BY disease_type;")
+    cur.execute("SELECT GROUP_CONCAT(DISTINCT disease_type SEPARATOR ','),GROUP_CONCAT(DISTINCT tissue_type SEPARATOR ','), COUNT(tissue_type) AS RTs_no_found, concat(round(((SELECT COUNT(disease_type))/(SELECT counts from exp_atlas_count)* 100 )),'%'), GROUP_CONCAT(DISTINCT repeat_family SEPARATOR ',') AS RT_found,GROUP_CONCAT(DISTINCT sequence SEPARATOR ',') FROM exp_atlas GROUP BY disease_type;")
     overall_disease_percentage=cur.fetchall()
 
-    cur.execute("SELECT tissue_type, COUNT(tissue_type) AS family_no_found, GROUP_CONCAT(DISTINCT repeat_family SEPARATOR ',') AS family_found,GROUP_CONCAT(DISTINCT sequence SEPARATOR ','),concat(round(((SELECT COUNT(tissue_type))/(SELECT counts from exp_atlas_count)* 100 )),'%') FROM exp_atlas GROUP BY tissue_type;")
+    cur.execute("SELECT tissue_type, COUNT(tissue_type) AS family_no_found, concat(round(((SELECT COUNT(tissue_type))/(SELECT counts from exp_atlas_count)* 100 )),'%'), GROUP_CONCAT(DISTINCT repeat_family SEPARATOR ',') AS family_found,GROUP_CONCAT(DISTINCT sequence SEPARATOR ',') FROM exp_atlas GROUP BY tissue_type;")
     overall_percentage=cur.fetchall()
     #overall_percentage = overall_percentage.replace("_", " ")
     cur.close()
@@ -607,7 +619,7 @@ def atlas2():
         cur = connection.cursor()
         try:
             disease_type1 = str(request.form.get('disease_type'))
-            cur.execute("SELECT GROUP_CONCAT(DISTINCT disease_type SEPARATOR ','), tissue_type, COUNT(tissue_type) AS RTs_no_found, GROUP_CONCAT(DISTINCT repeat_family SEPARATOR ',') AS RT_found,sequence,concat(round(((SELECT COUNT(disease_type))/(SELECT " + disease_type1 + " from exp_atlas_disease_counts)* 100 )),'%') FROM exp_atlas WHERE disease_type = '" + disease_type1 + "' GROUP BY disease_type,tissue_type, repeat_family;")
+            cur.execute("SELECT GROUP_CONCAT(DISTINCT disease_type SEPARATOR ','), tissue_type, COUNT(tissue_type) AS RTs_no_found, concat(round(((SELECT COUNT(disease_type))/(SELECT " + disease_type1 + " from exp_atlas_disease_counts)* 100 )),'%'), GROUP_CONCAT(DISTINCT repeat_family SEPARATOR ',') AS RT_found,sequence FROM exp_atlas WHERE disease_type = '" + disease_type1 + "' GROUP BY disease_type,tissue_type, repeat_family;")
             ind_repeat_disease=cur.fetchall()
         except:
             pass
@@ -616,7 +628,7 @@ def atlas2():
             tissue_type1 = str(request.form.get('tissue_type'))
 
             #cur.execute("SELECT tissue_type, COUNT(tissue_type) AS family_no_found, GROUP_CONCAT(DISTINCT repeat_family SEPARATOR ',') AS family_found,concat(round(((SELECT COUNT(repeat_family))/(SELECT %s from exp_atlas_count)* 100 )),'%') FROM exp_atlas WHERE tissue_type = %s GROUP BY repeat_family;", (tissue_type, tissue_type))
-            query5 = "SELECT tissue_type, COUNT(tissue_type) AS family_no_found, GROUP_CONCAT(DISTINCT repeat_family SEPARATOR ',') AS family_found,GROUP_CONCAT(DISTINCT sequence SEPARATOR ','),concat(round(((SELECT COUNT(repeat_family))/(SELECT " + tissue_type1 + " from exp_atlas_count)* 100 )),'%') FROM exp_atlas WHERE tissue_type = '" + tissue_type1 + "' GROUP BY repeat_family;"
+            query5 = "SELECT tissue_type, COUNT(tissue_type) AS family_no_found, concat(round(((SELECT COUNT(repeat_family))/(SELECT " + tissue_type1 + " from exp_atlas_count)* 100 )),'%'), GROUP_CONCAT(DISTINCT repeat_family SEPARATOR ',') AS family_found,GROUP_CONCAT(DISTINCT sequence SEPARATOR ',') FROM exp_atlas WHERE tissue_type = '" + tissue_type1 + "' GROUP BY repeat_family;"
             cur.execute(query5)
             individual_percentage=cur.fetchall()
         except:
