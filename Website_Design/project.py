@@ -519,27 +519,28 @@ def upload_peptide():
             result_seq_multi = "Incorrect filetype uploaded! Please Upload a MzIdent or mzTab formatted file"
             return render_template("upload_peptide.html", result_family=result_seq_multi)
 
-        list_of_pep_seqs = py_unique(list_of_pep_seqs) #keep only unique sequences
-        list_of_pep_seqs = [x for x in list_of_pep_seqs if len(x) > 50]
+        #list_of_pep_seqs = py_unique(list_of_pep_seqs) #keep only unique sequences
+
         str_pep_seqs = ''.join(str(i) for i in list_of_pep_seqs) # converts list to string for hash checker
         hashed = str(hashlib.sha224(str_pep_seqs).hexdigest()) # A hash check of the found peptide sequences of the file is conducted providing a unique SHA224 ID
-        elapsed_python = timeit.default_timer() - start_time
+        #elapsed_python = timeit.default_timer() - start_time
         if len(list_of_pep_seqs) == 1:
             #If only 1 fasta sequence in file
             cur = connection.cursor()
             for seqs in list_of_pep_seqs:
-                rows_count = cur.execute("SELECT family, sequence FROM all_prot_seqs WHERE INSTR(%s, sequence) <> 0", [seqs])
-                cur.execute("SELECT family, sequence FROM all_prot_seqs WHERE INSTR(%s, sequence) <> 0", [seqs])
-                result_seq =  cur.fetchall()
+                rows_count = cur.execute("SELECT family, sequence FROM all_prot_seqs2 WHERE sequence LIKE %s", ["%%"+seqs+"%%"])
+                cur.execute("SELECT family, sequence FROM all_prot_seqs2 WHERE sequence LIKE %s", ["%%"+seqs+"%%"])
+                result_seq2 =  cur.fetchall()
+                cur.close()
 
 
             #return no match
             if not cur.rowcount:
                 cur.close()
                 return render_template("upload_peptide.html", result_family=no_match)
-            else: #return match
-                cur.close()
-                return render_template("upload_peptide.html", data=result_seq)
+            # else: #return match
+            #
+            #     return render_template("upload_peptide.html", data=result_seq2)
 
         else:
             #If the inserted file is up to or equal to 5000 sequences
@@ -547,10 +548,10 @@ def upload_peptide():
             if len(list_of_pep_seqs)<=5000:
 
                 #A single mysql query for all sequences
-                querya = "SELECT family, sequence FROM all_prot_seqs WHERE INSTR("+'"'+str(list_of_pep_seqs[0])+'"'+", sequence) >0 "
-                queryb = "OR INSTR("+'"'+str(list_of_pep_seqs[1])+'"'+", sequence) >0 OR INSTR("+'"'
-                sep = '"'+", sequence) >0 "+"OR INSTR("+'"'
-                query2 = querya+queryb+sep.join(list_of_pep_seqs[2:])+'", sequence) >0'
+                query2 = "SELECT family, sequence FROM all_prot_seqs2 WHERE sequence LIKE "
+                query2 = query2+'"%'+str(list_of_pep_seqs[0])+'%"'+' OR sequence LIKE "%'
+                sep = '%" OR sequence LIKE "%'
+                query2 = query2+sep.join(list_of_pep_seqs[1:])+'%"'
                 cur = connection.cursor()
                 cur.execute(query2)
                 result_seq2=cur.fetchall()
@@ -577,72 +578,73 @@ def upload_peptide():
                 #query for each ~5000 sequences
                 for ele in list_of_pep_seqs:
                     cur = connection.cursor()
-                    querya = "SELECT family, sequence FROM all_prot_seqs WHERE INSTR("+'"'+str(ele[0])+'"'+", sequence) >0 "
-                    queryb = "OR INSTR("+'"'+str(ele[1])+'"'+", sequence) >0 OR INSTR("+'"'
-                    sep = '"'+", sequence) >0 "+"OR INSTR("+'"'
-                    query2 = querya+queryb+sep.join(ele[2:])+'", sequence) >0'
+                    query2 = "SELECT family, sequence FROM all_prot_seqs2 WHERE sequence LIKE "
+                    query2 = query2+'"%'+str(ele[0])+'%"'+' OR sequence LIKE "%'
+                    sep = '%" OR sequence LIKE "%'
+                    query2 = query2+sep.join(list_of_pep_seqs[1:])+'%"'
                     cur.execute(query2)
                     for somet in cur.fetchall():
                         result_seq2.append(somet)
                 cur.close()
-            elapsed = timeit.default_timer() - start_time
-            print "python = "+str(elapsed_python)
-            print "all = "+str(elapsed)
-            print "seqs ="+str(len(list_of_pep_seqs))
+
+            # elapsed = timeit.default_timer() - start_time
+            # print "python = "+str(elapsed_python)
+            # print "all = "+str(elapsed)
+            # print "seqs ="+str(len(list_of_pep_seqs))
             # If not result is found, display no match
             if len(result_seq2)==0:
                 result_seq_multi="No match was found!"
                 return render_template("upload_peptide.html", result_seq = result_seq_multi)#result_seq_multi)
 
-            # If a result is found, the data from dropdown boxes are saved into memory
-            if len(result_seq2) != 0:
-                tissue_type = str(request.form.get('tissue_type'))
-                disease_type = str(request.form.get('disease_type'))
+        # If a result is found, the data from dropdown boxes are saved into memory
+        if len(result_seq2) != 0:
+            tissue_type = str(request.form.get('tissue_type'))
+            disease_type = str(request.form.get('disease_type'))
 
 
-                # CHecks to see if the hash checker file is present otehrwise creates it
-                if os.path.isfile(APP_ROOT+"/uploaded/hash_checker.csv"):
-                    pass
-                else:
-                    open("hash_checker.csv", "w")
+            # CHecks to see if the hash checker file is present otehrwise creates it
+            if os.path.isfile(APP_ROOT+"/uploaded/hash_checker.csv"):
+                pass
+            else:
+                open("hash_checker.csv", "w")
 
-                #If the unique hash check is not duplicate, the data is saved for the atlas expression
-                #otherwise the data is not saved (due to it already existing from the same source file)
-                #if no match is found
-                # The family matches, and the data from the dropdown boxes are saved into MySQL
-                # Using MySQL query. This data can then be viewed in expression atlas.
-                with open("hash_checker.csv", "r+b") as f:
-                    reader = csv.reader(f)
-                    writer = csv.writer(f)
-                    for row in reader:
-                        # Checks if row is empty, if not, appends rows to memory
-                        if not (row):
-                            pass
-                        else:
-                            rowlist2.append(row[0])
-                    if hashed not in rowlist2:
-                        rowlist.append(hashed)
-                        writer.writerow(rowlist)
-                        result_seq_multi2 = result_seq2
-                        cur = connection.cursor()
+            #If the unique hash check is not duplicate, the data is saved for the atlas expression
+            #otherwise the data is not saved (due to it already existing from the same source file)
+            #if no match is found
+            # The family matches, and the data from the dropdown boxes are saved into MySQL
+            # Using MySQL query. This data can then be viewed in expression atlas.
+            with open("hash_checker.csv", "r+b") as f:
+                reader = csv.reader(f)
+                writer = csv.writer(f)
+                for row in reader:
+                    # Checks if row is empty, if not, appends rows to memory
+                    if not (row):
+                        pass
+                    else:
+                        rowlist2.append(row[0])
+                if hashed not in rowlist2:
+                    rowlist.append(hashed)
+                    writer.writerow(rowlist)
+                    result_seq_multi2 = result_seq2
+                    cur = connection.cursor()
 
-                        for i in range(0, len(result_seq2)):
-                            cur.execute("INSERT INTO exp_atlas(tissue_type, repeat_family, disease_type,sequence) VALUES (%s,%s,%s,%s);", (tissue_type, result_seq2[i][0], disease_type, result_seq2[i][1]))
-                            cur.fetchall()
-                        query3 = ("UPDATE exp_atlas_count SET counts = (SELECT COUNT(tissue_type) FROM exp_atlas);")
-                        cur.execute(query3)
-                        try:
-                            query4 = ("UPDATE exp_atlas_count SET " + tissue_type + " = (SELECT COUNT(tissue_type) FROM exp_atlas WHERE tissue_type = '" + tissue_type + "');")
-                            cur.execute(query4)
-                        except:
-                            pass
-                        try:
-                            query5 = ("UPDATE exp_atlas_disease_counts SET " + disease_type + " = (SELECT COUNT(disease_type) FROM exp_atlas WHERE disease_type = '" + disease_type + "');")
-                            cur.execute(query5)
-                        except:
-                            pass
-                        connection.commit()
-                        cur.close()
+                    for i in range(0, len(result_seq2)):
+                        cur.execute("INSERT INTO exp_atlas(tissue_type, repeat_family, disease_type,sequence) VALUES (%s,%s,%s,%s);", (tissue_type, result_seq2[i][0], disease_type, result_seq2[i][1]))
+                        cur.fetchall()
+                    query3 = ("UPDATE exp_atlas_count SET counts = (SELECT COUNT(tissue_type) FROM exp_atlas);")
+                    cur.execute(query3)
+                    try:
+                        query4 = ("UPDATE exp_atlas_count SET " + tissue_type + " = (SELECT COUNT(tissue_type) FROM exp_atlas WHERE tissue_type = '" + tissue_type + "');")
+                        cur.execute(query4)
+                    except:
+                        pass
+                    try:
+                        query5 = ("UPDATE exp_atlas_disease_counts SET " + disease_type + " = (SELECT COUNT(disease_type) FROM exp_atlas WHERE disease_type = '" + disease_type + "');")
+                        cur.execute(query5)
+                    except:
+                        pass
+                    connection.commit()
+                    cur.close()
 
             return render_template("upload_peptide.html", data=result_seq2)#, empty = hashed + ", " + disease_type + ", " + tissue_type)
     else:
