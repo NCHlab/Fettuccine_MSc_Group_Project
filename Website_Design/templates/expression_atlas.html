@@ -18,13 +18,25 @@
 		<link rel="stylesheet" href="http://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 		<script src="http://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+
 		<script>
-				$(document).ready( function () {
-						$('#Atlas').DataTable();FFF;
+
+		$(document).ready(function() {
+			var table = $('#Atlas').DataTable( {
+					scrollY:        "2000px",
+					scrollX:        true,
+					scrollCollapse: true,
+					paging:         true
 			} );
-		$(document).ready( function () {
-				$('#Atlas3').DataTable();FFF;
+	} );
+	$(document).ready(function() {
+		var table = $('#Atlas3').DataTable( {
+				scrollY:        "2000px",
+				scrollX:        true,
+				scrollCollapse: true,
+				paging:         true
 		} );
+} );
 		</script>
 	</head>
 
@@ -122,7 +134,8 @@
 				 <th>Disease Type</th>
 				 <th>Tissue Type</th>
 				 <th>No of Families found</th>
-				 <th>Familiess</th>
+				 <th>Families</th>
+				 <th>Sequence</th>
 				 <th>%</th>
 			 </tr>
 		 </thead>
@@ -149,7 +162,8 @@
 			 <tr>
 				 <th>Tissue Type</th>
 				 <th>No of Families found</th>
-				 <th>Familiess</th>
+				 <th>Families</th>
+				 <th>Sequence</th>
 				 <th>%</th>
 			 </tr>
 		 </thead>
