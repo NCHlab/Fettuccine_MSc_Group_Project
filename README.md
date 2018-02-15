@@ -51,8 +51,8 @@ PyGraphviz May not work on 64bit python, python 64bit is reccomended as the 32bi
 If Pygraphviz does not load, you are still able to run the website as it is not needed for the main sections of the site 
 (The 2nd custom tree will not load on the webpage, however you can visit the url custom_tree2 > "localhost:5000/custom_tree2" to see how it would look if it had rendered properly with the functional plugin)
 
-
----- MYSQL ----
+#MYSQL
+-----------
 
 Create a database called genome_data:
 
