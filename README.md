@@ -53,6 +53,7 @@ If Pygraphviz does not load, you are still able to run the website as it is not 
 
 
 ---- MYSQL ----
+
 Create a database called genome_data:
 
 > CREATE DATABASE genome_data;
@@ -69,6 +70,7 @@ populate the new db.
 ---------------
 
 ---- RUNNING FLASK ----
+
 To run the software go to Website_Design and execute the commands based on OS:
 
 #run flask on WINDOWS using:
