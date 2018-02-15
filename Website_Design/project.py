@@ -175,6 +175,10 @@ def herv_rv():
 def herv_rv1():
     return render_template("herv_rv1.html")
 
+@app.route("/AA_seq_list")
+def AA_seq_list():
+    return render_template("AA_seq_list.html")
+    
 @app.route("/custom_tree2")
 def custom_tree2():
     #This function only required to manually access the page for ctrl + f5 refresh, to refresh the page to load new image
