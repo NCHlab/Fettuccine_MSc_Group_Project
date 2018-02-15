@@ -132,11 +132,16 @@
 								</p>
 								<hr>
 								{{ result_family }}
-								<!-- <div class="alert alert-danger">
-								  <strong>{{ empty }}</strong>
-								</div> -->
+
 								{{ result_seq1 }}
-								{{ empty }}
+
+								{% if empty != "" %}
+								  <img src="{{ err_img }}" width=30px height=30px>
+									{{ empty  }}
+									<img src="{{ err_img }}" width=30px height=30px>
+								{% endif %}
+
+
 							</div>
 						</div>
 					</div>
