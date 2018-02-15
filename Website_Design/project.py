@@ -256,6 +256,7 @@ def peptide_seq_ident():
     result_seq = ""
     rows_count = ""
     error_empty2 = "This is an empty file! Please upload a populated FASTA file"
+    err_img = "/static/assets/img/error_img.png"
     no_match = "No Match was found!"
     error_fasta_1 = "Please Enter only 1 fasta sequence in the search bar, for multiple use upload function"
     error_fasta_2 = "Please Remove the Headers and only Search using the peptide Sequences or use the upload function"
@@ -274,10 +275,10 @@ def peptide_seq_ident():
 
             # Checks to see if a header exists and rejects the data if it does
             if fasta_check > 1:
-                return render_template("peptide_seq_ident.html", empty = error_fasta_1)
+                return render_template("peptide_seq_ident.html", empty = error_fasta_1, err_img = err_img)
             elif fasta_check == 1:
                 fastaseq = request.form["fasta_content"]
-                return render_template("peptide_seq_ident.html", empty = error_fasta_2)
+                return render_template("peptide_seq_ident.html", empty = error_fasta_2, err_img = err_img)
 
             else:
                 # Saves the peptide sequences and removes all spaces, tabs and new lines
@@ -291,7 +292,7 @@ def peptide_seq_ident():
                 result_seq =  cur.fetchall()
                 cur.close()
                 if not cur.rowcount:
-                  return render_template("peptide_seq_ident.html", result_family=no_match)
+                  return render_template("peptide_seq_ident.html", empty = no_match, err_img = err_img)
                 else:
                   return render_template("peptide_seq_ident.html", data1=result_seq)
 
@@ -321,7 +322,7 @@ def peptide_seq_ident():
             # Goes through fasta file and checks whether the file is empty
             seqfile = SeqIO.parse(filename, "fasta")
             if os.stat(filename).st_size == 0:
-                return render_template("peptide_seq_ident.html", empty = error_empty2)
+                return render_template("peptide_seq_ident.html", empty = error_empty2, err_img = err_img)
 
 
             # Checks the file extension, if it is not in the allowed fasta format, it is rejected
@@ -352,7 +353,7 @@ def peptide_seq_ident():
                         cur.close()
 
                     if not cur.rowcount:
-                      return render_template("peptide_seq_ident.html", empty=no_match)
+                      return render_template("peptide_seq_ident.html", empty=no_match, err_img = err_img)
                     else:
                         return render_template("peptide_seq_ident.html", data2=result_seq)
                 else:
@@ -392,12 +393,12 @@ def peptide_seq_ident():
                 # If no matches are found, the webpage is returned stating no match
                 # otherwise if matches are found, data is returned and displayed
                 if len(result_seq)==0:
-                  return render_template("peptide_seq_ident.html", empty=no_match)
+                  return render_template("peptide_seq_ident.html", empty=no_match, err_img = err_img)
                 else:
                     return render_template("peptide_seq_ident.html", data=result_seq)
         # if nothing is submitted via text box form, empty error raised
         elif request.form["fasta_content"] == "":
-            return render_template("peptide_seq_ident.html", empty = error_empty2)
+            return render_template("peptide_seq_ident.html", empty = error_empty2, err_img = err_img)
     else:
         # By default, this GET method is returned and displays 1000 sequences and families from the database
         cur = connection.cursor()
@@ -542,16 +543,12 @@ def upload_peptide():
                     query2 = "SELECT family, sequence FROM all_prot_seqs2 WHERE sequence LIKE "
                     query2 = query2+'"%'+str(ele[0])+'%"'+' OR sequence LIKE "%'
                     sep = '%" OR sequence LIKE "%'
-                    query2 = query2+sep.join(list_of_pep_seqs[1:])+'%"'
+                    query2 = query2+sep.join(ele[1:])+'%"'
                     cur.execute(query2)
                     for somet in cur.fetchall():
                         result_seq2.append(somet)
                 cur.close()
 
-            elapsed = timeit.default_timer() - start_time
-            print "python = "+str(elapsed_python)
-            print "all = "+str(elapsed)
-            print "seqs ="+str(len(list_of_pep_seqs))
             # If not result is found, display no match
             if len(result_seq2)==0:
                 result_seq_multi="No match was found!"
@@ -607,7 +604,7 @@ def upload_peptide():
                     connection.commit()
                     cur.close()
 
-            return render_template("upload_peptide.html", data=result_seq2)#, empty = hashed + ", " + disease_type + ", " + tissue_type)
+            return render_template("upload_peptide.html", data=result_seq2)
     else:
         return render_template("upload_peptide.html")
 
