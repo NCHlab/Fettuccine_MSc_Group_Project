@@ -74,8 +74,7 @@ Create a database called genome_data:
 Import the SQL file into MySQL using:
 
 Use genome_data_export1.sql first
-
-If the above file doesn't work use genome_data_2_1.sql 
+If it doesn't work try the other ones.
 
 Import the file to the DB:
 
