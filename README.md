@@ -44,8 +44,12 @@ pip install -r /path/to/requirements.txt
 
 Download the DB files from:
 
-- Dropbox (Download first): https://www.dropbox.com/s/0ajx2p0t9wbe3ib/genome_data_export.sql?dl=0
+- Dropbox (Download first): https://www.dropbox.com/s/x78gylbh9hindvu/genome_data_export1.sql?dl=0
 - Dropbox (2nd backup version): https://www.dropbox.com/s/stniwg8msanx5ku/genome_data_2_1.sql?dl=0
+- Dropbox (3rd version): https://www.dropbox.com/s/0ajx2p0t9wbe3ib/genome_data_export.sql?dl=0
+
+Download the DB files from Apocrita located on:
+- /data/SBCS-MSc-Bioinf/fettbase_sql
 
 Install Your Own MYSQL server of Choice (we Used MAMP for windows to make it simple to turn on / off)
 
@@ -69,7 +73,7 @@ Create a database called genome_data:
 
 Import the SQL file into MySQL using:
 
-Use genome_data_export.sql first
+Use genome_data_export1.sql first
 
 If the above file doesn't work use genome_data_2_1.sql 
 
