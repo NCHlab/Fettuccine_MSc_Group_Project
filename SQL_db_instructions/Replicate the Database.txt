@@ -327,4 +327,6 @@ CREATE TABLE `exp_atlas` (
 DROP TABLE l1_prot_seqs_pre;
 DROP TABLE herv_prot_seqs_pre;
 
-
+#Remove Duplicates from all_prot_seqs and all_prot_seqs2
+SELECT family, sequence FROM (SELECT DISTINCT CONCAT(family, '', sequence) as dio, family, sequence FROM all_prot_seqs) t
+SELECT family, sequence FROM (SELECT DISTINCT CONCAT(family, '', sequence) as dio, family, sequence FROM all_prot_seqs2) t
