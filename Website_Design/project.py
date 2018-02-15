@@ -607,7 +607,7 @@ def upload_peptide():
                     connection.commit()
                     cur.close()
 
-            return render_template("upload_peptide.html", data=result_seq2)#, empty = hashed + ", " + disease_type + ", " + tissue_type)
+            return render_template("upload_peptide.html", data=result_seq2)
     else:
         return render_template("upload_peptide.html")
 
