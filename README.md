@@ -65,18 +65,20 @@ User can also create an identical database from scratch by
 following the instructions  inside SQL_db_instructions folder.
 This file also contains random data from our database that can
 populate the new db.
+
 ---------------
 
 ---- RUNNING FLASK ----
 To run the software go to Website_Design and execute the commands based on OS:
 
-run flask on WINDOWS using:
-set FLASK_APP=project.py
-set FLASK_DEBUG=1
-flask run
+#run flask on WINDOWS using:
+-set FLASK_APP=project.py
+-set FLASK_DEBUG=1
+-flask run
 
-run flask on LINUX using:
-export FLASK_APP=project.py
-export FLASK_DEBUG=1
-flask run
+#run flask on LINUX using:
+-export FLASK_APP=project.py
+-export FLASK_DEBUG=1
+-flask run
+
 ----------------------
