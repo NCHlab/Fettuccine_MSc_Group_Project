@@ -36,6 +36,8 @@ https://academic.oup.com/gbe/article/8/12/3485/2680041
 ------------------------------
 USE python 32bit or 64bit. (different library files will be provided for each version)
 
+Use virtualenv at your own discretion
+
 Open up CMD terminal and run:
 pip install -r /path/to/requirements.txt
 ------------------------------
@@ -46,12 +48,12 @@ Download https://www.graphviz.org/download/ V2.38 and install
 
 The software was ran and tested using MySQK 5.7.20 in Windows 32-bit, 64-bit and Linux 64-bit.
 
-Copy the MySQLdb (MySQL python connector) and pygraphviz folders + pylab files to your C:\Python27\Lib\site-packages\ or equivilant flders for your OS
+Copy the MySQLdb (MySQL python connector) and pygraphviz folders + pylab files to your C:\Python27\Lib\site-packages\ or equivalent folders for your OS or if using virtualenv. (These files have been provided in the compressed zip format)
 
 PyGraphviz May not work on 64bit python, python 64bit is reccomended as the 32bit will cause memory errors if you try to upload files > 300MB (however pygraphviz works on 32bit)
 
 If Pygraphviz does not load, you are still able to run the website as it is not needed for the main sections of the site 
-(The 2nd custom tree will not load on the webpage, however you can visit the url custom_tree2 > "localhost:5000/custom_tree2" to see how it would look if it had rendered properly with the functional plugin)
+(The SECOND custom tree will not load on the webpage after submission of ph file, however you can visit the url custom_tree2 > "localhost:5000/custom_tree2" to see how it would look if it had rendered properly with the functional plugin)
 
 # MYSQL
 -----------
