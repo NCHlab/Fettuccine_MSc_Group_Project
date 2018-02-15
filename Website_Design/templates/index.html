@@ -6,45 +6,28 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 		<meta name="format-detection" content="telephone=no">
 		<meta name="apple-mobile-web-app-capable" content="yes">
-		<!-- Fonts-->
+
 		<link rel="stylesheet" type="text/css" href="static/assets/fonts/fontawesome/font-awesome.min.css">
 		<link rel="stylesheet" type="text/css" href="static/assets/fonts/themify-icons/themify-icons.css">
-		<!-- Vendors-->
 		<link rel="stylesheet" type="text/css" href="static/assets/vendors/bootstrap4/bootstrap-grid.min.css">
 		<link rel="stylesheet" type="text/css" href="static/assets/vendors/magnific-popup/magnific-popup.min.css">
 		<link rel="stylesheet" type="text/css" href="static/assets/vendors/owl.carousel/owl.carousel.css">
 		<link rel="stylesheet" type="text/css" href="static/assets/vendors/_jquery/jquery.min.css">
-		<!-- <link rel="stylesheet" type="text/css" href="static/assets/vendors/bootstrap4/bootstrap-grid.min.css"> -->
-		<!-- <link rel="stylesheet" type="text/css" href="static/assets/vendors/bootstrap4/bootstrap-grid.min.css"> -->
-		<!-- App & fonts-->
 		<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i&amp;amp;subset=latin-ext">
-		<link rel="stylesheet" type="text/css" href="static/assets/css/main.css"><!--[if lt IE 9]>
-			<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-		<![endif]-->
-	</head>
+		<link rel="stylesheet" type="text/css" href="static/assets/css/main.css">
 
+	</head>
 	<body>
 		<div class="page-wrap">
 
-			<!-- header -->
 			<header class="header header__style-02">
 				<div class="container">
 					<div class="header__logo"><a href=""><img src="static\assets\img\fetbase_logo.png" alt=""/></a></div>
-					<div class="header__toogleGroup">
-						<div class="search-form">
-							<div class="search-form__toggle"><i class=""></i></div>
-							<div class="search-form__form">
 
 
-
-							</div>
-						</div>
-					</div>
-
-					<!-- fett-nav -->
 					<nav class="fett-nav">
 
-						<!-- fett-menu -->
+
 						<ul class="fett-menu">
 							<li class="current-menu-item"><a href="{{ url_for('indexpage')}}">Home</a>
 							</li>
@@ -77,21 +60,21 @@
 									<li><a href="{{ url_for('about_us')}}">About Us</a>
 									</li>
 								</ul>
-						</ul><!-- fett-menu -->
+						</ul>
 
 						<div class="navbar-toggle"><span></span><span></span><span></span></div>
-					</nav><!-- End / fett-nav -->
+					</nav>
 
 				</div>
-			</header><!-- End / header -->
+			</header>
 
-			<!-- Content-->
+
 			<div class="md-content">
 
-				<!-- slider -->
+
 				<div class="slider">
 
-					<!-- carousel__element owl-carousel -->
+
 					<div class="carousel__element owl-carousel" data-options='{"items":1,"loop":true,"dots":false,"nav":false,"margin":0, "autoplay": true, "autoplayTimeout": 7000}'>
 						<div class="slider__item" style="background-image: url('static/assets/img/backgrounds/image4.jpg');">
 							<div class="md-tb">
@@ -120,86 +103,86 @@
 								</div>
 							</div>
 						</div>
-					</div><!-- End / carousel__element owl-carousel -->
+					</div>
 
-				</div><!-- End / slider -->
-
-
+				</div>
 
 
-				<!-- Section -->
+
+
+
 				<section class="md-section" style="background-color:#f7f7f7;padding-top:0;">
 					<div class="container">
 						<div class="row">
 							<div class="col-md-10 col-lg-8 offset-0 offset-sm-0 offset-md-1 offset-lg-2 ">
 
-								<!-- iconbox -->
+
 								<div class="iconbox">
 									<div class="iconbox__icon"><i class=""></i></div>
 									<div>
 										<h2 class="iconbox__title"><a href="#"></a></h2>
 										<div class="iconbox__description"> </div>
 									</div>
-								</div><!-- End / iconbox -->
+								</div>
 
 							</div>
 						</div>
 						<div class="row">
 							<div class="col-sm-6 col-md-6 col-lg-3 ">
 
-								<!-- iconbox -->
+
 								<div class="iconbox iconbox__style-02">
 									<div class="iconbox__icon"><i class="ti-search"></i></div>
 									<div>
 										<h2 class="iconbox__title"><a href="{{ url_for('family_table_HERV_Superfamilies')}}">Family Table</a></h2>
 										<div class="iconbox__description">Search through the current family table database to locate transposons</div>
 									</div>
-								</div><!-- End / iconbox -->
+								</div>
 
 							</div>
 							<div class="col-sm-6 col-md-6 col-lg-3 ">
 
-								<!-- iconbox -->
+
 								<div class="iconbox iconbox__style-02">
 									<div class="iconbox__icon"><i class="ti-announcement"></i></div>
 									<div>
 										<h2 class="iconbox__title"><a href="{{ url_for('distribution')}}">Distribution</a></h2>
 										<div class="iconbox__description">Visualise the Distribution between the retrotransposons across the whole genome</div>
 									</div>
-								</div><!-- End / iconbox -->
+								</div>
 
 							</div>
 							<div class="col-sm-6 col-md-6 col-lg-3 ">
 
-								<!-- iconbox -->
+
 								<div class="iconbox iconbox__style-02">
 									<div class="iconbox__icon"><i class="ti-timer"></i></div>
 									<div>
 										<h2 class="iconbox__title"><a href="{{ url_for('AA_seq_list')}}">Translated Products</a></h2>
 										<div class="iconbox__description">View the Translated products and the relationships</div>
 									</div>
-								</div><!-- End / iconbox -->
+								</div>
 
 							</div>
 							<div class="col-sm-6 col-md-6 col-lg-3 ">
 
-								<!-- iconbox -->
+
 								<div class="iconbox iconbox__style-02">
 									<div class="iconbox__icon"><i class="ti-briefcase"></i></div>
 									<div>
 										<h2 class="iconbox__title"><a href="{{ url_for('peptide_seq_ident')}}">Upload Files</a></h2>
 										<div class="iconbox__description">Upload your own files to see if retrotransposons can be identified from a sequence query</div>
 									</div>
-								</div><!-- End / iconbox -->
+								</div>
 
 							</div>
 						</div>
 					</div>
 				</section>
-				<!-- End / Section -->
 
-				<!-- About-->
-				<!-- Section -->
+
+
+
 				<section class="md-section">
 					<div class="container">
 						<div class="row">
@@ -210,7 +193,7 @@
 							</div>
 						</div>
 
-						<!-- post-03 -->
+
 						<div class="post-03">
 							<div class="post-03__media"><a href="#"><img src="static\assets\img\backgrounds\Transposable_Elements_JPG.jpg" alt=""/></a></div>
 							<div class="post-03__body">
@@ -220,10 +203,10 @@
 									location (cut-paste procedure), B) <span style="text-decoration: underline;">Retrotransposons:</span> Copy
 									their sequence to a new genome location using an RNA intermediate molecule</div>
 							</div>
-						</div><!-- End / post-03 -->
+						</div>
 
 
-						<!-- post-03 -->
+
 						<div class="post-03 post-03__reverse">
 							<div class="post-03__media"><a href="#"><img src="static\assets\img\backgrounds\LINE-1_JPG.jpg" alt=""/></a></div>
 							<div class="post-03__body">
@@ -234,10 +217,10 @@
 									ORF1 and ORF2 proteins. These two proteins form a complex with the RNA which has the ability to integrate the RNA molecule at a
 									genome location through reverse transcription. </div>
 							</div>
-						</div><!-- End / post-03 -->
+						</div>
 
 
-						<!-- post-03 -->
+
 						<div class="post-03">
 							<div class="post-03__media"><a href="#"><img src="static\assets\img\backgrounds\HERV_JPG.jpg" alt=""/></a></div>
 							<div class="post-03__body">
@@ -249,52 +232,52 @@
 									encode a protein complex which mediates the production of a cDNA molecule which can integrate the retrotransoson sequence
 									into a new genome location.</p> </div>
 							</div>
-						</div><!-- End / post-03 -->
+						</div>
 
 					</div>
 
-				<!-- Section -->
+
 				<section class="md-section">
 					<div class="container">
 						<div class="row">
 							<div class="col-lg-10 offset-0 offset-sm-0 offset-md-0 offset-lg-1 ">
 
-								<!-- title-01 -->
+
 
 								<div class="row">
 									<div class=" row-sm-4 ">
 
-										<!-- box-number -->
+
 										<div class="box-number">
 											<div class="box-number__number">
 												<h2 class="js-counter" data-counter-time="2000" data-counter-delay="10">{{ total_index }}</h2>
 											</div>
 											<div class="box-number__description" style="text-align: center;">Retrotransposons</div>
-										</div><!-- End / box-number -->
+										</div>
 
 									</div>
 									<hr>
 									<div class="col-sm-4 ">
 
-										<!-- box-number -->
+
 										<div class="box-number">
 											<div class="box-number__number">
 												<h2 class="js-counter" data-counter-time="2000" data-counter-delay="10">{{ l1_index }}</h2>
 											</div>
 											<div class="box-number__description" style="text-align: center;">LINE1s</div>
-										</div><!-- End / box-number -->
+										</div>
 
 									</div>
 									<hr>
 									<div class="col-sm-4 ">
 
-										<!-- box-number -->
+
 										<div class="box-number">
 											<div class="box-number__number">
 												<h2 class="js-counter" data-counter-time="2000" data-counter-delay="10">{{ herv_index }}</h2>
 											</div>
 											<div class="box-number__description" style="text-align: center;">HERVs</div>
-										</div><!-- End / box-number -->
+										</div>
 
 									</div>
 								</div>
@@ -303,22 +286,22 @@
 						</div>
 					</div>
 				</section>
-				<!-- End / Section -->
 
-				<!-- Contact us-->
 
-				<!-- Section -->
+
+
+
 				<section class="md-section md-skin-dark js-fett-form" style="background-image:url(static/assets/img/backgrounds/image1.jpg);">
 					<div class="md-overlay"></div>
 					<div class="container">
 						<div class="row">
 							<div class="col-lg-8 offset-0 offset-sm-0 offset-md-0 offset-lg-2 ">
 
-								<!-- title-01 -->
+
 								<div class="title-01 title-01__style-02">
 									<h2 class="title-01__title">Contact Us via our email</h2>
 									<div>Operating hours 4am-5am Friday only </div>
-								</div><!-- End / title-01 -->
+								</div>
 
 								<div class="fett-phone">Fettucine@qmul.ac.uk</div>
 							</div>
@@ -328,10 +311,10 @@
 
 					</div>
 				</section>
-				<!-- End / Section -->
 
 
-			<!-- footer -->
+
+
 			<footer class="footer">
 				<div class="footer__main">
 					<div class="row row-eq-height">
@@ -343,7 +326,7 @@
 						<div class="col-sm-6 col-md-4 col-lg-3 col-xl-2 offset-0 offset-sm-0 offset-md-0 offset-lg-0 offset-xl-1 ">
 							<div class="footer__item">
 
-									<!-- widget-text__widget -->
+
 									<section class="widget-text__widget widget">
 										<div class="widget-text__content">
 											<ul>
@@ -353,14 +336,14 @@
 												<li><a href="#">Translated Products</a></li>
 											</ul>
 										</div>
-									</section><!-- End / widget-text__widget -->
+									</section>
 
 							</div>
 						</div>
 						<div class="col-sm-6 col-md-4 col-lg-2 col-xl-2 ">
 							<div class="footer__item">
 
-									<!-- widget-text__widget -->
+
 									<section class="widget-text__widget widget">
 										<div class="widget-text__content">
 											<ul>
@@ -370,7 +353,7 @@
 												<li><a href="#">About Us</a></li>
 											</ul>
 										</div>
-									</section><!-- End / widget-text__widget -->
+									</section>
 
 							</div>
 						</div>
@@ -387,7 +370,7 @@
 					</div>
 				</div>
 				<div class="footer__copyright">2018 &copy; Fettucine Bio-Informatics Group.</div>
-			</footer><!-- End / footer -->
+			</footer>
 
 		</div>
 		<script type="text/javascript" src="static/assets/vendors/jquery/jquery.min.js"></script>

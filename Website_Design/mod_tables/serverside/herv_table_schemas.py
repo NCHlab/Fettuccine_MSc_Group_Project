@@ -32,6 +32,6 @@ SERVERSIDE_TABLE_COLUMNS = [
         "column_name": "Column E",
         "default": "",
         "order": 5,
-        "searchable": True
+        "searchable": False
     }
 ]

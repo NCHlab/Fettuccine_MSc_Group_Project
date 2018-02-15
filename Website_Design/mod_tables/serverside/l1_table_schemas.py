@@ -7,7 +7,7 @@ SERVERSIDE_TABLE_COLUMNS = [
         "searchable": True
     },
     {
-        "data_name": "repeat_name",
+        "data_name": "family",
         "column_name": "Column B",
         "default": "",
         "order": 2,
@@ -25,6 +25,6 @@ SERVERSIDE_TABLE_COLUMNS = [
         "column_name": "Column D",
         "default": "",
         "order": 4,
-        "searchable": True
+        "searchable": False
     }
 ]
