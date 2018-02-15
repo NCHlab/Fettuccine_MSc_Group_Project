@@ -1,0 +1,330 @@
+#Simple instructions to create FetBASE "genome_data" database similar to 
+#the one used by the software. In the same folder, random data from our 
+#initial data can be found. These data were randomly selected so they will
+#not lead to a database with the same data as the original one because repeats
+#will not necessarily match with the proteins as in the original database.
+
+#The csv files were manually imported and not with SQL script using these settings:
+Character set of the file: utf-8
+Format: CSV using LOAD DATA
+Columns separated with: ,
+Columns enclosed with: "
+Columns escaped with: \
+Lines terminated with: auto
+
+#Settings for MySQL:
+SET max_allowed_packet=1073741824;
+SET key_buffer_size= ; #around 25% of your total memory
+
+#Create the database:
+CREATE DATABASE genome_data;
+
+#Main LINE-1 Repeats Table
+CREATE TABLE `l1_repeats` (
+  `id` varchar(9) NOT NULL,
+  `chromosome` varchar(30) NOT NULL,
+  `repeat_name` varchar(20) NOT NULL,
+  `superfamily` text NOT NULL,
+  `genostart` text NOT NULL,
+  `genoend` text NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `Chromosome` (`chromosome`),
+  KEY `Repeat_Name` (`repeat_name`),
+  KEY `Repeat_Name_2` (`repeat_name`),
+  KEY `repeat_name_3` (`repeat_name`),
+  KEY `chromosome_2` (`chromosome`));
+
+#Import L1_repeats.csv into the table 
+
+#Main HERV Repeats Table
+CREATE TABLE `herv_repeats` (
+  `id` varchar(8) NOT NULL,
+  `repeat_name` varchar(20) NOT NULL,
+  `family` varchar(20) NOT NULL,
+  `superfamily` varchar(10) NOT NULL,
+  `chromosome` varchar(23) NOT NULL,
+  `genoStart` text NOT NULL,
+  `genoEnd` text NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `repeat_name` (`repeat_name`),
+  KEY `family` (`family`),
+  KEY `superfamily` (`superfamily`),
+  KEY `chromosome` (`chromosome`));
+
+#Import HERV_repeats.csv into the table
+
+#Preliminary Herv protein tables
+CREATE TABLE `herv_prot_seqs_pre` (
+  `peptide_id` varchar(8) NOT NULL,
+  `repeat_id` varchar(8) NOT NULL,
+  `predicted_protein` text NOT NULL,
+  `sequence` varchar(935) NOT NULL,
+  PRIMARY KEY (`peptide_id`),
+  KEY `repeat_id` (`repeat_id`),
+  KEY `sequence` (`sequence`));
+
+#Import HERV_proteins_backup.csv into the table
+
+#Preliminary L1 proteins table
+CREATE TABLE `l1_prot_seqs_pre` (
+  `peptide_id` varchar(9) NOT NULL,
+  `repeat_id` varchar(9) NOT NULL,
+  `protein` varchar(5) NOT NULL,
+  `sequence` varchar(1312) NOT NULL,
+  PRIMARY KEY (`peptide_id`),
+  KEY `repeat_name` (`family`),
+  KEY `sequence` (`sequence`),
+  KEY `repeat_id` (`repeat_id`));
+
+#Import HERV_proteins_backup.csv into the table
+
+#Combine information from l1_repeats and l1_prot_seqs_pre 
+#to create new table l1_prot_seqs
+CREATE TABLE l1_prot_seqs (
+`peptide_id` varchar(9) NOT NULL,
+  `repeat_id` varchar(9) NOT NULL,
+  `family` varchar(20) NOT NULL,
+  `protein` varchar(5) NOT NULL,
+  `sequence` varchar(1312) NOT NULL,
+  PRIMARY KEY (`peptide_id`),
+  KEY `repeat_name` (`family`),
+  KEY `sequence` (`sequence`),
+  KEY `family` (`family`),
+  KEY `repeat_id` (`repeat_id`)) AS
+SELECT l1_prot_seqs_pre.peptide_id, l1_prot_seqs_pre.repeat_id, l1_repeats.repeat_name as family, l1_prot_seqs_pre.protein, l1_prot_seqs_pre.sequence
+FROM l1_prot_seqs_pre, l1_repeats
+WHERE l1_prot_seqs_pre.repeat_id = l1_repeats.id;
+
+#Combine information from herv_repeats and herv_prot_seqs_pre 
+#to create new table herv_prot_seqs
+CREATE TABLE `herv_prot_seqs` (
+  `peptide_id` varchar(8) NOT NULL,
+  `repeat_id` varchar(8) NOT NULL,
+  `repeat_name` varchar(20) NOT NULL,
+  `family` varchar(20) NOT NULL,
+  `superfamily` varchar(10) NOT NULL,
+  `predicted_protein` text NOT NULL,
+  `sequence` varchar(935) NOT NULL,
+  PRIMARY KEY (`peptide_id`),
+  KEY `repeat_id` (`repeat_id`),
+  KEY `repeat_name` (`repeat_name`),
+  KEY `family` (`family`),
+  KEY `superfamily` (`superfamily`),
+  KEY `sequence` (`sequence`),
+  KEY `family_2` (`family`)) AS
+SELECT herv_prot_seqs_pre.peptide_id, herv_prot_seqs_pre.repeat_id, herv_repeats.repeat_name, herv_repeats.family, herv_repeats.superfamily, herv_prot_seqs_pre.predicted_protein, herv_prot_seqs_pre.sequence
+FROM herv_prot_seqs_pre, herv_repeats
+WHERE herv_prot_seqs_pre.repeat_id = herv_repeats.id;
+
+#Create the table that groups all HERV repeats by family
+#Get combined information from protein table herv_prot_seqs
+SET SESSION group_concat_max_len = 1000000000000;
+CREATE TABLE herv_groupby_families (
+  `family` varchar(20) NOT NULL,
+  `superfamily` varchar(10) DEFAULT NULL,
+  `no_repeats` bigint(21) DEFAULT NULL,
+  `no_proteins_found` bigint(21) NOT NULL DEFAULT '0',
+  `proteins_found` text,
+  PRIMARY KEY (`family`),
+  KEY `family` (`family`),
+  KEY `superfamily` (`superfamily`)) AS
+SELECT herv_repeats.family, MIN(herv_repeats.superfamily) as superfamily, COUNT(herv_repeats.id) as no_repeats, COUNT(herv_prot_seqs.peptide_id) as no_proteins_found, GROUP_CONCAT(DISTINCT herv_prot_seqs.predicted_protein SEPARATOR ', ') as proteins_found
+FROM herv_repeats, herv_prot_seqs
+WHERE herv_repeats.family = herv_prot_seqs.family
+GROUP BY family;
+
+#Create the table that groups all HERV repeats by repeat names
+#Get combined information from protein table herv_prot_seqs
+CREATE TABLE `herv_groupby_repeat_names` (
+  `repeat_name` varchar(20) NOT NULL,
+  `family` varchar(20) DEFAULT NULL,
+  `superfamily` varchar(10) DEFAULT NULL,
+  `no_repeats` bigint(21) DEFAULT NULL,
+  `no_proteins_found` bigint(21) NOT NULL DEFAULT '0',
+  `proteins_found` text,
+  PRIMARY KEY (`repeat_name`),
+  KEY `repeat_name` (`repeat_name`,`family`,`superfamily`)) AS
+SELECT herv_repeats.repeat_name, MIN(herv_repeats.family) as family, MIN(herv_repeats.superfamily) as superfamily, COUNT(herv_repeats.id) as no_repeats, COUNT(herv_prot_seqs.peptide_id) as no_proteins_found, GROUP_CONCAT(DISTINCT herv_prot_seqs.predicted_protein SEPARATOR ', ') as proteins_found
+FROM herv_repeats, herv_prot_seqs
+WHERE herv_repeats.repeat_name = herv_prot_seqs.repeat_name
+GROUP BY repeat_name;
+
+#Create the table that groups all HERV repeats by Superfamilies
+#Get combined information from protein table herv_prot_seqs
+CREATE TABLE `herv_groupby_superfamilies` (
+  `superfamily` varchar(10) NOT NULL,
+  `no_repeats` bigint(21) NOT NULL DEFAULT '0',
+  `no_proteins_found` bigint(21) NOT NULL DEFAULT '0',
+  `proteins_found` text,
+  PRIMARY KEY (`superfamily`),
+  KEY `superfamily` (`superfamily`),
+  KEY `superfamily_2` (`superfamily`)) AS
+SELECT herv_repeats.superfamily, MIN(herv_repeats.family) as family, COUNT(herv_repeats.id) as no_repeats, COUNT(herv_prot_seqs.peptide_id) as no_proteins_found, GROUP_CONCAT(DISTINCT herv_prot_seqs.predicted_protein SEPARATOR ', ') as proteins_found
+FROM herv_repeats, herv_prot_seqs
+WHERE herv_repeats.superfamily = herv_prot_seqs.superfamily
+GROUP BY superfamily;
+
+#Add description for each superfamily
+
+ALTER TABLE herv_groupby_superfamilies ADD description TEXT;
+UPDATE herv_groupby_superfamilies
+SET description = "Class I: Contains the HERVs related to gamma retroviruses such as murine leukemia virus (MLV) and baboon endogenous virus (BaEV)."
+WHERE superfamily = "ERV1";
+UPDATE herv_groupby_superfamilies
+SET description = "Group of unclassified fragments, which contain other ERV1-like sequences."
+WHERE superfamily = "ERV1?";
+UPDATE herv_groupby_superfamilies
+SET description = "Class II: Contains beta retroviruses including mouse mammary tumor virus (MMTV)."
+WHERE superfamily = "ERVK";
+UPDATE herv_groupby_superfamilies
+SET description = "Class II: Distantly related to spuma retroviruses."
+WHERE superfamily = "ERVL";
+UPDATE herv_groupby_superfamilies
+SET description = "Mammalian apparent LTR-retrotransposons."
+WHERE superfamily = "ERVL-MaLR";
+UPDATE herv_groupby_superfamilies
+SET description = "Group of unclassified fragments, which contain other ERVL-like sequences."
+WHERE superfamily = "ERVL?";
+
+#Create the table that groups all L1 repeats by Repeat_Names 
+#Get combined information from protein table l1_prot_seqs
+CREATE TABLE `l1_groupby_repeat_names` (
+  `repeat_name` varchar(20) NOT NULL,
+  `no_repeats` bigint(21) DEFAULT NULL,
+  `no_proteins_found` bigint(21) NOT NULL DEFAULT '0',
+  `proteins_found` text,
+  PRIMARY KEY (`repeat_name`)) AS
+SELECT l1_repeats.repeat_name, COUNT(l1_repeats.id) as no_repeats, COUNT(l1_prot_seqs.peptide_id) as no_proteins_found, GROUP_CONCAT(DISTINCT l1_prot_seqs.protein SEPARATOR ', ') AS proteins_found
+FROM l1_repeats, l1_prot_seqs
+GROUP BY repeat_name;
+
+#Preliminary herv chromosomes table to apply regex to chromosomes with strange names
+CREATE TABLE herv_chromosome_count_pre AS
+SELECT herv_repeats.chromosome
+FROM herv_repeats;
+
+#apply regex to this table
+Update herv_chromosome_count_pre
+set herv_chromosome_count.chromosome = Replace('.[_]\w*', '.[_]\w*', '')
+where chromosome REGEXP '.[_]\w*';
+
+#Create the original chromosome count table from the preliminary one
+CREATE TABLE `herv_chromosome_count` (
+  `chromosome` varchar(15) NOT NULL,
+  `counts` bigint(21) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`chromosome`)) AS
+SELECT herv_chromosome_count_pre.chromosomee, COUNT(herv_chromosome_count_pre.chromosome) as counts FROM herv_chromosome_count_pre GROUP BY chromosome ORDER BY chromosome;
+
+#Delete the herv_chromosome_count_pre
+DROP TABLE herv_chromosome_count_pre;
+
+#Preliminary l1 chromosomes table to apply regex to chromosomes with strange names
+CREATE TABLE l1_chromosome_count_pre AS
+SELECT l1_repeats.chromosome
+FROM l1_repeats;
+
+#apply regex to the table
+Update l1_chromosome_count_pre
+set l1_chromosome_count_pre.chromosome = Replace('.[_]\w*', '.[_]\w*', '')
+where chromosome REGEXP '.[_]\w*';
+
+#delete l1 preliminary chromosome table
+DROP TABLE l1_chromosome_count_pre;
+
+#Create an indexed table that will be searched for flask for exact matches
+#i.e. SELECT * FROM here WHERE sequence = "DJSAKLDJASKLDAJ"
+CREATE TABLE `all_prot_seqs` (
+  `family` varchar(20) NOT NULL DEFAULT '',
+  `sequence` varchar(1320) NOT NULL,
+  PRIMARY KEY (`family`,`sequence`),
+  KEY `family` (`family`),
+  KEY `sequence` (`sequence`),
+  KEY `family_2` (`family`),
+  KEY `sequence_5` (`sequence`),
+  FULLTEXT KEY `sequence_2` (`sequence`),
+  FULLTEXT KEY `sequence_3` (`sequence`),
+  FULLTEXT KEY `sequence_4` (`sequence`)) AS
+SELECT herv_prot_seqs.family, herv_prot_seqs.sequence FROM herv_prot_seqs
+UNION
+SELECT l1_prot_seqs.family, l1_prot_seqs.sequence FROM l1_prot_seqs;
+
+#Create an unindexed table that will be searched for flask for exact matches with LIKE
+#i.e. SELECT * FROM here WHERE sequence LIKE "%DJSAKLDJASKLDAJ%"
+#Searching an unindexed table with LIKE in this way is faster
+CREATE TABLE `all_prot_seqs2` (
+  `family` varchar(20) NOT NULL DEFAULT '',
+  `sequence` varchar(1320) NOT NULL) AS
+SELECT herv_prot_seqs.family, herv_prot_seqs.sequence FROM herv_prot_seqs
+UNION
+SELECT l1_prot_seqs.family, l1_prot_seqs.sequence FROM l1_prot_seqs
+
+#Expression Atlas tables
+#These are empty tables that will be populated directly from the software
+CREATE TABLE `exp_atlas_count` (
+  `counts` bigint(21) NOT NULL DEFAULT '0',
+  `heart` int(11) NOT NULL,
+  `unknown` int(255) NOT NULL,
+  `adrenal_gland` int(255) NOT NULL,
+  `anus_and_anal_canal` int(255) NOT NULL,
+  `bile_duct` int(255) NOT NULL,
+  `bladder` int(255) NOT NULL,
+  `blood` int(255) NOT NULL,
+  `bone` int(255) NOT NULL,
+  `bone_marrow` int(255) NOT NULL,
+  `brain` int(255) NOT NULL,
+  `breast` int(255) NOT NULL,
+  `bronchus_and_lung` int(255) NOT NULL,
+  `cervix` int(255) NOT NULL,
+  `colon` int(255) NOT NULL,
+  `colorectal` int(255) NOT NULL,
+  `esophagus` int(255) NOT NULL,
+  `eye` int(255) NOT NULL,
+  `head_and_neck` int(255) NOT NULL,
+  `kidney` int(255) NOT NULL,
+  `liver_and_bile_ducts` int(255) NOT NULL,
+  `lung` int(255) NOT NULL,
+  `lymph_nodes` int(255) NOT NULL,
+  `nervous_system` int(255) NOT NULL,
+  `ovary` int(255) NOT NULL,
+  `other` int(255) NOT NULL,
+  `pancreas` int(255) NOT NULL,
+  `penis` int(255) NOT NULL,
+  `peripheral_nerves_and ans` int(255) NOT NULL,
+  `prostate` int(255) NOT NULL,
+  `rectum` int(255) NOT NULL,
+  `skin` int(255) NOT NULL,
+  `small_intestine` int(255) NOT NULL,
+  `soft_tissue` int(255) NOT NULL,
+  `spinal_cord` int(255) NOT NULL,
+  `stomach` int(255) NOT NULL,
+  `testes` int(255) NOT NULL,
+  `thymus` int(255) NOT NULL,
+  `thyroid` int(255) NOT NULL,
+  `trachea` int(255) NOT NULL,
+  `ureter` int(255) NOT NULL,
+  `uterus` int(255) NOT NULL,
+  `vagina` int(255) NOT NULL,
+  `vulva` int(255) NOT NULL);
+
+
+CREATE TABLE `exp_atlas_disease_counts` (
+  `unknown` int(225) NOT NULL,
+  `autoimmune` int(225) NOT NULL,
+  `cancer` int(225) NOT NULL,
+  `cardiovascular_disease` int(225) NOT NULL,
+  `infectious_and_parasitic` int(225) NOT NULL,
+  `liver_disease` int(225) NOT NULL,
+  `neurological_disease` int(225) NOT NULL,
+  `other` int(225) NOT NULL);
+
+CREATE TABLE `exp_atlas` (
+  `tissue_type` varchar(100) NOT NULL,
+  `repeat_family` varchar(100) NOT NULL,
+  `disease_type` varchar(100) NOT NULL,
+  `sequence` varchar(1320) NOT NULL);
+
+#Delete tables that are not needed anymore
+DROP TABLE l1_prot_seqs_pre;
+DROP TABLE herv_prot_seqs_pre;
+
+
