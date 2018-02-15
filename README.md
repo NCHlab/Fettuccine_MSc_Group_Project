@@ -24,7 +24,7 @@ link:
 https://academic.oup.com/gbe/article/8/12/3485/2680041
 
 
-# Useful Commands: 
+# Useful Commands:
 - git clone (link)
 - git add (file)
 - git commit -m "comment goes here"
@@ -42,6 +42,10 @@ Open up CMD terminal and run:
 pip install -r /path/to/requirements.txt
 ------------------------------
 
+Download the DB files from:
+
+- Dropbox: https://www.dropbox.com/s/0ajx2p0t9wbe3ib/genome_data_export.sql?dl=0
+
 Install Your Own MYSQL server of Choice (we Used MAMP for windows to make it simple to turn on / off)
 
 Download https://www.graphviz.org/download/ V2.38 and install
@@ -52,7 +56,7 @@ Copy the MySQLdb (MySQL python connector) and pygraphviz folders + pylab files t
 
 PyGraphviz May not work on 64bit python, python 64bit is reccomended as the 32bit will cause memory errors if you try to upload files > 300MB (however pygraphviz works on 32bit)
 
-If Pygraphviz does not load, you are still able to run the website as it is not needed for the main sections of the site 
+If Pygraphviz does not load, you are still able to run the website as it is not needed for the main sections of the site
 (The SECOND custom tree will not load on the webpage after submission of ph file, however you can visit the url custom_tree2 > "localhost:5000/custom_tree2" to see how it would look if it had rendered properly with the functional plugin)
 
 # MYSQL
@@ -66,18 +70,19 @@ Import the SQL file into MySQL using:
 
 > Path/to/Mysql.exe -u root -p genome_data < "path/to/genome_data.sql"
 
-User can also create an identical database from scratch by 
+User can also create an identical database from scratch by
 following the instructions  inside SQL_db_instructions folder.
 This file also contains random data from our database that can
 populate the new db.
 
 ---------------
-# RUNNING FLASK 
+# RUNNING FLASK
 -----------
 
 To run the software go to Website_Design and execute the commands based on OS:
 
 # run flask on WINDOWS using:
+OPEN COMMAND PROMPT, GO TO CORRECT DIRECTORY of file (cd ..\..)
 - set FLASK_APP=project.py
 - set FLASK_DEBUG=1
 - flask run

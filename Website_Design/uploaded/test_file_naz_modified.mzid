@@ -1,0 +1,549 @@
+		<Peptide id="TFFSFPAVVAPFK">
+			<PeptideSequence>TFFSFPAVVAPFK</PeptideSequence>
+		</Peptide>
+		<Peptide id="KQPPVSPGTAIVGSQKEPSEVPTPK">
+			<PeptideSequence>KQPPVSPGTALVGSQKEPSEVPTPK</PeptideSequence>
+		</Peptide>
+		<Peptide id="KIEEVIIGMPNIIK">
+			<PeptideSequence>KLEEVLLGMPNIIK</PeptideSequence>
+		</Peptide>
+		<Peptide id="IVNHFVEEFKR">
+			<PeptideSequence>LVNHFVEEFKR</PeptideSequence>
+		</Peptide>
+		<Peptide id="SIVTQYINATGNR">
+			<PeptideSequence>SLVTQYLNATGNR</PeptideSequence>
+		</Peptide>
+		<Peptide id="FITYPFDQNR">
+			<PeptideSequence>FITYPFDQNR</PeptideSequence>
+		</Peptide>
+		<Peptide id="TFDQITPEESK">
+			<PeptideSequence>TFDQLTPEESK</PeptideSequence>
+		</Peptide>
+		<Peptide id="VSSVFKDEATVR">
+			<PeptideSequence>VSSVFKDEATVR</PeptideSequence>
+		</Peptide>
+		<Peptide id="TFSYAGFEMQPK_15.99491461956-ATAA-9">
+			<PeptideSequence>TFSYAGFEMQPK</PeptideSequence>
+			<Modification monoisotopicMassDelta="15.994915" residues="M" location="9" >
+				<cvParam cvRef="UNIMOD" accession="UNIMOD:35" name="Oxidation"/>
+			</Modification>
+		</Peptide>
+		<Peptide id="EAEYFEIPEIVR">
+			<PeptideSequence>EAEYFELPELVR</PeptideSequence>
+		</Peptide>
+		<Peptide id="HIAGIGITEAIDKNK">
+			<PeptideSequence>HLAGLGLTEAIDKNK</PeptideSequence>
+		</Peptide>
+		<Peptide id="GASQAGMTGYGMPR_15.99491461956-ATAA-12_15.99491461956-ATAA-7">
+			<PeptideSequence>GASQAGMTGYGMPR</PeptideSequence>
+			<Modification monoisotopicMassDelta="15.994915" residues="M" location="12" >
+				<cvParam cvRef="UNIMOD" accession="UNIMOD:35" name="Oxidation"/>
+			</Modification>
+			<Modification monoisotopicMassDelta="15.994915" residues="M" location="7" >
+				<cvParam cvRef="UNIMOD" accession="UNIMOD:35" name="Oxidation"/>
+			</Modification>
+		</Peptide>
+		<Peptide id="TDKSSASAPDVDDPEAFPAI">
+			<PeptideSequence>TDKSSASAPDVDDPEAFPAL</PeptideSequence>
+		</Peptide>
+		<Peptide id="KAIAAAGYDVEKNNSR">
+			<PeptideSequence>KALAAAGYDVEKNNSR</PeptideSequence>
+		</Peptide>
+		<Peptide id="MIDMGFEPQIR_15.99491461956-ATAA-1">
+			<PeptideSequence>MLDMGFEPQIR</PeptideSequence>
+			<Modification monoisotopicMassDelta="15.994915" residues="M" location="1" >
+				<cvParam cvRef="UNIMOD" accession="UNIMOD:35" name="Oxidation"/>
+			</Modification>
+		</Peptide>
+		<Peptide id="IDQIIYIPIPDEK">
+			<PeptideSequence>LDQLIYIPLPDEK</PeptideSequence>
+		</Peptide>
+		<Peptide id="DEIIPTTPISEQK">
+			<PeptideSequence>DEILPTTPISEQK</PeptideSequence>
+		</Peptide>
+		<Peptide id="AEEFDCIEEICER">
+			<PeptideSequence>AEEFDCIEEICER</PeptideSequence>
+			<Modification monoisotopicMassDelta="57.021464" residues="C" location="6" >
+				<cvParam cvRef="UNIMOD" accession="UNIMOD:4" name="Carbamidomethyl"/>
+			</Modification>
+			<Modification monoisotopicMassDelta="57.021464" residues="C" location="11" >
+				<cvParam cvRef="UNIMOD" accession="UNIMOD:4" name="Carbamidomethyl"/>
+			</Modification>
+		</Peptide>
+		<Peptide id="MIDMGFEPQIR_15.99491461956-ATAA-4">
+			<PeptideSequence>MLDMGFEPQIR</PeptideSequence>
+			<Modification monoisotopicMassDelta="15.994915" residues="M" location="4" >
+				<cvParam cvRef="UNIMOD" accession="UNIMOD:35" name="Oxidation"/>
+			</Modification>
+		</Peptide>
+		<Peptide id="VDVDVPDVNIEGPDAK">
+			<PeptideSequence>VDVDVPDVNIEGPDAK</PeptideSequence>
+		</Peptide>
+		<Peptide id="SIIECHNDIK">
+			<PeptideSequence>SLLECHNDLK</PeptideSequence>
+			<Modification monoisotopicMassDelta="57.021464" residues="C" location="5" >
+				<cvParam cvRef="UNIMOD" accession="UNIMOD:4" name="Carbamidomethyl"/>
+			</Modification>
+		</Peptide>
+		<Peptide id="MAPYQGPDAVPGAIDYK">
+			<PeptideSequence>MAPYQGPDAVPGALDYK</PeptideSequence>
+		</Peptide>
+		<Peptide id="EQFIDGDGWTSR_-18.010564683699997-ATAA-1">
+			<PeptideSequence>EQFLDGDGWTSR</PeptideSequence>
+			<Modification monoisotopicMassDelta="-18.010565" residues="E" location="0" >
+				<cvParam cvRef="UNIMOD" accession="UNIMOD:27" name="Glu-&gt;pyro-Glu"/>
+			</Modification>
+		</Peptide>
+		<Peptide id="FPGQINADIRK">
+			<PeptideSequence>FPGQLNADLRK</PeptideSequence>
+		</Peptide>
+		<Peptide id="SSIDSEPAIVIGPIK">
+			<PeptideSequence>SSIDSEPALVLGPLK</PeptideSequence>
+		</Peptide>
+		<Peptide id="WSCQEVPCPGTCSVIGGAHFSTFDGK">
+			<PeptideSequence>WSCQEVPCPGTCSVLGGAHFSTFDGK</PeptideSequence>
+			<Modification monoisotopicMassDelta="57.021464" residues="C" location="3" >
+				<cvParam cvRef="UNIMOD" accession="UNIMOD:4" name="Carbamidomethyl"/>
+			</Modification>
+			<Modification monoisotopicMassDelta="57.021464" residues="C" location="8" >
+				<cvParam cvRef="UNIMOD" accession="UNIMOD:4" name="Carbamidomethyl"/>
+			</Modification>
+			<Modification monoisotopicMassDelta="57.021464" residues="C" location="12" >
+				<cvParam cvRef="UNIMOD" accession="UNIMOD:4" name="Carbamidomethyl"/>
+			</Modification>
+		</Peptide>
+		<Peptide id="KIYYRPAIMTAIDGR">
+			<PeptideSequence>KIYYRPALMTAIDGR</PeptideSequence>
+		</Peptide>
+		<Peptide id="EYTAAVEAK">
+			<PeptideSequence>EYTAAVEAK</PeptideSequence>
+		</Peptide>
+		<Peptide id="DNGDYPYFETSAK">
+			<PeptideSequence>DNGDYPYFETSAK</PeptideSequence>
+		</Peptide>
+		<Peptide id="RIPENIYNDR">
+			<PeptideSequence>RLPENLYNDR</PeptideSequence>
+		</Peptide>
+		<Peptide id="VEAEDFGVYYCMQDAQD_15.99491461956-ATAA-12">
+			<PeptideSequence>VEAEDFGVYYCMQDAQD</PeptideSequence>
+			<Modification monoisotopicMassDelta="57.021464" residues="C" location="11" >
+				<cvParam cvRef="UNIMOD" accession="UNIMOD:4" name="Carbamidomethyl"/>
+			</Modification>
+			<Modification monoisotopicMassDelta="15.994915" residues="M" location="12" >
+				<cvParam cvRef="UNIMOD" accession="UNIMOD:35" name="Oxidation"/>
+			</Modification>
+		</Peptide>
+		<Peptide id="IVWIETPTNPTQK">
+			<PeptideSequence>LVWIETPTNPTQK</PeptideSequence>
+		</Peptide>
+		<Peptide id="ITPAHDQNDYEVGQR">
+			<PeptideSequence>ITPAHDQNDYEVGQR</PeptideSequence>
+		</Peptide>
+		<Peptide id="RNIDIERPTYTNINR">
+			<PeptideSequence>RNLDIERPTYTNLNR</PeptideSequence>
+		</Peptide>
+		<Peptide id="AERPEDINIPNAVITR_42.0105646837-ATAA-1">
+			<PeptideSequence>AERPEDLNLPNAVITR</PeptideSequence>
+			<Modification monoisotopicMassDelta="42.010565" residues="A" location="0" >
+				<cvParam cvRef="UNIMOD" accession="UNIMOD:1" name="Acetyl"/>
+			</Modification>
+		</Peptide>
+		<Peptide id="MATEVAADAIGEEWK">
+			<PeptideSequence>MATEVAADALGEEWK</PeptideSequence>
+		</Peptide>
+		<Peptide id="VVIIGGKPDR">
+			<PeptideSequence>VVLIGGKPDR</PeptideSequence>
+		</Peptide>
+		<Peptide id="DFAPVIVEAFK">
+			<PeptideSequence>DFAPVIVEAFK</PeptideSequence>
+		</Peptide>
+		<Peptide id="NGVMPSHFSR_15.99491461956-ATAA-4">
+			<PeptideSequence>NGVMPSHFSR</PeptideSequence>
+			<Modification monoisotopicMassDelta="15.994915" residues="M" location="4" >
+				<cvParam cvRef="UNIMOD" accession="UNIMOD:35" name="Oxidation"/>
+			</Modification>
+		</Peptide>
+		<Peptide id="TFDQITPDESKER">
+			<PeptideSequence>TFDQLTPDESKER</PeptideSequence>
+		</Peptide>
+		<Peptide id="IVINGNPITIFQERDPSKIK">
+			<PeptideSequence>LVINGNPITIFQERDPSKIK</PeptideSequence>
+		</Peptide>
+		<Peptide id="TITAAAVSGAQPIISK">
+			<PeptideSequence>TLTAAAVSGAQPILSK</PeptideSequence>
+		</Peptide>
+		<Peptide id="QNVSTSNSGSMPNIAQK_-17.026549101009998-ATAA-1">
+			<PeptideSequence>QNVSTSNSGSMPNLAQK</PeptideSequence>
+			<Modification monoisotopicMassDelta="-17.026549" residues="Q" location="0" >
+				<cvParam cvRef="UNIMOD" accession="UNIMOD:28" name="Gln-&gt;pyro-Glu"/>
+			</Modification>
+		</Peptide>
+		<Peptide id="GISEKIPEKWESVK">
+			<PeptideSequence>GLSEKLPEKWESVK</PeptideSequence>
+		</Peptide>
+		<Peptide id="TATESFASDPIIYRPVAVAIDTK">
+			<PeptideSequence>TATESFASDPILYRPVAVALDTK</PeptideSequence>
+		</Peptide>
+		<Peptide id="KGGSWIQEINVAEK">
+			<PeptideSequence>KGGSWIQEINVAEK</PeptideSequence>
+		</Peptide>
+		<Peptide id="AHSSMVGVNIPQK">
+			<PeptideSequence>AHSSMVGVNLPQK</PeptideSequence>
+		</Peptide>
+		<Peptide id="NREEEWDPEYTPK">
+			<PeptideSequence>NREEEWDPEYTPK</PeptideSequence>
+		</Peptide>
+		<Peptide id="VIYSTAMESIQGPGK">
+			<PeptideSequence>VLYSTAMESIQGPGK</PeptideSequence>
+		</Peptide>
+		<Peptide id="TTGFGMIYDSIDYAK">
+			<PeptideSequence>TTGFGMIYDSLDYAK</PeptideSequence>
+		</Peptide>
+		<Peptide id="DFTVSAMHGDMDQK">
+			<PeptideSequence>DFTVSAMHGDMDQK</PeptideSequence>
+		</Peptide>
+		<Peptide id="AITQTGGPHVK">
+			<PeptideSequence>ALTQTGGPHVK</PeptideSequence>
+		</Peptide>
+		<Peptide id="VEGDITGISFK">
+			<PeptideSequence>VEGDITGISFK</PeptideSequence>
+		</Peptide>
+		<Peptide id="VIVSGIPPSGSWQDIK">
+			<PeptideSequence>VLVSGLPPSGSWQDLK</PeptideSequence>
+		</Peptide>
+		<Peptide id="ADDIIPIGDQTQDGDFGSR">
+			<PeptideSequence>ADDLLPLGDQTQDGDFGSR</PeptideSequence>
+		</Peptide>
+		<Peptide id="ESKTGSSGIIVRISTNHFR">
+			<PeptideSequence>ESKTGSSGIIVRLSTNHFR</PeptideSequence>
+		</Peptide>
+		<Peptide id="EGDVITIIESER_-18.010564683699997-ATAA-1">
+			<PeptideSequence>EGDVLTLLESER</PeptideSequence>
+			<Modification monoisotopicMassDelta="-18.010565" residues="E" location="0" >
+				<cvParam cvRef="UNIMOD" accession="UNIMOD:27" name="Glu-&gt;pyro-Glu"/>
+			</Modification>
+		</Peptide>
+		<Peptide id="IYRIEVQIR">
+			<PeptideSequence>IYRLEVQLR</PeptideSequence>
+		</Peptide>
+		<Peptide id="DASIMVTNDGATIIK">
+			<PeptideSequence>DASLMVTNDGATILK</PeptideSequence>
+		</Peptide>
+		<Peptide id="QREEIGQGIQGVEQK_-17.026549101009998-ATAA-1">
+			<PeptideSequence>QREELGQGLQGVEQK</PeptideSequence>
+			<Modification monoisotopicMassDelta="-17.026549" residues="Q" location="0" >
+				<cvParam cvRef="UNIMOD" accession="UNIMOD:28" name="Gln-&gt;pyro-Glu"/>
+			</Modification>
+		</Peptide>
+		<Peptide id="AAGKGDVPTKRPPVIR">
+			<PeptideSequence>AAGKGDVPTKRPPVLR</PeptideSequence>
+		</Peptide>
+		<Peptide id="VGAEDADGIDMAYR_15.99491461956-ATAA-11">
+			<PeptideSequence>VGAEDADGIDMAYR</PeptideSequence>
+			<Modification monoisotopicMassDelta="15.994915" residues="M" location="11" >
+				<cvParam cvRef="UNIMOD" accession="UNIMOD:35" name="Oxidation"/>
+			</Modification>
+		</Peptide>
+		<Peptide id="NGQHVASSPIPVVISQSEIGDASR">
+			<PeptideSequence>NGQHVASSPIPVVISQSEIGDASR</PeptideSequence>
+		</Peptide>
+		<Peptide id="VIEVPPVVY">
+			<PeptideSequence>VLEVPPVVY</PeptideSequence>
+		</Peptide>
+		<Peptide id="VGPMPWIGPQTDESIK">
+			<PeptideSequence>VGPMPWLGPQTDESIK</PeptideSequence>
+		</Peptide>
+		<Peptide id="IIEDNEYTAREGAK">
+			<PeptideSequence>LIEDNEYTAREGAK</PeptideSequence>
+		</Peptide>
+		<Peptide id="NTIPTKETIEQEK">
+			<PeptideSequence>NTLPTKETIEQEK</PeptideSequence>
+		</Peptide>
+		<Peptide id="TINSMMAQNVQHISIR_15.99491461956">
+			<PeptideSequence>TLNSMMAQNVQHLSLR</PeptideSequence>
+			<Modification monoisotopicMassDelta="15.994915" residues="M" location="6" >
+				<cvParam cvRef="UNIMOD" accession="UNIMOD:35" name="Oxidation"/>
+			</Modification>
+		</Peptide>
+		<Peptide id="GTEFGIDYNSWEVGPK">
+			<PeptideSequence>GTEFGIDYNSWEVGPK</PeptideSequence>
+		</Peptide>
+		<Peptide id="GFCFITFKEEEPVK">
+			<PeptideSequence>GFCFITFKEEEPVK</PeptideSequence>
+			<Modification monoisotopicMassDelta="57.021464" residues="C" location="3" >
+				<cvParam cvRef="UNIMOD" accession="UNIMOD:4" name="Carbamidomethyl"/>
+			</Modification>
+		</Peptide>
+		<Peptide id="FGDRFPAMSDAYDR">
+			<PeptideSequence>FGDRFPAMSDAYDR</PeptideSequence>
+		</Peptide>
+		<Peptide id="NEIEIPGQYDGR">
+			<PeptideSequence>NELEIPGQYDGR</PeptideSequence>
+		</Peptide>
+		<Peptide id="IAAINPESNTAGIDIFAK">
+			<PeptideSequence>LAALNPESNTAGLDIFAK</PeptideSequence>
+		</Peptide>
+		<Peptide id="EGAFSNFPISEETIK">
+			<PeptideSequence>EGAFSNFPISEETIK</PeptideSequence>
+		</Peptide>
+		<Peptide id="NIDIERPTYTNINR">
+			<PeptideSequence>NLDIERPTYTNLNR</PeptideSequence>
+		</Peptide>
+		<Peptide id="TIQGQYAIPQPDITK">
+			<PeptideSequence>TIQGQYAIPQPDLTK</PeptideSequence>
+		</Peptide>
+		<Peptide id="NGESSEIDIQGIR">
+			<PeptideSequence>NGESSELDLQGIR</PeptideSequence>
+		</Peptide>
+		<Peptide id="IAQAIHEMR_15.99491461956-ATAA-8">
+			<PeptideSequence>LAQALHEMR</PeptideSequence>
+			<Modification monoisotopicMassDelta="15.994915" residues="M" location="8" >
+				<cvParam cvRef="UNIMOD" accession="UNIMOD:35" name="Oxidation"/>
+			</Modification>
+		</Peptide>
+		<Peptide id="TVIESSPESPVTITEPYR">
+			<PeptideSequence>TVIESSPESPVTITEPYR</PeptideSequence>
+		</Peptide>
+		<Peptide id="AAAEVNQDYGIDPK">
+			<PeptideSequence>AAAEVNQDYGLDPK</PeptideSequence>
+		</Peptide>
+		<Peptide id="GNPTVEVDIFTSK">
+			<PeptideSequence>GNPTVEVDLFTSK</PeptideSequence>
+		</Peptide>
+		<Peptide id="KSADTIWGIQK">
+			<PeptideSequence>KSADTLWGIQK</PeptideSequence>
+		</Peptide>
+		<Peptide id="SDPTSYAGYIEDIK">
+			<PeptideSequence>SDPTSYAGYIEDLK</PeptideSequence>
+		</Peptide>
+		<Peptide id="YRVPDVIVADPPIAR">
+			<PeptideSequence>YRVPDVLVADPPIAR</PeptideSequence>
+		</Peptide>
+		<Peptide id="VIATVTKPVGGDK">
+			<PeptideSequence>VLATVTKPVGGDK</PeptideSequence>
+		</Peptide>
+		<Peptide id="QYEQQTYQVIPEVIK">
+			<PeptideSequence>QYEQQTYQVIPEVIK</PeptideSequence>
+		</Peptide>
+		<Peptide id="YEIISETGGSHDKR">
+			<PeptideSequence>YELISETGGSHDKR</PeptideSequence>
+		</Peptide>
+		<Peptide id="EIVSIKQEQQAFK">
+			<PeptideSequence>ELVSLKQEQQAFK</PeptideSequence>
+		</Peptide>
+		<Peptide id="QNRYDGQVAVFGSDIQEK">
+			<PeptideSequence>QNRYDGQVAVFGSDLQEK</PeptideSequence>
+		</Peptide>
+		<Peptide id="DSFPYIEPIGAIPDVQK">
+			<PeptideSequence>DSFPYLEPLGAIPDVQK</PeptideSequence>
+		</Peptide>
+		<Peptide id="AGTQIENIDEDFR">
+			<PeptideSequence>AGTQIENIDEDFR</PeptideSequence>
+		</Peptide>
+		<Peptide id="VIGTSVESIMATEDR">
+			<PeptideSequence>VLGTSVESIMATEDR</PeptideSequence>
+		</Peptide>
+		<Peptide id="IQIAPDSGGIPER">
+			<PeptideSequence>IQIAPDSGGLPER</PeptideSequence>
+		</Peptide>
+		<Peptide id="RNFGKGCENCK">
+			<PeptideSequence>RNFGKGCENCK</PeptideSequence>
+			<Modification monoisotopicMassDelta="57.021464" residues="C" location="7" >
+				<cvParam cvRef="UNIMOD" accession="UNIMOD:4" name="Carbamidomethyl"/>
+			</Modification>
+			<Modification monoisotopicMassDelta="57.021464" residues="C" location="10" >
+				<cvParam cvRef="UNIMOD" accession="UNIMOD:4" name="Carbamidomethyl"/>
+			</Modification>
+		</Peptide>
+		<Peptide id="EYGYDCEFDWNACVCPESVVSGSHDR">
+			<PeptideSequence>EYGYDCEFDWNACVCPESVVSGSHDR</PeptideSequence>
+			<Modification monoisotopicMassDelta="57.021464" residues="C" location="6" >
+				<cvParam cvRef="UNIMOD" accession="UNIMOD:4" name="Carbamidomethyl"/>
+			</Modification>
+			<Modification monoisotopicMassDelta="57.021464" residues="C" location="13" >
+				<cvParam cvRef="UNIMOD" accession="UNIMOD:4" name="Carbamidomethyl"/>
+			</Modification>
+			<Modification monoisotopicMassDelta="57.021464" residues="C" location="15" >
+				<cvParam cvRef="UNIMOD" accession="UNIMOD:4" name="Carbamidomethyl"/>
+			</Modification>
+		</Peptide>
+		<Peptide id="FAFQAEVNR">
+			<PeptideSequence>FAFQAEVNR</PeptideSequence>
+		</Peptide>
+		<Peptide id="YKAEDEVQR">
+			<PeptideSequence>YKAEDEVQR</PeptideSequence>
+		</Peptide>
+		<Peptide id="KSAGGSGGAGGGEQNGQEEKWCEK">
+			<PeptideSequence>KSAGGSGGAGGGEQNGQEEKWCEK</PeptideSequence>
+			<Modification monoisotopicMassDelta="57.021464" residues="C" location="22" >
+				<cvParam cvRef="UNIMOD" accession="UNIMOD:4" name="Carbamidomethyl"/>
+			</Modification>
+		</Peptide>
+		<Peptide id="KPEDWDEEMDGEWEPPVIQ">
+			<PeptideSequence>KPEDWDEEMDGEWEPPVIQ</PeptideSequence>
+		</Peptide>
+		<Peptide id="AFSYYGPIR">
+			<PeptideSequence>AFSYYGPLR</PeptideSequence>
+		</Peptide>
+		<Peptide id="DMASPNWSIIPEEER">
+			<PeptideSequence>DMASPNWSILPEEER</PeptideSequence>
+		</Peptide>
+		<Peptide id="VDNDENEHQISIR">
+			<PeptideSequence>VDNDENEHQLSLR</PeptideSequence>
+		</Peptide>
+		<Peptide id="ATNESEDEIPQIVPIGK">
+			<PeptideSequence>ATNESEDEIPQLVPIGK</PeptideSequence>
+		</Peptide>
+		<Peptide id="HATIYPTEEEIQAVQK">
+			<PeptideSequence>HATIYPTEEELQAVQK</PeptideSequence>
+		</Peptide>
+		<Peptide id="MIGEAISKNPGYIK_15.99491461956-ATAA-1">
+			<PeptideSequence>MLGEALSKNPGYIK</PeptideSequence>
+			<Modification monoisotopicMassDelta="15.994915" residues="M" location="1" >
+				<cvParam cvRef="UNIMOD" accession="UNIMOD:35" name="Oxidation"/>
+			</Modification>
+		</Peptide>
+		<Peptide id="GSFGMQVVSVGGPGKGHGK">
+			<PeptideSequence>GSFGMQVVSVGGPGKGHGK</PeptideSequence>
+		</Peptide>
+		<Peptide id="ASTNAMIISAGIPPIK">
+			<PeptideSequence>ASTNAMLISAGLPPLK</PeptideSequence>
+		</Peptide>
+		<Peptide id="EYFSWEGAFQHVGK">
+			<PeptideSequence>EYFSWEGAFQHVGK</PeptideSequence>
+		</Peptide>
+		<Peptide id="IGIHEDSTNRR">
+			<PeptideSequence>LGIHEDSTNRR</PeptideSequence>
+		</Peptide>
+		<Peptide id="AAHSEGNTTAGIDMR_15.99491461956-ATAA-14">
+			<PeptideSequence>AAHSEGNTTAGLDMR</PeptideSequence>
+			<Modification monoisotopicMassDelta="15.994915" residues="M" location="14" >
+				<cvParam cvRef="UNIMOD" accession="UNIMOD:35" name="Oxidation"/>
+			</Modification>
+		</Peptide>
+		<Peptide id="VDKGVVPIAGTDGETTTQGIDGISER">
+			<PeptideSequence>VDKGVVPLAGTDGETTTQGLDGLSER</PeptideSequence>
+		</Peptide>
+		<Peptide id="TSSGIGGSTTDFIEEWK">
+			<PeptideSequence>TSSGLGGSTTDFLEEWK</PeptideSequence>
+		</Peptide>
+		<Peptide id="IYRIMRGVPFIVGAK">
+			<PeptideSequence>IYRLMRGVPFIVGAK</PeptideSequence>
+		</Peptide>
+		<Peptide id="APSVPAAEPEYPK">
+			<PeptideSequence>APSVPAAEPEYPK</PeptideSequence>
+		</Peptide>
+		<Peptide id="AQHEDQVEQYKK">
+			<PeptideSequence>AQHEDQVEQYKK</PeptideSequence>
+		</Peptide>
+		<Peptide id="HEHQVMIMR_15.99491461956-ATAA-6_15.99491461956-ATAA-8">
+			<PeptideSequence>HEHQVMLMR</PeptideSequence>
+			<Modification monoisotopicMassDelta="15.994915" residues="M" location="8" >
+				<cvParam cvRef="UNIMOD" accession="UNIMOD:35" name="Oxidation"/>
+			</Modification>
+			<Modification monoisotopicMassDelta="15.994915" residues="M" location="6" >
+				<cvParam cvRef="UNIMOD" accession="UNIMOD:35" name="Oxidation"/>
+			</Modification>
+		</Peptide>
+		<Peptide id="TTNAGPIHPYWPQHIR_42.0105646837-ATAA-1">
+			<PeptideSequence>TTNAGPLHPYWPQHLR</PeptideSequence>
+			<Modification monoisotopicMassDelta="42.010565" residues="T" location="0" >
+				<cvParam cvRef="UNIMOD" accession="UNIMOD:1" name="Acetyl"/>
+			</Modification>
+		</Peptide>
+		<Peptide id="IESGMQNMSIHTK_15.99491461956-ATAA-8">
+			<PeptideSequence>LESGMQNMSIHTK</PeptideSequence>
+			<Modification monoisotopicMassDelta="15.994915" residues="M" location="8" >
+				<cvParam cvRef="UNIMOD" accession="UNIMOD:35" name="Oxidation"/>
+			</Modification>
+		</Peptide>
+		<Peptide id="IESGMQNMSIHTK_15.99491461956-ATAA-5">
+			<PeptideSequence>LESGMQNMSIHTK</PeptideSequence>
+			<Modification monoisotopicMassDelta="15.994915" residues="M" location="5" >
+				<cvParam cvRef="UNIMOD" accession="UNIMOD:35" name="Oxidation"/>
+			</Modification>
+		</Peptide>
+		<Peptide id="YEEENFYIEPYIK">
+			<PeptideSequence>YEEENFYLEPYLK</PeptideSequence>
+		</Peptide>
+		<Peptide id="DFIQAMNDIRPSAMR_15.99491461956">
+			<PeptideSequence>DFLQAMNDIRPSAMR</PeptideSequence>
+			<Modification monoisotopicMassDelta="15.994915" residues="M" location="14" >
+				<cvParam cvRef="UNIMOD" accession="UNIMOD:35" name="Oxidation"/>
+			</Modification>
+		</Peptide>
+		<Peptide id="IIQDGGIQVVEK">
+			<PeptideSequence>ILQDGGLQVVEK</PeptideSequence>
+		</Peptide>
+		<Peptide id="VPKIIFKK">
+			<PeptideSequence>VPKLIFKK</PeptideSequence>
+		</Peptide>
+		<Peptide id="EMEISFSSTTSHSNCK_-18.010564683699997-ATAA-1_15.99491461956-ATAA-2">
+			<PeptideSequence>EMEISFSSTTSHSNCK</PeptideSequence>
+			<Modification monoisotopicMassDelta="-18.010565" residues="E" location="0" >
+				<cvParam cvRef="UNIMOD" accession="UNIMOD:27" name="Glu-&gt;pyro-Glu"/>
+			</Modification>
+			<Modification monoisotopicMassDelta="57.021464" residues="C" location="15" >
+				<cvParam cvRef="UNIMOD" accession="UNIMOD:4" name="Carbamidomethyl"/>
+			</Modification>
+			<Modification monoisotopicMassDelta="15.994915" residues="M" location="2" >
+				<cvParam cvRef="UNIMOD" accession="UNIMOD:35" name="Oxidation"/>
+			</Modification>
+		</Peptide>
+		<Peptide id="GGDIMAYDRR_15.99491461956-ATAA-5">
+			<PeptideSequence>GGDLMAYDRR</PeptideSequence>
+			<Modification monoisotopicMassDelta="15.994915" residues="M" location="5" >
+				<cvParam cvRef="UNIMOD" accession="UNIMOD:35" name="Oxidation"/>
+			</Modification>
+		</Peptide>
+		<Peptide id="YYPTEDVPR">
+			<PeptideSequence>YYPTEDVPR</PeptideSequence>
+		</Peptide>
+		<Peptide id="IIHFVDGDIMEEYSTEEEEEEEK">
+			<PeptideSequence>IIHFVDGDIMEEYSTEEEEEEEK</PeptideSequence>
+		</Peptide>
+		<Peptide id="VTAQGPGIEPSGNIANK">
+			<PeptideSequence>VTAQGPGLEPSGNIANK</PeptideSequence>
+		</Peptide>
+		<Peptide id="AMTGVEQWPYR_15.99491461956-ATAA-2">
+			<PeptideSequence>AMTGVEQWPYR</PeptideSequence>
+			<Modification monoisotopicMassDelta="15.994915" residues="M" location="2" >
+				<cvParam cvRef="UNIMOD" accession="UNIMOD:35" name="Oxidation"/>
+			</Modification>
+		</Peptide>
+		<Peptide id="QVDGIDWTHGDRDEEEEK">
+			<PeptideSequence>QVDGIDWTHGDRDEEEEK</PeptideSequence>
+		</Peptide>
+		<Peptide id="DFYVAFQDIPTR">
+			<PeptideSequence>DFYVAFQDLPTR</PeptideSequence>
+		</Peptide>
+		<Peptide id="QIAEEDIAQQR">
+			<PeptideSequence>QLAEEDLAQQR</PeptideSequence>
+		</Peptide>
+		<Peptide id="IYGPSSVSFADDFVR">
+			<PeptideSequence>LYGPSSVSFADDFVR</PeptideSequence>
+		</Peptide>
+		<Peptide id="DMIIANKVPAAAR_15.99491461956-ATAA-2">
+			<PeptideSequence>DMLLANKVPAAAR</PeptideSequence>
+			<Modification monoisotopicMassDelta="15.994915" residues="M" location="2" >
+				<cvParam cvRef="UNIMOD" accession="UNIMOD:35" name="Oxidation"/>
+			</Modification>
+		</Peptide>
+		<Peptide id="EESGKPGAHVTVKK">
+			<PeptideSequence>EESGKPGAHVTVKK</PeptideSequence>
+		</Peptide>
+		<Peptide id="TIFQPQTGAYQTIAK">
+			<PeptideSequence>TLFQPQTGAYQTLAK</PeptideSequence>
+		</Peptide>
+		<Peptide id="DTIVADNIDQATR">
+			<PeptideSequence>DTLVADNLDQATR</PeptideSequence>
+		</Peptide>
+		<Peptide id="YFEADPPGQVAASPDPTT">
+			<PeptideSequence>YFEADPPGQVAASPDPTT</PeptideSequence>
+		</Peptide>
+		<Peptide id="VIVRHIGIDTVDCK">
+			<PeptideSequence>VLVRHLGLDTVDCK</PeptideSequence>
+
+			
+								<Peptide id="NGPAFKATITQGISRVLGIQYHLHCSWRPQSSGKVEKAN">
+			<PeptideSequence>NGPAFKATITQGISRVLGIQYHLHCSWRPQSSGKVEKAN</PeptideSequence>

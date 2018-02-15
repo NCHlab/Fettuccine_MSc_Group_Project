@@ -230,10 +230,6 @@ def custom_tree():
     else:
         return render_template("relationship_AA.html")
 
-@app.route("/AA_seq_list")
-def AA_seq_list():
-    return render_template("AA_seq_list.html")
-
 @app.route("/line1_rv")
 def line1_rv():
     return render_template("line1_rv.html")
