@@ -189,7 +189,11 @@
 										<hr>
 										</p>
 										{{ result_seq1 }}
-										{{ empty }}
+										{% if empty != "" %}
+										  <img src="{{ err_img }}" width=30px height=30px>
+											{{ empty  }}
+											<img src="{{ err_img }}" width=30px height=30px>
+										{% endif %}
 										{{ result_family }}
 									</div>
 								</div>

@@ -424,6 +424,7 @@ def upload_peptide():
     disease_type_write=[]
     result_seq2=[]
     hashed=str()
+    err_img = "/static/assets/img/error_img.png"
 
     # Checks for post method (data submitted)
     start_time = timeit.default_timer()
@@ -453,12 +454,12 @@ def upload_peptide():
         #Checks to see if any file has been uploaded, if it has not then error returned
         if 'file' not in request.files:
             result_seq_multi = "No File uploaded! Please Upload a MzIdent or mzTab formatted file"
-            return render_template("upload_peptide.html", result_family=result_seq_multi)
+            return render_template("upload_peptide.html", empty=result_seq_multi, err_img = err_img)
 
         # Checks to see for the presence of an extension.
         if "." not in filename2:
             result_seq_multi = "Incorrect filetype uploaded! Please Upload a MzIdent or mzTab formatted file"
-            return render_template("upload_peptide.html", result_family=result_seq_multi)
+            return render_template("upload_peptide.html", empty=result_seq_multi, err_img = err_img)
 
         # If the filetype is allowed, the file is read in and then regex match used to locate the peptide
         if filename2.rsplit('.', 1)[1].lower() in ALLOWED_EX_XML:
@@ -495,7 +496,7 @@ def upload_peptide():
 
             #If the file extension does not match mztab or mzident, an error stating wrong filetype uploaded relayed back
             result_seq_multi = "Incorrect filetype uploaded! Please Upload a MzIdent or mzTab formatted file"
-            return render_template("upload_peptide.html", result_family=result_seq_multi)
+            return render_template("upload_peptide.html", empty=result_seq_multi, err_img = err_img)
 
         str_pep_seqs = ''.join(str(i) for i in list_of_pep_seqs) # converts list to string for hash checker
         hashed = str(hashlib.sha224(str_pep_seqs).hexdigest()) # A hash check of the found peptide sequences of the file is conducted providing a unique SHA224 ID
@@ -513,7 +514,7 @@ def upload_peptide():
             #return no match
             if not cur.rowcount:
                 cur.close()
-                return render_template("upload_peptide.html", result_family=no_match)
+                return render_template("upload_peptide.html", empty=no_match, err_img = err_img)
 
         else:
             #If the inserted file is up to or equal to 5000 sequences
@@ -552,7 +553,7 @@ def upload_peptide():
             # If not result is found, display no match
             if len(result_seq2)==0:
                 result_seq_multi="No match was found!"
-                return render_template("upload_peptide.html", result_seq = result_seq_multi)#result_seq_multi)
+                return render_template("upload_peptide.html", empty = result_seq_multi, err_img = err_img)
 
         # If a result is found, the data from dropdown boxes are saved into memory
         if len(result_seq2) != 0:
