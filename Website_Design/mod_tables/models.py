@@ -13,6 +13,7 @@ import re
 import csv
 import hashlib
 import json
+#Connect to the datbase
 try:
 	connection = MySQLdb.connect(host="localhost",
 						port=3306,
@@ -24,7 +25,9 @@ except:
 	print "Please ensure you have started your MySQL server and the db name is correct"
 	print "and that the port is set to 3306 in your server"
 	pass
-cur = connection.cursor() # May need to open it in each function instead of globally
+
+#Get the information from the database
+cur = connection.cursor()
 cur.execute("SELECT peptide_id, family, superfamily, predicted_protein, sequence FROM `herv_prot_seqs`")
 row_headers_erv=[x[0] for x in cur.description]
 ervs = cur.fetchall()
@@ -42,6 +45,7 @@ for result in ervs:
 DATA_SAMPLE_ERV = json_data_erv
 DATA_SAMPLE_L1 = json_data_l1
 
+#return the data for serverside processing
 class TableBuilder(object):
 
 	def collect_data_serverside_erv(self, request):
