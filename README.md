@@ -73,14 +73,14 @@ populate the new db.
 
 To run the software go to Website_Design and execute the commands based on OS:
 
-#run flask on WINDOWS using:
--set FLASK_APP=project.py
--set FLASK_DEBUG=1
--flask run
+# run flask on WINDOWS using:
+- set FLASK_APP=project.py
+- set FLASK_DEBUG=1
+- flask run
 
-#run flask on LINUX using:
--export FLASK_APP=project.py
--export FLASK_DEBUG=1
--flask run
+# run flask on LINUX using:
+- export FLASK_APP=project.py
+- export FLASK_DEBUG=1
+- flask run
 
 ----------------------
