@@ -41,10 +41,12 @@ pip install -r /path/to/requirements.txt
 ------------------------------
 
 Install Your Own MYSQL server of Choice (we Used MAMP for windows to make it simple to turn on / off)
+
 Download https://www.graphviz.org/download/ V2.38 and install
+
 The software was ran and tested using MySQK 5.7.20 in Windows 32-bit, 64-bit and Linux 64-bit.
 
-Copy the MySQLdb (MySQL python connector) and pygraphviz folders + pylab files to your C:\Python27\Lib\site-packages\
+Copy the MySQLdb (MySQL python connector) and pygraphviz folders + pylab files to your C:\Python27\Lib\site-packages\ or equivilant flders for your OS
 
 PyGraphviz May not work on 64bit python, python 64bit is reccomended as the 32bit will cause memory errors if you try to upload files > 300MB (however pygraphviz works on 32bit)
 
